@@ -1,3 +1,4 @@
+import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_theme.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash.dart';
 import 'package:artisanmill_group5capstoneproject/routing/app_router.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           title: 'ArtisanMill',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: AppTheme.theme,
           routerConfig: appRouter.router,
         );
       }

@@ -16,7 +16,7 @@ class OnboardingItem {
     ),
     OnboardingItem(
       title: 'Book The Service of\n Qualified Artisans',
-      imagePath: Assets.images.serviceProviders.path,
+      imagePath: Assets.images.qualifiedArtisans.path,
     ),
   ];
 }
