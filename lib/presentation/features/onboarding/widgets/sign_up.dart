@@ -104,18 +104,24 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget _buildSignInText() {
-    return RichText(
-      text: TextSpan(
-          text: 'Do you have an account already? ',
-          style: TextStyle(color: context.colors.onSurface),
-          children: [
-            TextSpan(
-                text: 'Sign In',
-                style: TextStyle(
-                  color: context.colors.secondary,
-                ),
-                recognizer: TapGestureRecognizer()..onTap = () {}),
-          ]),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: RichText(
+          text: TextSpan(
+              text: 'Do you have an account already? ',
+              style: context.textTheme.titleLarge,
+              children: [
+                TextSpan(
+                    text: 'Sign In',
+                    style: context.textTheme.titleLarge?.copyWith(
+                      color: context.colors.secondary
+                    ),
+                    recognizer: TapGestureRecognizer()..onTap = () {}),
+              ]),
+        ),
+      ),
     );
   }
 

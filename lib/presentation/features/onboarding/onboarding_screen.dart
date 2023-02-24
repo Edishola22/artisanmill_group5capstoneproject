@@ -6,7 +6,6 @@ import 'package:artisanmill_group5capstoneproject/utils/extensions/context_exten
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'dart:developer' as dev;
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -109,12 +108,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            child: const Text('Skip'),
+            child: Text(
+              'Skip',
+              style: context.textTheme.titleLarge,
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               int currentPage = _controller.page!.toInt();
-              dev.log("Current page is $currentPage");
               _goToPage(++currentPage);
             },
             style: TextButton.styleFrom(
@@ -126,7 +127,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             ),
             child: Row(
               children: [
-                const Text('Next'),
+                Text(
+                  'Next',
+                  style: context.textTheme.titleLarge,
+                ),
                 SizedBox(width: 8.w),
                 const Icon(Icons.arrow_forward_rounded)
               ],

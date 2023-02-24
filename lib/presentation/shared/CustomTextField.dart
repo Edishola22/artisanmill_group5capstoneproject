@@ -27,7 +27,10 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label),
+        Text(
+          label,
+          style: context.textTheme.titleLarge,
+        ),
         SizedBox(height: 4.h),
         SizedBox(
           height: 50.h,
@@ -49,7 +52,7 @@ class CustomTextField extends StatelessWidget {
                     )
                   : null,
             ),
-            obscureText: isPassword ? !isPasswordVisible!: false,
+            obscureText: isPassword ? !isPasswordVisible! : false,
             validator: validator,
           ),
         ),

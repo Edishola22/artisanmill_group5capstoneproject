@@ -1,4 +1,5 @@
 import 'package:artisanmill_group5capstoneproject/domain/models/onboarding_item.dart';
+import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,8 +33,8 @@ class OnboardingScreenItem extends StatelessWidget {
           child: Text(
             item.title,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20.sp,
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
