@@ -27,6 +27,7 @@ final TextTheme textTheme = TextTheme(
 
 class AppTheme {
   static ThemeData theme = ThemeData.light().copyWith(
+    scaffoldBackgroundColor: Colors.white,
     textTheme: textTheme,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,

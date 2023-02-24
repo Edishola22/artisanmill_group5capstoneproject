@@ -41,8 +41,17 @@ class $AssetsImagesGen {
   AssetGenImage get serviceProviders =>
       const AssetGenImage('assets/images/service_providers.png');
 
+  /// File path: assets/images/user_avatar.png
+  AssetGenImage get userAvatar =>
+      const AssetGenImage('assets/images/user_avatar.png');
+
+  /// File path: assets/images/vendor_avatar.png
+  AssetGenImage get vendorAvatar =>
+      const AssetGenImage('assets/images/vendor_avatar.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [logo, qualifiedArtisans, serviceProviders];
+  List<AssetGenImage> get values =>
+      [logo, qualifiedArtisans, serviceProviders, userAvatar, vendorAvatar];
 }
 
 class Assets {
