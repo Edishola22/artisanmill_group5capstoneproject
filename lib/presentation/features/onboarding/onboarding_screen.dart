@@ -1,6 +1,7 @@
 import 'package:artisanmill_group5capstoneproject/domain/models/onboarding_item.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/widgets/onboarding_screen_item.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/widgets/sign_up.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -97,21 +98,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              fixedSize: Size(103.w, 44.h),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: context.colors.primary,
-                ),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-            ),
-            child: Text(
-              'Skip',
-              style: context.textTheme.titleLarge,
-            ),
+          PlainAppButton(
+            width: 103.w,
+            height: 44.h,
+            text: 'Skip',
+            onTap: () {},
           ),
           ElevatedButton(
             onPressed: () {

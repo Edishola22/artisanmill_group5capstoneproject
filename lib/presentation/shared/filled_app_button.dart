@@ -1,8 +1,9 @@
+import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppButton extends StatelessWidget {
-  const AppButton({
+class FilledAppButton extends StatelessWidget {
+  const FilledAppButton({
     Key? key,
     required this.width,
     required this.height,
@@ -19,12 +20,14 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(width, height),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
-        )
+          fixedSize: Size(width, height),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          )),
+      child: Text(
+        text,
+        style: context.textTheme.bodyLarge,
       ),
-      child: Text(text),
     );
   }
 }

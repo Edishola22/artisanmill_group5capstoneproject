@@ -1,10 +1,11 @@
 import 'package:artisanmill_group5capstoneproject/presentation/shared/CustomTextField.dart';
-import 'package:artisanmill_group5capstoneproject/presentation/shared/app_button.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/shared/filled_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -81,11 +82,11 @@ class _SignUpState extends State<SignUp> {
                         );
                       }),
                   SizedBox(height: 48.h),
-                  AppButton(
+                  FilledAppButton(
                     width: 172.w,
                     height: 51.h,
                     text: 'Sign Up',
-                    onTap: () {},
+                    onTap: () => _navigateToChooseAccount(),
                   ),
                   SizedBox(height: 24.h),
                   const Text('Or'),
@@ -101,6 +102,10 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  void _navigateToChooseAccount() {
+    context.goNamed('account-chooser');
   }
 
   Widget _buildSignInText() {
