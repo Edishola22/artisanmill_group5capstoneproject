@@ -30,6 +30,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/artisan_avatar.png
+  AssetGenImage get artisanAvatar =>
+      const AssetGenImage('assets/images/artisan_avatar.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
@@ -45,13 +49,9 @@ class $AssetsImagesGen {
   AssetGenImage get userAvatar =>
       const AssetGenImage('assets/images/user_avatar.png');
 
-  /// File path: assets/images/vendor_avatar.png
-  AssetGenImage get vendorAvatar =>
-      const AssetGenImage('assets/images/vendor_avatar.png');
-
   /// List of all assets
   List<AssetGenImage> get values =>
-      [logo, qualifiedArtisans, serviceProviders, userAvatar, vendorAvatar];
+      [artisanAvatar, logo, qualifiedArtisans, serviceProviders, userAvatar];
 }
 
 class Assets {

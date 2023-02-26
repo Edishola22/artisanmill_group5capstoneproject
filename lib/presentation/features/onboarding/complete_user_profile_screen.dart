@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CompleteUserProfileScreen extends StatefulWidget {
-  CompleteUserProfileScreen({Key? key}) : super(key: key);
+  const CompleteUserProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<CompleteUserProfileScreen> createState() =>
