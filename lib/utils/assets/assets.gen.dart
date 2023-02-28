@@ -14,8 +14,18 @@ import 'package:flutter/services.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/about.svg
+  SvgGenImage get about => const SvgGenImage('assets/icons/about.svg');
+
   /// File path: assets/icons/apple.svg
   SvgGenImage get apple => const SvgGenImage('assets/icons/apple.svg');
+
+  /// File path: assets/icons/calendar_icon.svg
+  SvgGenImage get calendarIcon =>
+      const SvgGenImage('assets/icons/calendar_icon.svg');
+
+  /// File path: assets/icons/chat_icon.svg
+  SvgGenImage get chatIcon => const SvgGenImage('assets/icons/chat_icon.svg');
 
   /// File path: assets/icons/facebook.svg
   SvgGenImage get facebook => const SvgGenImage('assets/icons/facebook.svg');
@@ -23,8 +33,42 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
+  /// File path: assets/icons/hamburger_icon.svg
+  SvgGenImage get hamburgerIcon =>
+      const SvgGenImage('assets/icons/hamburger_icon.svg');
+
+  /// File path: assets/icons/help.svg
+  SvgGenImage get help => const SvgGenImage('assets/icons/help.svg');
+
+  /// File path: assets/icons/home_icon.svg
+  SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home_icon.svg');
+
+  /// File path: assets/icons/profile_icon.svg
+  SvgGenImage get profileIcon =>
+      const SvgGenImage('assets/icons/profile_icon.svg');
+
+  /// File path: assets/icons/search_icon.svg
+  SvgGenImage get searchIcon =>
+      const SvgGenImage('assets/icons/search_icon.svg');
+
+  /// File path: assets/icons/security.svg
+  SvgGenImage get security => const SvgGenImage('assets/icons/security.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [apple, facebook, google];
+  List<SvgGenImage> get values => [
+        about,
+        apple,
+        calendarIcon,
+        chatIcon,
+        facebook,
+        google,
+        hamburgerIcon,
+        help,
+        homeIcon,
+        profileIcon,
+        searchIcon,
+        security
+      ];
 }
 
 class $AssetsImagesGen {
@@ -33,6 +77,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/artisan_avatar.png
   AssetGenImage get artisanAvatar =>
       const AssetGenImage('assets/images/artisan_avatar.png');
+
+  /// File path: assets/images/cleaning.png
+  AssetGenImage get cleaning =>
+      const AssetGenImage('assets/images/cleaning.png');
 
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
@@ -50,8 +98,14 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/user_avatar.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [artisanAvatar, logo, qualifiedArtisans, serviceProviders, userAvatar];
+  List<AssetGenImage> get values => [
+        artisanAvatar,
+        cleaning,
+        logo,
+        qualifiedArtisans,
+        serviceProviders,
+        userAvatar
+      ];
 }
 
 class Assets {

@@ -29,6 +29,10 @@ class AppTheme {
   static ThemeData theme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: Colors.white,
     textTheme: textTheme,
+    appBarTheme: const AppBarTheme(
+      color: Colors.white,
+      elevation: 0
+    ),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: Colors.orange,

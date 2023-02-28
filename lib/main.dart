@@ -1,5 +1,4 @@
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_theme.dart';
-import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash.dart';
 import 'package:artisanmill_group5capstoneproject/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

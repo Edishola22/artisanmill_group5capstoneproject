@@ -5,6 +5,7 @@ import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CompleteUserProfileScreen extends StatefulWidget {
   const CompleteUserProfileScreen({Key? key}) : super(key: key);
@@ -107,7 +108,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       width: 197.w,
                       height: 51.h,
                       text: 'Completed',
-                      onTap: () {},
+                      onTap: () => _navigateToHome(),
                     ),
                   ],
                 ),
@@ -117,5 +118,9 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _navigateToHome() {
+    context.goNamed('home');
   }
 }
