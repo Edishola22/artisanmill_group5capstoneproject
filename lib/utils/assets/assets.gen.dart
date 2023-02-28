@@ -78,6 +78,10 @@ class $AssetsImagesGen {
   AssetGenImage get artisanAvatar =>
       const AssetGenImage('assets/images/artisan_avatar.png');
 
+  /// File path: assets/images/chat_avatar.png
+  AssetGenImage get chatAvatar =>
+      const AssetGenImage('assets/images/chat_avatar.png');
+
   /// File path: assets/images/cleaning.png
   AssetGenImage get cleaning =>
       const AssetGenImage('assets/images/cleaning.png');
@@ -100,6 +104,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         artisanAvatar,
+        chatAvatar,
         cleaning,
         logo,
         qualifiedArtisans,

@@ -1,0 +1,5 @@
+
+
+class CouldNotUpdateUserException implements Exception {
+
+}

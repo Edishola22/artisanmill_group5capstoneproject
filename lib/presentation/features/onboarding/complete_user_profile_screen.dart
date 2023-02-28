@@ -1,4 +1,4 @@
-import 'package:artisanmill_group5capstoneproject/presentation/shared/CustomTextField.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/shared/custom_text_field.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';

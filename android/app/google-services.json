@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "951716668454",
+    "project_id": "artisan-mill",
+    "storage_bucket": "artisan-mill.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951716668454:android:67e29d8eb87614bd7132e7",
+        "android_client_info": {
+          "package_name": "com.example.artisanmill_group5capstoneproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951716668454-cflmlcfgsjrkr998fioc2erm4t8mt16v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7GNyihOzRAcczTk4MfFhpMpHOc_FP5Is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951716668454-cflmlcfgsjrkr998fioc2erm4t8mt16v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
