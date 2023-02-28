@@ -54,6 +54,22 @@ class $AssetsIconsGen {
   /// File path: assets/icons/security.svg
   SvgGenImage get security => const SvgGenImage('assets/icons/security.svg');
 
+  /// File path: assets/icons/splash_bottom_icon.svg
+  SvgGenImage get splashBottomIcon =>
+      const SvgGenImage('assets/icons/splash_bottom_icon.svg');
+
+  /// File path: assets/icons/splash_left_icon.svg
+  SvgGenImage get splashLeftIcon =>
+      const SvgGenImage('assets/icons/splash_left_icon.svg');
+
+  /// File path: assets/icons/splash_right_icon.svg
+  SvgGenImage get splashRightIcon =>
+      const SvgGenImage('assets/icons/splash_right_icon.svg');
+
+  /// File path: assets/icons/splash_top_icon.svg
+  SvgGenImage get splashTopIcon =>
+      const SvgGenImage('assets/icons/splash_top_icon.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         about,
@@ -67,7 +83,11 @@ class $AssetsIconsGen {
         homeIcon,
         profileIcon,
         searchIcon,
-        security
+        security,
+        splashBottomIcon,
+        splashLeftIcon,
+        splashRightIcon,
+        splashTopIcon
       ];
 }
 

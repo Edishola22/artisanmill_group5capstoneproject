@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp.router(
-            title: 'ArtisanMill',
+            title: 'ArtisansMill',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.theme,
             routerConfig: appRouter.router,

@@ -8,4 +8,5 @@ class AppColours {
   static const darkShade = Color(0xFF2B2B2B);
   static const purpleShadeOne = Color(0xFFEAE6FE);
   static const purpleShadeThree = Color(0xFF3D1FF8);
+  static const purpleShadeFour = Color(0xFF9483FB);
 }

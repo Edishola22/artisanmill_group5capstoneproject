@@ -1,6 +1,7 @@
 import 'package:artisanmill_group5capstoneproject/presentation/features/calendar/calendar.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/settings_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_section_navigation.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/account_chooser.dart';
@@ -23,6 +24,11 @@ class AppRouter {
     routes: [
       GoRoute(
         path: '/',
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        name: 'onboarding',
         builder: (context, state) => const OnBoardingScreen(),
       ),
       GoRoute(
