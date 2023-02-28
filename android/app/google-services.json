@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "951716668454-cflmlcfgsjrkr998fioc2erm4t8mt16v.apps.googleusercontent.com",
+          "client_id": "951716668454-7rorj2pmibpla647m24430a3k6qd87tq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.artisanmill_group5capstoneproject",
+            "certificate_hash": "0b3bd3779aa2174809c4240d85bfef39dd91b292"
+          }
+        },
+        {
+          "client_id": "951716668454-rn8shk2694sck2qdko8fok6toj70o4gl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +37,13 @@
             {
               "client_id": "951716668454-cflmlcfgsjrkr998fioc2erm4t8mt16v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "951716668454-mevj3s1pu8jv1t8c9k03318dkstntjcm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.artisanmillGroup5capstoneproject"
+              }
             }
           ]
         }
