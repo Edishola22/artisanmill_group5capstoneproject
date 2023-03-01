@@ -8,11 +8,11 @@ part of 'user.dart';
 
 _$_UserDto _$$_UserDtoFromJson(Map<String, dynamic> json) => _$_UserDto(
       id: json['id'] as String?,
-      email: json['email'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      name: json['name'] as String,
-      city: json['city'] as String,
-      streetAddress: json['streetAddress'] as String,
+      email: json['email'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+      name: json['name'] as String?,
+      city: json['city'] as String?,
+      streetAddress: json['streetAddress'] as String?,
     );
 
 Map<String, dynamic> _$$_UserDtoToJson(_$_UserDto instance) =>

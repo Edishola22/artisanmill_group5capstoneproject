@@ -21,11 +21,11 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserDto {
   String? get id => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get city => throw _privateConstructorUsedError;
-  String get streetAddress => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
+  String? get streetAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $UserDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      String email,
-      String phoneNumber,
-      String name,
-      String city,
-      String streetAddress});
+      String? email,
+      String? phoneNumber,
+      String? name,
+      String? city,
+      String? streetAddress});
 }
 
 /// @nodoc
@@ -60,37 +60,37 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
   @override
   $Res call({
     Object? id = freezed,
-    Object? email = null,
-    Object? phoneNumber = null,
-    Object? name = null,
-    Object? city = null,
-    Object? streetAddress = null,
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+    Object? name = freezed,
+    Object? city = freezed,
+    Object? streetAddress = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
+              as String?,
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress: null == streetAddress
+              as String?,
+      streetAddress: freezed == streetAddress
           ? _value.streetAddress
           : streetAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -104,11 +104,11 @@ abstract class _$$_UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      String email,
-      String phoneNumber,
-      String name,
-      String city,
-      String streetAddress});
+      String? email,
+      String? phoneNumber,
+      String? name,
+      String? city,
+      String? streetAddress});
 }
 
 /// @nodoc
@@ -122,37 +122,37 @@ class __$$_UserDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? email = null,
-    Object? phoneNumber = null,
-    Object? name = null,
-    Object? city = null,
-    Object? streetAddress = null,
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+    Object? name = freezed,
+    Object? city = freezed,
+    Object? streetAddress = freezed,
   }) {
     return _then(_$_UserDto(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
+              as String?,
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress: null == streetAddress
+              as String?,
+      streetAddress: freezed == streetAddress
           ? _value.streetAddress
           : streetAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -162,11 +162,11 @@ class __$$_UserDtoCopyWithImpl<$Res>
 class _$_UserDto implements _UserDto {
   _$_UserDto(
       {this.id,
-      required this.email,
-      required this.phoneNumber,
-      required this.name,
-      required this.city,
-      required this.streetAddress});
+      this.email,
+      this.phoneNumber,
+      this.name,
+      this.city,
+      this.streetAddress});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
       _$$_UserDtoFromJson(json);
@@ -174,15 +174,15 @@ class _$_UserDto implements _UserDto {
   @override
   final String? id;
   @override
-  final String email;
+  final String? email;
   @override
-  final String phoneNumber;
+  final String? phoneNumber;
   @override
-  final String name;
+  final String? name;
   @override
-  final String city;
+  final String? city;
   @override
-  final String streetAddress;
+  final String? streetAddress;
 
   @override
   String toString() {
@@ -226,26 +226,26 @@ class _$_UserDto implements _UserDto {
 abstract class _UserDto implements UserDto {
   factory _UserDto(
       {final String? id,
-      required final String email,
-      required final String phoneNumber,
-      required final String name,
-      required final String city,
-      required final String streetAddress}) = _$_UserDto;
+      final String? email,
+      final String? phoneNumber,
+      final String? name,
+      final String? city,
+      final String? streetAddress}) = _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
   @override
   String? get id;
   @override
-  String get email;
+  String? get email;
   @override
-  String get phoneNumber;
+  String? get phoneNumber;
   @override
-  String get name;
+  String? get name;
   @override
-  String get city;
+  String? get city;
   @override
-  String get streetAddress;
+  String? get streetAddress;
   @override
   @JsonKey(ignore: true)
   _$$_UserDtoCopyWith<_$_UserDto> get copyWith =>
