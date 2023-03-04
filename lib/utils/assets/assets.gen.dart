@@ -60,8 +60,14 @@ class $AssetsIconsGen {
   SvgGenImage get loginSecurity =>
       const SvgGenImage('assets/icons/login_security.svg');
 
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
+
   /// File path: assets/icons/password.svg
   SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
+
+  /// File path: assets/icons/phone.svg
+  SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
   /// File path: assets/icons/profile_icon.svg
   SvgGenImage get profileIcon =>
@@ -101,6 +107,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/two_factor.svg
   SvgGenImage get twoFactor => const SvgGenImage('assets/icons/two_factor.svg');
 
+  /// File path: assets/icons/web.svg
+  SvgGenImage get web => const SvgGenImage('assets/icons/web.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         about,
@@ -117,7 +126,9 @@ class $AssetsIconsGen {
         location,
         loginActivity,
         loginSecurity,
+        mail,
         password,
+        phone,
         profileIcon,
         searchIcon,
         security,
@@ -127,7 +138,8 @@ class $AssetsIconsGen {
         splashLeftIcon,
         splashRightIcon,
         splashTopIcon,
-        twoFactor
+        twoFactor,
+        web
       ];
 }
 

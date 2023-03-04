@@ -6,6 +6,7 @@ import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/n
 import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/all_artisans.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/search/widgets/search_app_bar.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
@@ -44,7 +45,9 @@ class _SearchTabState extends State<SearchTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppbar(),
+      appBar: SearchAppBar(
+        onBackPressed: _navigateToHome,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
@@ -59,6 +62,7 @@ class _SearchTabState extends State<SearchTab> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+            SizedBox(height: 20.h),
             Expanded(
               child: BlocBuilder<ArtisanBloc, ArtisanState>(
                 builder: (context, state) {
@@ -88,17 +92,17 @@ class _SearchTabState extends State<SearchTab> {
                               SizedBox(height: 16.h),
                               allArtisans.painters.isEmpty
                                   ? const SizedBox.shrink()
-                                  :_buildArtisanCategory(
-                                title: 'Painters',
-                                artisans: allArtisans.painters,
-                              ),
+                                  : _buildArtisanCategory(
+                                      title: 'Painters',
+                                      artisans: allArtisans.painters,
+                                    ),
                               SizedBox(height: 16.h),
                               allArtisans.hairStylists.isEmpty
                                   ? const SizedBox.shrink()
-                                  :_buildArtisanCategory(
-                                title: 'Hair Stylists',
-                                artisans: allArtisans.hairStylists,
-                              ),
+                                  : _buildArtisanCategory(
+                                      title: 'Hair Stylists',
+                                      artisans: allArtisans.hairStylists,
+                                    ),
                             ],
                           ),
                         );
@@ -113,6 +117,15 @@ class _SearchTabState extends State<SearchTab> {
     );
   }
 
+  void _navigateToArtisanProfile(String artisanId) {
+    context.goNamed(
+      'artisan-profile',
+      params: {
+        'id': artisanId
+      }
+    );
+  }
+
   Widget _buildArtisanCategory({
     required String title,
     required List<ArtisanDto> artisans,
@@ -120,16 +133,18 @@ class _SearchTabState extends State<SearchTab> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style:
-                context.textTheme.titleMedium?.copyWith(color: Colors.black)),
+        Text(
+          title,
+          style: context.textTheme.titleMedium?.copyWith(color: Colors.black),
+        ),
         SizedBox(height: 6.h),
         Container(
-          height: 170.h,
+          height: 190.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             color: AppColours.orangeLight,
           ),
+          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
           child: ListView.separated(
               itemCount: artisans.length,
               physics: const BouncingScrollPhysics(),
@@ -139,36 +154,42 @@ class _SearchTabState extends State<SearchTab> {
               },
               itemBuilder: (context, index) {
                 final artisan = artisans[index];
-                dev.log("image url is ${artisan.imageUrl}");
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: CachedNetworkImage(
-                        imageUrl: artisan.imageUrl ?? '',
-                        width: 120.w,
-                        height: 140.h,
-                        placeholder: (context, url) => Container(
-                          color: Colors.grey,
-                          width: 120.w,
-                          height: 140.h,
-                        ),
-                        errorWidget: (context, url, child) => Container(
-                          color: Colors.grey,
-                          width: 120.w,
-                          height: 140.h,
+                return InkWell(
+                  onTap: () => _navigateToArtisanProfile(artisan.id ?? 'a'),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        clipBehavior: Clip.hardEdge,
+                        child: CachedNetworkImage(
+                          imageUrl: artisan.imageUrl ?? '',
+                          width: 150.w,
+                          height: 145.h,
+                          fit: BoxFit.contain,
+                          placeholder: (context, url) => Container(
+                            color: Colors.grey.withOpacity(0.5),
+                            width: 150.w,
+                            height: 145.h,
+                          ),
+                          errorWidget: (context, url, child) => Container(
+                            color: Colors.grey.withOpacity(0.5),
+                            width: 150.w,
+                            height: 145.h,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      artisan.businessName ?? '',
-                      style: context.textTheme.bodyLarge
-                          ?.copyWith(color: Colors.black),
-                    ),
-                  ],
+                      SizedBox(height: 4.h),
+                      FittedBox(
+                        child: Text(
+                          artisan.businessName ?? '',
+                          style: context.textTheme.bodyLarge
+                              ?.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }),
         )
@@ -176,86 +197,48 @@ class _SearchTabState extends State<SearchTab> {
     );
   }
 
-  PreferredSizeWidget _buildAppbar() {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(kToolbarHeight + 40),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
-              child: const AppLogo(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () => _navigateToSettings(context),
-                    iconSize: 32.w,
-                    icon: Assets.icons.hamburgerIcon.svg(),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<NavigationBloc>()
-                          .add(NavigateToHomeTabEvent());
-                    },
-                    iconSize: 32.w,
-                    icon: Assets.icons.backIcon.svg(),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+  void _navigateToHome() {
+    context
+        .read<NavigationBloc>()
+        .add(NavigateToHomeTabEvent());
   }
 
   Widget _buildSearchField() {
     return SizedBox(
       height: 50.h,
       child: TextField(
-          controller: _searchController,
-          maxLines: 1,
-          onSubmitted: (value) {},
-          decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide:
-                    const BorderSide(color: AppColours.purpleShadeThree),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide:
-                    const BorderSide(color: AppColours.purpleShadeThree),
-              ),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              prefixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 4.w),
-                  SvgPicture.asset(
-                    Assets.icons.searchIcon.path,
-                    width: 30.w,
-                    height: 30.h,
-                  ),
-                  Divider(
-                    thickness: 5.w,
-                    height: double.infinity,
-                    color: AppColours.purpleShadeThree,
-                  )
-                ],
-              ),
-              hintStyle: context.textTheme.bodyLarge,
-              hintText: 'Search by Service')),
+        controller: _searchController,
+        maxLines: 1,
+        onSubmitted: (value) {},
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: const BorderSide(color: AppColours.purpleShadeThree),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: const BorderSide(color: AppColours.purpleShadeThree),
+            ),
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+            prefixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(width: 4.w),
+                SvgPicture.asset(
+                  Assets.icons.searchIcon.path,
+                  width: 30.w,
+                  height: 30.h,
+                ),
+                VerticalDivider(
+                  thickness: 1.w,
+                  color: AppColours.purpleShadeThree.withOpacity(0.6),
+                )
+              ],
+            ),
+            hintStyle: context.textTheme.bodyLarge,
+            hintText: 'Search by Service'),
+      ),
     );
-  }
-
-  void _navigateToSettings(BuildContext context) {
-    context.pushNamed('settings');
   }
 }

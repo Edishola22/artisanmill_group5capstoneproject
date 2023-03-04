@@ -82,6 +82,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       label: 'Name',
                       controller: _nameController,
                       inputType: TextInputType.name,
+                      hintText: 'Enter your name',
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'Name required';
@@ -92,6 +93,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                     SizedBox(height: 24.h),
                     CustomTextField(
                       label: 'State',
+                      hintText: 'Enter your state',
                       controller: _stateController,
                       inputType: TextInputType.name,
                       validator: (value) {
@@ -105,6 +107,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                     CustomTextField(
                       label: 'City',
                       controller: _cityController,
+                      hintText: 'Enter your city',
                       inputType: TextInputType.name,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
@@ -117,6 +120,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                     CustomTextField(
                       label: 'Street Address',
                       inputType: TextInputType.streetAddress,
+                      hintText: 'Enter your street address',
                       controller: _addressController,
                       validator: (value) {
                         if(value!.trim().isEmpty) {

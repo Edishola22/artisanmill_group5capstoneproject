@@ -60,6 +60,7 @@ class _SignUpState extends State<SignUp> {
                     label: 'Email',
                     inputType: TextInputType.emailAddress,
                     controller: _emailController,
+                    hintText: 'Enter your email address',
                     validator: (value) {
                       if (value!.trim().isEmpty) {
                         return 'Email required';
@@ -73,6 +74,7 @@ class _SignUpState extends State<SignUp> {
                   CustomTextField(
                     label: 'Phone Number',
                     inputType: TextInputType.phone,
+                    hintText: 'Enter your phone number',
                     controller: _phoneController,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9]"))

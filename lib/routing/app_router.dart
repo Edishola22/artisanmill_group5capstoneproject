@@ -3,6 +3,7 @@ import 'package:artisanmill_group5capstoneproject/presentation/features/chat/cha
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/profile/edit_profile.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/search/artisan_profile_detail.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/security_settings.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/settings_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_section_navigation.dart';
@@ -22,6 +23,7 @@ class AppRouter {
   late final router = GoRouter(
     initialLocation: '/home',
     navigatorKey: _rootNavKey,
+    debugLogDiagnostics: true,
     routes: [
       GoRoute(
         path: '/',
@@ -82,6 +84,16 @@ class AppRouter {
             GoRoute(
               path: '/search',
               name: 'search',
+              routes: [
+                GoRoute(
+                  path: 'artisan-profile/:id',
+                  name: 'artisan-profile',
+                  builder: (context, state) {
+                    final artisanId = state.params['id'] ?? '';
+                    return ArtisanProfileDetails(userId: artisanId);
+                  }
+                )
+              ],
               builder: (context, state) {
                 return const SearchTab();
               },
@@ -98,10 +110,9 @@ class AppRouter {
               name: 'profile',
               routes: [
                 GoRoute(
-                  path: 'edit-profile',
-                  name: 'edit-profile',
-                  builder: (context, state) => const EditProfileScreen()
-                )
+                    path: 'edit-profile',
+                    name: 'edit-profile',
+                    builder: (context, state) => const EditProfileScreen())
               ],
               builder: (context, state) {
                 return const ProfileTab();
