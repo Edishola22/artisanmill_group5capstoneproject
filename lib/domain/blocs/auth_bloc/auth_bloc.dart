@@ -7,7 +7,7 @@ import 'package:bloc/bloc.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuthHelper authHelper = FirebaseAuthHelper();
 
-  AuthBloc() : super(AuthState.uninitiated()) {
+  AuthBloc() : super(AuthState.initial()) {
     on<CreateAccountWithEmailAndPasswordEvent>(_createAccount);
 
     on<GoogleSignInEvent>(_initiateGoogleSignIn);

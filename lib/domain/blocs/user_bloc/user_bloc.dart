@@ -5,7 +5,7 @@ import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_st
 import 'package:bloc/bloc.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc() : super(UserState.uninitiated()) {
+  UserBloc() : super(UserState.initial()) {
     on<CreateUserDocumentEvent>(onCreateUserDocument);
 
     on<UpdateUserDocumentEvent>(onUpdateUserDocument);

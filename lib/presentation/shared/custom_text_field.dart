@@ -1,20 +1,22 @@
+import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {Key? key,
-      required this.label,
-      required this.controller,
-      required this.validator,
-      this.inputType,
-      this.isPassword = false,
-      this.onShowPassword,
-      this.isPasswordVisible,
-      this.inputFormatters})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    required this.label,
+    required this.controller,
+    required this.validator,
+    this.inputType,
+    this.isPassword = false,
+    this.onShowPassword,
+    this.isPasswordVisible,
+    this.hintText,
+    this.inputFormatters,
+  }) : super(key: key);
 
   final String label;
   final bool isPassword;
@@ -24,6 +26,7 @@ class CustomTextField extends StatelessWidget {
   final bool? isPasswordVisible;
   final TextInputType? inputType;
   final List<TextInputFormatter>? inputFormatters;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class CustomTextField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: context.textTheme.titleLarge,
+          style: context.textTheme.bodyLarge,
         ),
         SizedBox(height: 4.h),
         TextFormField(
@@ -43,9 +46,12 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: context.colors.onSurface),
+              borderSide: const BorderSide(color: AppColours.grayShade),
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
+            hintText: hintText,
+            hintStyle: context.textTheme.bodyLarge,
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
             suffixIcon: isPassword
                 ? IconButton(
                     onPressed: onShowPassword,

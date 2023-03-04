@@ -1,4 +1,5 @@
 
+import 'package:artisanmill_group5capstoneproject/domain/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.g.dart';
 part 'user.freezed.dart';
@@ -14,8 +15,11 @@ class UserDto with _$UserDto {
      final String? city,
      final String? state,
     final String? streetAddress,
+    final String? imageUrl,
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
+
+
 
 }

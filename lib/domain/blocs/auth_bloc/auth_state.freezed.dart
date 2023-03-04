@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() uninitiated,
+    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -26,7 +26,7 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? uninitiated,
+    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -34,7 +34,7 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitiated,
+    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -43,7 +43,7 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_uninitiated value) uninitiated,
+    required TResult Function(_initial value) initial,
     required TResult Function(_loading value) loading,
     required TResult Function(_success value) success,
     required TResult Function(_error value) error,
@@ -51,7 +51,7 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_uninitiated value)? uninitiated,
+    TResult? Function(_initial value)? initial,
     TResult? Function(_loading value)? loading,
     TResult? Function(_success value)? success,
     TResult? Function(_error value)? error,
@@ -59,7 +59,7 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_uninitiated value)? uninitiated,
+    TResult Function(_initial value)? initial,
     TResult Function(_loading value)? loading,
     TResult Function(_success value)? success,
     TResult Function(_error value)? error,
@@ -86,35 +86,34 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 }
 
 /// @nodoc
-abstract class _$$_uninitiatedCopyWith<$Res> {
-  factory _$$_uninitiatedCopyWith(
-          _$_uninitiated value, $Res Function(_$_uninitiated) then) =
-      __$$_uninitiatedCopyWithImpl<$Res>;
+abstract class _$$_initialCopyWith<$Res> {
+  factory _$$_initialCopyWith(
+          _$_initial value, $Res Function(_$_initial) then) =
+      __$$_initialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_uninitiatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_uninitiated>
-    implements _$$_uninitiatedCopyWith<$Res> {
-  __$$_uninitiatedCopyWithImpl(
-      _$_uninitiated _value, $Res Function(_$_uninitiated) _then)
+class __$$_initialCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_initial>
+    implements _$$_initialCopyWith<$Res> {
+  __$$_initialCopyWithImpl(_$_initial _value, $Res Function(_$_initial) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_uninitiated implements _uninitiated {
-  _$_uninitiated();
+class _$_initial implements _initial {
+  _$_initial();
 
   @override
   String toString() {
-    return 'AuthState.uninitiated()';
+    return 'AuthState.initial()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_uninitiated);
+        (other.runtimeType == runtimeType && other is _$_initial);
   }
 
   @override
@@ -123,36 +122,36 @@ class _$_uninitiated implements _uninitiated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() uninitiated,
+    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
   }) {
-    return uninitiated();
+    return initial();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? uninitiated,
+    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
-    return uninitiated?.call();
+    return initial?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitiated,
+    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (uninitiated != null) {
-      return uninitiated();
+    if (initial != null) {
+      return initial();
     }
     return orElse();
   }
@@ -160,43 +159,43 @@ class _$_uninitiated implements _uninitiated {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_uninitiated value) uninitiated,
+    required TResult Function(_initial value) initial,
     required TResult Function(_loading value) loading,
     required TResult Function(_success value) success,
     required TResult Function(_error value) error,
   }) {
-    return uninitiated(this);
+    return initial(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_uninitiated value)? uninitiated,
+    TResult? Function(_initial value)? initial,
     TResult? Function(_loading value)? loading,
     TResult? Function(_success value)? success,
     TResult? Function(_error value)? error,
   }) {
-    return uninitiated?.call(this);
+    return initial?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_uninitiated value)? uninitiated,
+    TResult Function(_initial value)? initial,
     TResult Function(_loading value)? loading,
     TResult Function(_success value)? success,
     TResult Function(_error value)? error,
     required TResult orElse(),
   }) {
-    if (uninitiated != null) {
-      return uninitiated(this);
+    if (initial != null) {
+      return initial(this);
     }
     return orElse();
   }
 }
 
-abstract class _uninitiated implements AuthState {
-  factory _uninitiated() = _$_uninitiated;
+abstract class _initial implements AuthState {
+  factory _initial() = _$_initial;
 }
 
 /// @nodoc
@@ -236,7 +235,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() uninitiated,
+    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -247,7 +246,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? uninitiated,
+    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -258,7 +257,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitiated,
+    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -273,7 +272,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_uninitiated value) uninitiated,
+    required TResult Function(_initial value) initial,
     required TResult Function(_loading value) loading,
     required TResult Function(_success value) success,
     required TResult Function(_error value) error,
@@ -284,7 +283,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_uninitiated value)? uninitiated,
+    TResult? Function(_initial value)? initial,
     TResult? Function(_loading value)? loading,
     TResult? Function(_success value)? success,
     TResult? Function(_error value)? error,
@@ -295,7 +294,7 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_uninitiated value)? uninitiated,
+    TResult Function(_initial value)? initial,
     TResult Function(_loading value)? loading,
     TResult Function(_success value)? success,
     TResult Function(_error value)? error,
@@ -349,7 +348,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() uninitiated,
+    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -360,7 +359,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? uninitiated,
+    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -371,7 +370,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitiated,
+    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -386,7 +385,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_uninitiated value) uninitiated,
+    required TResult Function(_initial value) initial,
     required TResult Function(_loading value) loading,
     required TResult Function(_success value) success,
     required TResult Function(_error value) error,
@@ -397,7 +396,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_uninitiated value)? uninitiated,
+    TResult? Function(_initial value)? initial,
     TResult? Function(_loading value)? loading,
     TResult? Function(_success value)? success,
     TResult? Function(_error value)? error,
@@ -408,7 +407,7 @@ class _$_success implements _success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_uninitiated value)? uninitiated,
+    TResult Function(_initial value)? initial,
     TResult Function(_loading value)? loading,
     TResult Function(_success value)? success,
     TResult Function(_error value)? error,
@@ -487,7 +486,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() uninitiated,
+    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
@@ -498,7 +497,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? uninitiated,
+    TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
@@ -509,7 +508,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? uninitiated,
+    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
@@ -524,7 +523,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_uninitiated value) uninitiated,
+    required TResult Function(_initial value) initial,
     required TResult Function(_loading value) loading,
     required TResult Function(_success value) success,
     required TResult Function(_error value) error,
@@ -535,7 +534,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_uninitiated value)? uninitiated,
+    TResult? Function(_initial value)? initial,
     TResult? Function(_loading value)? loading,
     TResult? Function(_success value)? success,
     TResult? Function(_error value)? error,
@@ -546,7 +545,7 @@ class _$_error implements _error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_uninitiated value)? uninitiated,
+    TResult Function(_initial value)? initial,
     TResult Function(_loading value)? loading,
     TResult Function(_success value)? success,
     TResult Function(_error value)? error,

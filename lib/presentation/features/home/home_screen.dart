@@ -39,27 +39,46 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          children: [
-            Image.asset(
-              Assets.images.cleaning.path,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              height: 127.h,
-            ),
-            SizedBox(height: 21.h),
-            _buildSearchField(),
-            SizedBox(height: 14.h),
-            _buildCategory(),
-            SizedBox(height: 28.h),
-            Expanded(child: _buildPopularServices()),
-          ],
-        ),
-      ),
-    );
+        appBar: _buildAppBar(context),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Image.asset(
+                        Assets.images.cleaning.path,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        height: 127.h,
+                      ),
+                    SizedBox(height: 21.h),
+                    _buildSearchField(),
+                    SizedBox(height: 14.h),
+                  ],
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: _buildCategory(),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 28.h),
+              ),
+              SliverToBoxAdapter(
+                child: Text('Popular Services',
+                    style:
+                    context.textTheme.titleMedium?.copyWith(color: Colors.black)),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 6.h),
+              ),
+              _buildPopularServices(),
+            ],
+          ),
+        )
+        );
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
@@ -85,54 +104,43 @@ class _HomeTabState extends State<HomeTab> {
             Category(title: cat.category, image: Assets.images.maintenace.path))
         .toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Service Categories',
-            style:
-            context.textTheme.titleMedium?.copyWith(color: Colors.black)),
-        SizedBox(height: 6.h),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              color: AppColours.orangeLight,
-            ),
-            child: GridView.builder(
-              itemCount: categories.length,
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 6.h,
-                childAspectRatio: 1.0,
-                crossAxisSpacing: 6.w,
-              ),
-              itemBuilder: (context, index) {
-                final category = categories[index];
+    return SliverGrid.builder(
+      itemCount: categories.length,
+      //   primary: false,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+       childAspectRatio: 1.0,
+      ),
+      itemBuilder: (context, index) {
+        final category = categories[index];
 
-                return Column(
-                  children: [
-                    Flexible(
-                      child: Image.asset(
-                        index % 2 == 0
-                            ? Assets.images.mechanical.path
-                            : category.image,
-                        height: 180.h,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Text(
-                      category.title,
-                      style: context.textTheme.bodyLarge
-                          ?.copyWith(color: Colors.black),
-                    ),
-                  ],
-                );
-              },
-            ),
+
+        return Container(
+          decoration: const BoxDecoration(
+           // borderRadius: BorderRadius.circular(10.r),
+            color: AppColours.orangeLight,
           ),
-        ),
-      ],
+         padding: EdgeInsets.symmetric(horizontal: 4.w),
+          child: Column(
+            children: [
+              Flexible(
+                child: Image.asset(
+                  index % 2 == 0
+                      ? Assets.images.mechanical.path
+                      : category.image,
+                  height: 180.h,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Text(
+                category.title,
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: Colors.black),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -157,6 +165,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           child: ListView.builder(
               itemCount: categories.length,
+              primary: false,
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
@@ -228,8 +237,7 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void _navigateToSearch() {
-    context.read<NavigationBloc>()
-        .add(NavigateToSearchTabEvent());
+    context.read<NavigationBloc>().add(NavigateToSearchTabEvent());
   }
 
   void _navigateToSettings(BuildContext context) {

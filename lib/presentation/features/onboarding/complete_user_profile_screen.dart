@@ -54,9 +54,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const AppLogo(),
-        backgroundColor: context.colors.background,
         centerTitle: true,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(

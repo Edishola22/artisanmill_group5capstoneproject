@@ -49,6 +49,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home_icon.svg');
 
+  /// File path: assets/icons/location.svg
+  SvgGenImage get location => const SvgGenImage('assets/icons/location.svg');
+
   /// File path: assets/icons/login_activity.svg
   SvgGenImage get loginActivity =>
       const SvgGenImage('assets/icons/login_activity.svg');
@@ -111,6 +114,7 @@ class $AssetsIconsGen {
         hamburgerIcon,
         help,
         homeIcon,
+        location,
         loginActivity,
         loginSecurity,
         password,
@@ -165,6 +169,10 @@ class $AssetsImagesGen {
   AssetGenImage get userAvatar =>
       const AssetGenImage('assets/images/user_avatar.png');
 
+  /// File path: assets/images/user_profile_avatar.png
+  AssetGenImage get userProfileAvatar =>
+      const AssetGenImage('assets/images/user_profile_avatar.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         artisanAvatar,
@@ -175,7 +183,8 @@ class $AssetsImagesGen {
         mechanical,
         qualifiedArtisans,
         serviceProviders,
-        userAvatar
+        userAvatar,
+        userProfileAvatar
       ];
 }
 

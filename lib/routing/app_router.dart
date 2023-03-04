@@ -2,6 +2,7 @@ import 'package:artisanmill_group5capstoneproject/presentation/features/calendar
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/profile/edit_profile.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/security_settings.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/settings_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_section_navigation.dart';
@@ -95,6 +96,13 @@ class AppRouter {
             GoRoute(
               path: '/profile',
               name: 'profile',
+              routes: [
+                GoRoute(
+                  path: 'edit-profile',
+                  name: 'edit-profile',
+                  builder: (context, state) => const EditProfileScreen()
+                )
+              ],
               builder: (context, state) {
                 return const ProfileTab();
               },
@@ -105,12 +113,11 @@ class AppRouter {
               name: 'settings',
               routes: [
                 GoRoute(
-                  path: 'security',
-                  name: 'security',
-                  builder: (context, state) {
-                    return const SecuritySettings();
-                  }
-                )
+                    path: 'security',
+                    name: 'security',
+                    builder: (context, state) {
+                      return const SecuritySettings();
+                    })
               ],
               builder: (context, state) {
                 return const SettingsScreen();
