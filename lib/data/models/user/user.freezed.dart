@@ -25,6 +25,7 @@ mixin _$UserDto {
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
+  String? get state => throw _privateConstructorUsedError;
   String? get streetAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $UserDtoCopyWith<$Res> {
       String? phoneNumber,
       String? name,
       String? city,
+      String? state,
       String? streetAddress});
 }
 
@@ -64,6 +66,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
     Object? phoneNumber = freezed,
     Object? name = freezed,
     Object? city = freezed,
+    Object? state = freezed,
     Object? streetAddress = freezed,
   }) {
     return _then(_value.copyWith(
@@ -87,6 +90,10 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String?,
       streetAddress: freezed == streetAddress
           ? _value.streetAddress
           : streetAddress // ignore: cast_nullable_to_non_nullable
@@ -108,6 +115,7 @@ abstract class _$$_UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
       String? phoneNumber,
       String? name,
       String? city,
+      String? state,
       String? streetAddress});
 }
 
@@ -126,6 +134,7 @@ class __$$_UserDtoCopyWithImpl<$Res>
     Object? phoneNumber = freezed,
     Object? name = freezed,
     Object? city = freezed,
+    Object? state = freezed,
     Object? streetAddress = freezed,
   }) {
     return _then(_$_UserDto(
@@ -149,6 +158,10 @@ class __$$_UserDtoCopyWithImpl<$Res>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String?,
       streetAddress: freezed == streetAddress
           ? _value.streetAddress
           : streetAddress // ignore: cast_nullable_to_non_nullable
@@ -166,6 +179,7 @@ class _$_UserDto implements _UserDto {
       this.phoneNumber,
       this.name,
       this.city,
+      this.state,
       this.streetAddress});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
@@ -182,11 +196,13 @@ class _$_UserDto implements _UserDto {
   @override
   final String? city;
   @override
+  final String? state;
+  @override
   final String? streetAddress;
 
   @override
   String toString() {
-    return 'UserDto(id: $id, email: $email, phoneNumber: $phoneNumber, name: $name, city: $city, streetAddress: $streetAddress)';
+    return 'UserDto(id: $id, email: $email, phoneNumber: $phoneNumber, name: $name, city: $city, state: $state, streetAddress: $streetAddress)';
   }
 
   @override
@@ -200,6 +216,7 @@ class _$_UserDto implements _UserDto {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
             (identical(other.streetAddress, streetAddress) ||
                 other.streetAddress == streetAddress));
   }
@@ -207,7 +224,7 @@ class _$_UserDto implements _UserDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, email, phoneNumber, name, city, streetAddress);
+      runtimeType, id, email, phoneNumber, name, city, state, streetAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -230,6 +247,7 @@ abstract class _UserDto implements UserDto {
       final String? phoneNumber,
       final String? name,
       final String? city,
+      final String? state,
       final String? streetAddress}) = _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
@@ -244,6 +262,8 @@ abstract class _UserDto implements UserDto {
   String? get name;
   @override
   String? get city;
+  @override
+  String? get state;
   @override
   String? get streetAddress;
   @override

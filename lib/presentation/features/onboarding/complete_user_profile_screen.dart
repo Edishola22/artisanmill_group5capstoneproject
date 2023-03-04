@@ -1,14 +1,23 @@
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/custom_text_field.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CompleteUserProfileScreen extends StatefulWidget {
-  const CompleteUserProfileScreen({Key? key}) : super(key: key);
+  const CompleteUserProfileScreen({
+    Key? key,
+    this.phoneNumber,
+  }) : super(key: key);
+
+  final String? phoneNumber;
 
   @override
   State<CompleteUserProfileScreen> createState() =>
@@ -75,28 +84,48 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       label: 'Name',
                       controller: _nameController,
                       inputType: TextInputType.name,
-                      validator: (value) {},
+                      validator: (value) {
+                        if(value!.trim().isEmpty) {
+                          return 'Name required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 24.h),
                     CustomTextField(
                       label: 'State',
                       controller: _stateController,
                       inputType: TextInputType.name,
-                      validator: (value) {},
+                      validator: (value) {
+                        if(value!.trim().isEmpty) {
+                          return 'State required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 24.h),
                     CustomTextField(
                       label: 'City',
                       controller: _cityController,
                       inputType: TextInputType.name,
-                      validator: (value) {},
+                      validator: (value) {
+                        if(value!.trim().isEmpty) {
+                          return 'City required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 24.h),
                     CustomTextField(
                       label: 'Street Address',
                       inputType: TextInputType.streetAddress,
                       controller: _addressController,
-                      validator: (value) {},
+                      validator: (value) {
+                        if(value!.trim().isEmpty) {
+                          return 'Street address required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 24.h),
                     Text(
@@ -104,11 +133,30 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       style: context.textTheme.bodyLarge,
                     ),
                     SizedBox(height: 24.h),
-                    PlainAppButton(
-                      width: 197.w,
-                      height: 51.h,
-                      text: 'Completed',
-                      onTap: () => _navigateToHome(),
+                    BlocConsumer<UserBloc, UserState>(
+                      listener: (context, state) {
+                        state.maybeWhen(
+                          orElse: () => null,
+                          success: () {
+                            context.showSuccessSnackBar('Profile created!');
+                            _navigateToHome();
+                          },
+                          error: (message) {
+                            context.showErrorSnackBar(message);
+                          }
+                        );
+                      },
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          orElse: () => PlainAppButton(
+                            width: 197.w,
+                            height: 51.h,
+                            text: 'Completed',
+                            onTap: () => createUserDetails(),
+                          ),
+                          loading: () => const CircularProgressIndicator(),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -118,6 +166,27 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
         ),
       ),
     );
+  }
+
+  void createUserDetails() {
+    if(_formKey.currentState!.validate()) {
+      final name = _nameController.text.trim();
+      final city = _cityController.text.trim();
+      final state = _stateController.text.trim();
+      final streetAddress = _addressController.text.trim();
+      final phoneNumber = widget.phoneNumber;
+
+      final userBloc = BlocProvider.of<UserBloc>(context);
+      userBloc.add(
+        CreateUserDocumentEvent(
+          name: name,
+          city: city,
+          state: state,
+          phone: phoneNumber,
+          address: streetAddress,
+        ),
+      );
+    }
   }
 
   void _navigateToHome() {

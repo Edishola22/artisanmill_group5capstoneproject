@@ -2,6 +2,7 @@ import 'package:artisanmill_group5capstoneproject/utils/exceptions/auth_exceptio
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:developer' as dev;
 
 class FirebaseAuthHelper {
 
@@ -32,15 +33,22 @@ class FirebaseAuthHelper {
 
   Future<void> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount?  account = await GoogleSignIn().signIn();
+      final GoogleSignInAccount?  account = await GoogleSignIn(
+        scopes: [
+          'profile',
+          'email',
+        ],
+      ).signIn();
+
       final GoogleSignInAuthentication? googleAuth = await account?.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
-        idToken: account?.id,
+        idToken: googleAuth?.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
     }
     catch (e) {
+      dev.log(e.toString());
       throw GenericAuthException();
     }
   }

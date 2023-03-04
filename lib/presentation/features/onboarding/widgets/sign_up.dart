@@ -1,9 +1,14 @@
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/custom_text_field.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/filled_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -55,14 +60,31 @@ class _SignUpState extends State<SignUp> {
                     label: 'Email',
                     inputType: TextInputType.emailAddress,
                     controller: _emailController,
-                    validator: (value) {},
+                    validator: (value) {
+                      if (value!.trim().isEmpty) {
+                        return 'Email required';
+                      } else if (!value.contains('@')) {
+                        return 'Not a valid email';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 24.h),
                   CustomTextField(
                     label: 'Phone Number',
                     inputType: TextInputType.phone,
                     controller: _phoneController,
-                    validator: (value) {},
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
+                    validator: (value) {
+                      if (value!.trim().isEmpty) {
+                        return 'Phone number required';
+                      } else if (value.length < 10) {
+                        return 'Not a valid phone number';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 24.h),
                   ValueListenableBuilder(
@@ -78,15 +100,39 @@ class _SignUpState extends State<SignUp> {
                             _isPasswordVisible.value =
                                 !_isPasswordVisible.value;
                           },
-                          validator: (value) {},
+                          validator: (value) {
+                            if (value!.trim().length < 7) {
+                              return 'Password must be at least 7 characters long';
+                            }
+                            return null;
+                          },
                         );
                       }),
                   SizedBox(height: 48.h),
-                  FilledAppButton(
-                    width: 172.w,
-                    height: 51.h,
-                    text: 'Sign Up',
-                    onTap: () => _navigateToChooseAccount(),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        orElse: () => null,
+                        success: () {
+                          context.showSuccessSnackBar(
+                            'Account created successfully!',
+                          );
+                          _navigateToChooseAccount();
+                        },
+                        error: (message) => context.showErrorSnackBar(message),
+                      );
+                    },
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        orElse: () => FilledAppButton(
+                          width: 172.w,
+                          height: 51.h,
+                          text: 'Sign Up',
+                          onTap: () => _createAccount(),
+                        ),
+                        loading: () => const CircularProgressIndicator(),
+                      );
+                    },
                   ),
                   SizedBox(height: 24.h),
                   const Text('Or'),
@@ -104,8 +150,33 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  void _signInWithGoogleAccount() {
+    final authBloc = BlocProvider.of<AuthBloc>(context);
+    authBloc.add(
+      GoogleSignInEvent()
+    );
+  }
+
+  void _createAccount() {
+    if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
+      final password = _emailController.text.trim();
+
+      final authBloc = BlocProvider.of<AuthBloc>(context);
+      authBloc.add(
+        CreateAccountWithEmailAndPasswordEvent(
+          email: email,
+          password: password,
+        ),
+      );
+    }
+  }
+
   void _navigateToChooseAccount() {
-    context.goNamed('account-chooser');
+    final phoneNumber = _phoneController.text.trim();
+    context.goNamed('account-chooser', queryParams: {
+      'phone': phoneNumber
+    });
   }
 
   Widget _buildSignInText() {
@@ -120,9 +191,8 @@ class _SignUpState extends State<SignUp> {
               children: [
                 TextSpan(
                     text: 'Sign In',
-                    style: context.textTheme.titleLarge?.copyWith(
-                      color: context.colors.secondary
-                    ),
+                    style: context.textTheme.titleLarge
+                        ?.copyWith(color: context.colors.secondary),
                     recognizer: TapGestureRecognizer()..onTap = () {}),
               ]),
         ),
@@ -135,7 +205,7 @@ class _SignUpState extends State<SignUp> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => _signInWithGoogleAccount(),
           iconSize: 24.w,
           icon: Assets.icons.google.svg(),
         ),

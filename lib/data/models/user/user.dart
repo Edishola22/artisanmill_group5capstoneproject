@@ -12,6 +12,7 @@ class UserDto with _$UserDto {
      final String? phoneNumber,
      final String? name,
      final String? city,
+     final String? state,
     final String? streetAddress,
   }) = _UserDto;
 

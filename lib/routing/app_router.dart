@@ -2,6 +2,7 @@ import 'package:artisanmill_group5capstoneproject/presentation/features/calendar
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/settings/security_settings.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/settings_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_section_navigation.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/account_chooser.dart';
@@ -15,11 +16,10 @@ import 'package:go_router/go_router.dart';
 import '../presentation/features/onboarding/complete_user_profile_screen.dart';
 
 class AppRouter {
-
   final _rootNavKey = GlobalKey<NavigatorState>();
   final _shellNavKey = GlobalKey<NavigatorState>();
   late final router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/home',
     navigatorKey: _rootNavKey,
     routes: [
       GoRoute(
@@ -34,69 +34,89 @@ class AppRouter {
       GoRoute(
         path: '/account-chooser',
         name: 'account-chooser',
-        builder: (context, state) => const AccountChooserScreen(),
+        builder: (context, state) {
+          final phoneNumber = state.queryParams['phone'];
+
+          return AccountChooserScreen(phoneNumber: phoneNumber);
+        },
       ),
       GoRoute(
         path: '/complete-user-profile',
         name: 'complete-user-profile',
-        builder: (context, state) => const CompleteUserProfileScreen(),
+        builder: (context, state) {
+          final phoneNumber = state.queryParams['phone'];
+
+          return CompleteUserProfileScreen(phoneNumber: phoneNumber);
+        },
       ),
       GoRoute(
         path: '/complete-artisan-profile',
         name: 'complete-artisan-profile',
-        builder: (context, state) => const CompleteArtisanProfileScreen(),
+        builder: (context, state) {
+          final phoneNumber = state.queryParams['phone'];
+
+          return CompleteArtisanProfileScreen(phoneNumber: phoneNumber);
+        },
       ),
       ShellRoute(
-        navigatorKey: _shellNavKey,
-        builder: (context, state, child) {
-          return ScaffoldWithNavBar(child: child);
-        },
-        routes: [
-          GoRoute(
-            path: '/home',
-            name: 'home',
-            builder: (context, state) {
-              return const HomeTab();
-            },
-          ),
-          GoRoute(
-            path: '/chat',
-            name: 'chat',
-            builder: (context, state) {
-              return const ChatTab();
-            },
-          ),
-          GoRoute(
-            path: '/search',
-            name: 'search',
-            builder: (context, state) {
-              return const SearchTab();
-            },
-          ),
-          GoRoute(
-            path: '/calendar',
-            name: 'calendar',
-            builder: (context, state) {
-              return const CalendarTab();
-            },
-          ),
-          GoRoute(
-            path: '/profile',
-            name: 'profile',
-            builder: (context, state) {
-              return const ProfileTab();
-            },
-          ),
-          GoRoute(
-            parentNavigatorKey: _shellNavKey,
-            path: '/settings',
-            name: 'settings',
-            builder: (context, state) {
-              return const SettingsScreen();
-            },
-          ),
-        ]
-      )
+          navigatorKey: _shellNavKey,
+          builder: (context, state, child) {
+            return ScaffoldWithNavBar(child: child);
+          },
+          routes: [
+            GoRoute(
+              path: '/home',
+              name: 'home',
+              builder: (context, state) {
+                return const HomeTab();
+              },
+            ),
+            GoRoute(
+              path: '/chat',
+              name: 'chat',
+              builder: (context, state) {
+                return const ChatTab();
+              },
+            ),
+            GoRoute(
+              path: '/search',
+              name: 'search',
+              builder: (context, state) {
+                return const SearchTab();
+              },
+            ),
+            GoRoute(
+              path: '/calendar',
+              name: 'calendar',
+              builder: (context, state) {
+                return const CalendarTab();
+              },
+            ),
+            GoRoute(
+              path: '/profile',
+              name: 'profile',
+              builder: (context, state) {
+                return const ProfileTab();
+              },
+            ),
+            GoRoute(
+              parentNavigatorKey: _shellNavKey,
+              path: '/settings',
+              name: 'settings',
+              routes: [
+                GoRoute(
+                  path: 'security',
+                  name: 'security',
+                  builder: (context, state) {
+                    return const SecuritySettings();
+                  }
+                )
+              ],
+              builder: (context, state) {
+                return const SettingsScreen();
+              },
+            ),
+          ])
     ],
   );
 }

@@ -8,7 +8,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class AccountChooserScreen extends StatelessWidget {
-  const AccountChooserScreen({Key? key}) : super(key: key);
+  const AccountChooserScreen({
+    Key? key,
+    this.phoneNumber,
+  }) : super(key: key);
+
+  final String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +61,17 @@ class AccountChooserScreen extends StatelessWidget {
   }
 
   void _navigateToCompleteUserProfileScreen(BuildContext context) {
-    context.goNamed('complete-user-profile');
+    context.goNamed('complete-user-profile', queryParams: {
+      'phone': phoneNumber,
+    });
   }
 
   void _navigateToCompleteArtisanProfileScreen(BuildContext context) {
-    context.goNamed('complete-artisan-profile');
+    context.goNamed(
+      'complete-artisan-profile',
+        queryParams: {
+          'phone': phoneNumber,
+        }
+    );
   }
 }

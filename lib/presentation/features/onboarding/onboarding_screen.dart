@@ -15,7 +15,7 @@ class OnBoardingScreen extends StatefulWidget {
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-const int kPageCount = 3;
+const int _kPageCount = 3;
 
 class _OnBoardingScreenState extends State<OnBoardingScreen>
     with TickerProviderStateMixin {
@@ -79,7 +79,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   Widget _buildPageIndicator(BuildContext context) {
     return SmoothPageIndicator(
       controller: _controller,
-      count: kPageCount,
+      count: _kPageCount,
       effect: WormEffect(
         dotWidth: 76.w,
         dotHeight: 15.h,
@@ -102,7 +102,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             width: 103.w,
             height: 44.h,
             text: 'Skip',
-            onTap: () {},
+            onTap: () => _goToSignUp(),
           ),
           ElevatedButton(
             onPressed: () {
@@ -132,6 +132,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     );
   }
 
+  void _goToSignUp() {
+    _controller.animateToPage(
+      2,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
+  }
+
   Widget _buildSignUpHeader() {
     return Column(
       key: UniqueKey(),
@@ -155,7 +163,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   Widget _buildOnboardingPageView() {
     final onboardingItems = OnboardingItem.items;
     return PageView.builder(
-      itemCount: kPageCount,
+      itemCount: _kPageCount,
       physics: const BouncingScrollPhysics(),
       controller: _controller,
       onPageChanged: (index) {

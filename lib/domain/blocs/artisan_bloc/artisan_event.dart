@@ -1,25 +1,39 @@
+import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 
-abstract class UserEvent {}
+abstract class ArtisanEvent {}
 
-class CreateUserDocumentEvent extends UserEvent {
-  final String name;
+class CreateArtisanDocumentEvent extends ArtisanEvent {
+  final String businessName;
   final String? phone;
-  final String city;
   final String state;
-  final String address;
+  final String occupation;
+  final String businessDescription;
+  final ArtisanCategory? category;
 
-  CreateUserDocumentEvent({
-    required this.name,
-    required this.city,
-    required this.state,
-    required this.address,
+  CreateArtisanDocumentEvent({
+    required this.businessName,
+    this.category,
     this.phone,
+    required this.occupation,
+    required this.state,
+    required this.businessDescription,
   });
 }
 
-class UpdateUserDocumentEvent extends UserEvent {
-  final UserDto user;
+class FetchArtisansForACategoryEvent extends ArtisanEvent {
+  String category;
 
-  UpdateUserDocumentEvent({required this.user});
+  FetchArtisansForACategoryEvent({
+    required this.category,
+  });
+}
+
+class FetchAllArtisansEvent extends ArtisanEvent {
+}
+
+class UpdateArtisanDocumentEvent extends ArtisanEvent {
+  final ArtisanDto artisan;
+
+  UpdateArtisanDocumentEvent({required this.artisan});
 }

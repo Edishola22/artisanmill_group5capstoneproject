@@ -17,8 +17,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/about.svg
   SvgGenImage get about => const SvgGenImage('assets/icons/about.svg');
 
+  /// File path: assets/icons/advanced.svg
+  SvgGenImage get advanced => const SvgGenImage('assets/icons/advanced.svg');
+
   /// File path: assets/icons/apple.svg
   SvgGenImage get apple => const SvgGenImage('assets/icons/apple.svg');
+
+  /// File path: assets/icons/back_icon.svg
+  SvgGenImage get backIcon => const SvgGenImage('assets/icons/back_icon.svg');
 
   /// File path: assets/icons/calendar_icon.svg
   SvgGenImage get calendarIcon =>
@@ -43,6 +49,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home_icon.svg');
 
+  /// File path: assets/icons/login_activity.svg
+  SvgGenImage get loginActivity =>
+      const SvgGenImage('assets/icons/login_activity.svg');
+
+  /// File path: assets/icons/login_security.svg
+  SvgGenImage get loginSecurity =>
+      const SvgGenImage('assets/icons/login_security.svg');
+
+  /// File path: assets/icons/password.svg
+  SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
+
   /// File path: assets/icons/profile_icon.svg
   SvgGenImage get profileIcon =>
       const SvgGenImage('assets/icons/profile_icon.svg');
@@ -53,6 +70,14 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/security.svg
   SvgGenImage get security => const SvgGenImage('assets/icons/security.svg');
+
+  /// File path: assets/icons/security_checkup.svg
+  SvgGenImage get securityCheckup =>
+      const SvgGenImage('assets/icons/security_checkup.svg');
+
+  /// File path: assets/icons/sign_out_icon.svg
+  SvgGenImage get signOutIcon =>
+      const SvgGenImage('assets/icons/sign_out_icon.svg');
 
   /// File path: assets/icons/splash_bottom_icon.svg
   SvgGenImage get splashBottomIcon =>
@@ -70,10 +95,15 @@ class $AssetsIconsGen {
   SvgGenImage get splashTopIcon =>
       const SvgGenImage('assets/icons/splash_top_icon.svg');
 
+  /// File path: assets/icons/two_factor.svg
+  SvgGenImage get twoFactor => const SvgGenImage('assets/icons/two_factor.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         about,
+        advanced,
         apple,
+        backIcon,
         calendarIcon,
         chatIcon,
         facebook,
@@ -81,13 +111,19 @@ class $AssetsIconsGen {
         hamburgerIcon,
         help,
         homeIcon,
+        loginActivity,
+        loginSecurity,
+        password,
         profileIcon,
         searchIcon,
         security,
+        securityCheckup,
+        signOutIcon,
         splashBottomIcon,
         splashLeftIcon,
         splashRightIcon,
-        splashTopIcon
+        splashTopIcon,
+        twoFactor
       ];
 }
 
@@ -109,6 +145,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/maintenace.png
+  AssetGenImage get maintenace =>
+      const AssetGenImage('assets/images/maintenace.png');
+
+  /// File path: assets/images/mechanical.png
+  AssetGenImage get mechanical =>
+      const AssetGenImage('assets/images/mechanical.png');
+
   /// File path: assets/images/qualified_artisans.png
   AssetGenImage get qualifiedArtisans =>
       const AssetGenImage('assets/images/qualified_artisans.png');
@@ -127,6 +171,8 @@ class $AssetsImagesGen {
         chatAvatar,
         cleaning,
         logo,
+        maintenace,
+        mechanical,
         qualifiedArtisans,
         serviceProviders,
         userAvatar
