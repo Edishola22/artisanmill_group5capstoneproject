@@ -1,4 +1,6 @@
+import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/calendar/calendar.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_detail_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
@@ -13,6 +15,7 @@ import 'package:artisanmill_group5capstoneproject/presentation/features/onboardi
 import 'package:artisanmill_group5capstoneproject/presentation/features/profile/profile_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../presentation/features/onboarding/complete_user_profile_screen.dart';
@@ -77,8 +80,21 @@ class AppRouter {
             GoRoute(
               path: '/chat',
               name: 'chat',
+              routes: [
+                GoRoute(
+                    path: 'chat-details/:id',
+                    name: 'chat-details',
+                    builder: (context, state) {
+                      final chatId = state.params['id'] ?? '';
+                      return ChatDetailScreen(chatId: chatId);
+                    }
+                ),
+              ],
               builder: (context, state) {
-                return const ChatTab();
+                return BlocProvider(
+                  create: (context) => ChatBloc(),
+                  child: const ChatTab(),
+                );
               },
             ),
             GoRoute(
@@ -86,13 +102,12 @@ class AppRouter {
               name: 'search',
               routes: [
                 GoRoute(
-                  path: 'artisan-profile/:id',
-                  name: 'artisan-profile',
-                  builder: (context, state) {
-                    final artisanId = state.params['id'] ?? '';
-                    return ArtisanProfileDetails(userId: artisanId);
-                  }
-                )
+                    path: 'artisan-profile/:id',
+                    name: 'artisan-profile',
+                    builder: (context, state) {
+                      final artisanId = state.params['id'] ?? '';
+                      return ArtisanProfileDetails(userId: artisanId);
+                    })
               ],
               builder: (context, state) {
                 return const SearchTab();

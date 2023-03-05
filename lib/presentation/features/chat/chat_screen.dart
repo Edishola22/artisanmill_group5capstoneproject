@@ -1,11 +1,17 @@
+import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_state.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/chat_model.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/widgets/chat_item.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatTab extends StatefulWidget {
   const ChatTab({Key? key}) : super(key: key);
@@ -20,6 +26,8 @@ class _ChatTabState extends State<ChatTab> {
   @override
   void initState() {
     _searchController = TextEditingController();
+    final userId = BlocProvider.of<UserBloc>(context).userId;
+    BlocProvider.of<ChatBloc>(context).add(ChatEvent.fetchChatRooms(userId));
     super.initState();
   }
 
@@ -34,29 +42,70 @@ class _ChatTabState extends State<ChatTab> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat',
+          'Chats',
           style: context.textTheme.titleLarge
               ?.copyWith(fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.w),
-        child: Column(
-          children: [
-            _buildSearchField(),
-            SizedBox(height: 24.h),
-            Expanded(child: _buildChatItemList())
-          ],
+        padding:  EdgeInsets.symmetric(horizontal: 22.w),
+        child: BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () => const SizedBox.shrink(),
+              loading: () =>
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+              success: (chats) {
+                final chatRooms = chats as List<ChatModel>;
+                return chatRooms.isEmpty ?
+                Center(
+                  child: Text('No chats yet',
+                  style: context.textTheme.titleMedium,),
+                ):
+                Column(
+                  children: [
+                    _buildSearchField(),
+                    SizedBox(height: 24.h),
+                    Expanded(child: _buildChatItemList(chatRooms))
+                  ],
+                );
+              },
+              error: (message) =>  Center(
+                child: Text(message,
+                  style: context.textTheme.titleMedium,),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildChatItemList() {
-    return ListView.builder(itemBuilder: (context, index) {
-      return ChatItem(chat: ChatModel(
-          name: '', recentMessage: '', timeStamp: DateTime.now()),);
+  Widget _buildChatItemList(List<ChatModel> chats) {
+    return ListView.separated(
+        itemCount: 6,
+        separatorBuilder: (_, index) => SizedBox(height: 8.h),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => _navigateToChatDetail(),
+            child: ChatItem(
+              chat: ChatModel(
+                  userOneName: 'Blessing Okon',
+                  userTwoName: 'Blessing Okon',
+                  userTwoAvatar: '',
+                  recentMessage: 'Hello',
+                  timeStamp: DateTime.now()),
+            ),
+          );
+        });
+  }
+
+  void _navigateToChatDetail() {
+    context.goNamed('chat-details', params: {
+      'id': 'a',
     });
   }
 
@@ -64,36 +113,38 @@ class _ChatTabState extends State<ChatTab> {
     return SizedBox(
       height: 50.h,
       child: TextField(
-          controller: _searchController,
-          maxLines: 1,
-          decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide: const BorderSide(
-                    color: AppColours.purpleShadeThree),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide: const BorderSide(
-                    color: AppColours.purpleShadeThree),
-              ),
-              prefixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    Assets.icons.searchIcon.path,
-                    width: 30.w,
-                    height: 30.h,
-                  ),
-                  Divider(
-                    thickness: 5.w,
-                    height: double.infinity,
-                    color: AppColours.purpleShadeThree,
-                  )
-                ],
-              ),
-              hintText: 'Search'
-          )),
+        controller: _searchController,
+        maxLines: 1,
+        onSubmitted: (value) {},
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: const BorderSide(color: AppColours.purpleShadeThree),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: const BorderSide(color: AppColours.purpleShadeThree),
+            ),
+            contentPadding:
+            EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+            prefixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(width: 4.w),
+                SvgPicture.asset(
+                  Assets.icons.searchIcon.path,
+                  width: 30.w,
+                  height: 30.h,
+                ),
+                VerticalDivider(
+                  thickness: 1.w,
+                  color: AppColours.purpleShadeThree.withOpacity(0.6),
+                )
+              ],
+            ),
+            hintStyle: context.textTheme.bodyLarge,
+            hintText: 'Search'),
+      ),
     );
   }
 }

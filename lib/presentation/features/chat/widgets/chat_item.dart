@@ -13,35 +13,62 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          chat.userAvatar,
-          width: 60.w,
-          fit: BoxFit.cover,
-        ),
-        SizedBox(width: 4.w),
-        Column(
-          children: [
-            Text(
-              chat.name,
-              style: context.textTheme.bodyLarge?.copyWith(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+      child: Row(
+        children: [
+          Stack(
+            children: [
+              Image.asset(
+                chat.userOneAvatar,
+                width: 60.w,
+                fit: BoxFit.cover,
               ),
+              Positioned(
+                top: -1.h,
+                right: 2.w,
+                child: Container(
+                  width: 20.w,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.green,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1.w,
+                    )
+                  ),
+                ),
+              )
+            ]
+          ),
+          SizedBox(width: 18.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  chat.userOneName,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  chat.recentMessage,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 4.h),
-            Text(
-              chat.recentMessage,
-              style: context.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        const Spacer(),
-        const Text('1hr'),
-      ],
+          ),
+          const Text('1hr'),
+        ],
+      ),
     );
   }
 }

@@ -16,6 +16,8 @@ class FirebaseUserHelper {
 
   CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
 
+  String get userId => currentUser!.uid;
+
   Future<void> createUserProfile(UserDto userDto) async {
     try {
      final user =  userDto.copyWith(

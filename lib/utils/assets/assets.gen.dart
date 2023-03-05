@@ -63,6 +63,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
+  /// File path: assets/icons/paperclip.svg
+  SvgGenImage get paperclip => const SvgGenImage('assets/icons/paperclip.svg');
+
   /// File path: assets/icons/password.svg
   SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
 
@@ -127,6 +130,7 @@ class $AssetsIconsGen {
         loginActivity,
         loginSecurity,
         mail,
+        paperclip,
         password,
         phone,
         profileIcon,

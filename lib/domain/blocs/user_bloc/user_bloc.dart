@@ -11,7 +11,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUserDocumentEvent>(onUpdateUserDocument);
   }
 
+
+
+
   final FirebaseUserHelper userHelper = FirebaseUserHelper();
+
+  String get userId => userHelper.userId;
 
   void onCreateUserDocument(
     CreateUserDocumentEvent event,
