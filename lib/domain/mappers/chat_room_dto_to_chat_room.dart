@@ -5,6 +5,9 @@ extension ChatRoomDtoMapper on ChatRoomDto {
 
   ChatModel toChatRoom() {
     return ChatModel(
+      id: id!,
+      userOneId: userOne,
+      userTwoId: userTwo,
       userOneName: userOneName,
       userTwoName: userTwoName,
       recentMessage: lastMessage,

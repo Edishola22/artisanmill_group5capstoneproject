@@ -23,3 +23,9 @@ class UpdateUserDocumentEvent extends UserEvent {
 
   UpdateUserDocumentEvent({required this.user});
 }
+
+class FetchUserProfileEvent extends UserEvent {
+  final String userId;
+
+  FetchUserProfileEvent({required this.userId});
+}

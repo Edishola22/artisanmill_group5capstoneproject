@@ -29,6 +29,14 @@ class FetchArtisansForACategoryEvent extends ArtisanEvent {
   });
 }
 
+class FetchArtisanProfileEvent extends ArtisanEvent {
+  String artisanId;
+
+  FetchArtisanProfileEvent({
+    required this.artisanId,
+  });
+}
+
 class FetchAllArtisansEvent extends ArtisanEvent {
 }
 

@@ -1,5 +1,9 @@
+import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/filled_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
@@ -10,57 +14,88 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  @override
+  void initState() {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.add(FetchUserProfileEvent(userId: userBloc.userId));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppbar(context),
-      body: SizedBox(
-        width: double.maxFinite,
-        child: Column(
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(Assets.images.userProfileAvatar.path),
-              radius: 51.r,
+      body: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const SizedBox.shrink(),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Blessing Okon',
-              style: context.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
+            success: (data) {
+              final user = data as UserDto;
+              return SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage:
+                          AssetImage(Assets.images.userProfileAvatar.path),
+                      radius: 51.r,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      user.name!,
+                      style: context.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.icons.location.path,
+                          width: 24.w,
+                        ),
+                        SizedBox(width: 16.w),
+                        Text(
+                          user.state ?? '' ' ,Nigeria',
+                          style: context.textTheme.bodyLarge?.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    FilledAppButton(
+                      width: 168.w,
+                      height: 40.h,
+                      text: 'Edit Profile',
+                      onTap: () => _navigateToEditProfile(context, user),
+                    ),
+                  ],
+                ),
+              );
+            },
+            error: (message) => Center(
+              child: Text(
+                message,
+                style: context.textTheme.titleMedium,
               ),
             ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  Assets.icons.location.path,
-                  width: 24.w,
-                ),
-                SizedBox(width: 16.w),
-                Text(
-                  'Lagos, Nigeria',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-
-              ],
-            ),
-            const SizedBox(height: 16),
-            FilledAppButton(
-              width: 168.w,
-              height: 40.h,
-              text: 'Edit Profile',
-              onTap: () => _navigateToEditProfile(context),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -103,8 +138,11 @@ class ProfileTab extends StatelessWidget {
     );
   }
 
-  void _navigateToEditProfile(BuildContext context) {
-    context.goNamed('edit-profile');
+  void _navigateToEditProfile(BuildContext context, UserDto user) {
+    context.goNamed(
+      'edit-profile',
+      extra: user,
+    );
   }
 
   void _navigateToSettings(BuildContext context) {

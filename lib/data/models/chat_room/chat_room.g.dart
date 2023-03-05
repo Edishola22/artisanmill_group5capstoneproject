@@ -8,6 +8,7 @@ part of 'chat_room.dart';
 
 _$_ChatRoomDto _$$_ChatRoomDtoFromJson(Map<String, dynamic> json) =>
     _$_ChatRoomDto(
+      id: json['id'] as String?,
       userOne: json['user_one'] as String,
       userTwo: json['user_two'] as String,
       userOneName: json['user_one_name'] as String,
@@ -20,6 +21,7 @@ _$_ChatRoomDto _$$_ChatRoomDtoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_ChatRoomDtoToJson(_$_ChatRoomDto instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'user_one': instance.userOne,
       'user_two': instance.userTwo,
       'user_one_name': instance.userOneName,

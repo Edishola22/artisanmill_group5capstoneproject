@@ -7,6 +7,7 @@ part 'chat_room.g.dart';
 @freezed
 class ChatRoomDto with _$ChatRoomDto {
   factory ChatRoomDto({
+    String? id,
     @JsonKey(name: 'user_one') required String userOne,
     @JsonKey(name: 'user_two') required String userTwo,
     @JsonKey(name: 'user_one_name') required String userOneName,

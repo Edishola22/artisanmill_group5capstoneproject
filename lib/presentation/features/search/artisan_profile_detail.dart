@@ -1,21 +1,41 @@
+import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/search/widgets/search_app_bar.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/avatar_widget.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/filled_app_button.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class ArtisanProfileDetails extends StatelessWidget {
+class ArtisanProfileDetails extends StatefulWidget {
   const ArtisanProfileDetails({Key? key, required this.userId})
       : super(key: key);
 
   final String userId;
+
+  @override
+  State<ArtisanProfileDetails> createState() => _ArtisanProfileDetailsState();
+}
+
+class _ArtisanProfileDetailsState extends State<ArtisanProfileDetails> {
+  late ArtisanDto artisan;
+
+  @override
+  void initState() {
+    BlocProvider.of<ArtisanBloc>(context)
+        .add(FetchArtisanProfileEvent(artisanId: widget.userId));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,54 +48,92 @@ class ArtisanProfileDetails extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            _buildAvatar(context),
-            SizedBox(height: 8.h),
-            Text(
-              'Tara\'s Touch',
-              style: context.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w700,
+        child: BlocBuilder<ArtisanBloc, ArtisanState>(
+          builder: (context, state) {
+            return state.when(
+              uninitiated: () => const SizedBox.shrink(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
-            SizedBox(height: 8.h),
-            _buildRatingRow(context),
-            SizedBox(height: 16.h),
-            _buildLocationContainer(context),
-            SizedBox(height: 16.h),
-            _buildDescriptionContainer(context),
-            SizedBox(height: 16.h),
-            _buildSocialsContainer(
-              context: context,
-              icon: Assets.icons.mail.path,
-              text: 'tarastouch@gmail.com',
-            ),
-            SizedBox(height: 16.h),
-            _buildSocialsContainer(
-              context: context,
-              icon: Assets.icons.web.path,
-              text: 'tarastouch.org',
-            ),
-            SizedBox(height: 16.h),
-            _buildSocialsContainer(
-              context: context,
-              icon: Assets.icons.phone.path,
-              text: '+234 419 2465 3232',
-            ),
-            SizedBox(height: 16.h),
-            _buildCatalog(context),
-            SizedBox(height: 16.h),
-            _buildReview(context),
-            SizedBox(height: 16.h),
-            FilledAppButton(
-              width: double.maxFinite,
-              height: 45.h,
-              text: 'Book Now',
-              onTap: () {},
-            ),
-          ],
+              success: (data) {
+                artisan = data as ArtisanDto;
+
+                return Column(
+                  children: [
+                    _buildAvatar(context),
+                    SizedBox(height: 8.h),
+                    Text(
+                      artisan.businessName ?? '',
+                      style: context.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildMessageButton(context),
+                    SizedBox(height: 8.h),
+                    _buildRatingRow(context),
+                    SizedBox(height: 16.h),
+                    _buildLocationContainer(context),
+                    SizedBox(height: 16.h),
+                    _buildDescriptionContainer(context),
+                    SizedBox(height: 16.h),
+                    _buildSocialsContainer(
+                      context: context,
+                      icon: Assets.icons.mail.path,
+                      text: artisan.email ?? '',
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildSocialsContainer(
+                      context: context,
+                      icon: Assets.icons.web.path,
+                      text: 'artisansmill.org',
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildSocialsContainer(
+                      context: context,
+                      icon: Assets.icons.phone.path,
+                      text: artisan.phoneNumber ?? '',
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildCatalog(context),
+                    SizedBox(height: 16.h),
+                    _buildReview(context),
+                    SizedBox(height: 16.h),
+                    FilledAppButton(
+                      width: double.maxFinite,
+                      height: 45.h,
+                      text: 'Book Now',
+                      onTap: () {},
+                    ),
+                  ],
+                );
+              },
+              error: (message) => Center(
+                child: Text(
+                  message,
+                  style: context.textTheme.titleMedium,
+                ),
+              ),
+            );
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildMessageButton(BuildContext context) {
+    return PlainAppButton(
+      width: 120.w,
+      height: 45.h,
+      text: 'Message',
+      onTap: () {
+        context.goNamed(
+          'chat-details',
+          queryParams: {
+            'userId': artisan.id,
+          }
+        );
+      },
     );
   }
 
@@ -201,7 +259,7 @@ class ArtisanProfileDetails extends StatelessWidget {
           ),
           SizedBox(width: 4.w),
           Text(
-            'Lagos, Nigeria',
+            artisan.state ?? '',
             style: context.textTheme.bodyLarge,
           ),
         ],
@@ -234,7 +292,7 @@ class ArtisanProfileDetails extends StatelessWidget {
   Widget _buildDescriptionContainer(BuildContext context) {
     return _buildOutlinedContainer(
       child: Text(
-        "At Tara’s Glam, we give  the perfect amount of glow that you need to shine  bright like the diamond that you already are.",
+        artisan.businessDescription ?? '',
         style: context.textTheme.titleMedium,
         textAlign: TextAlign.center,
       ),

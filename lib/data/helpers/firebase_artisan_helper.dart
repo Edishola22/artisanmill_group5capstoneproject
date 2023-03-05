@@ -29,6 +29,11 @@ class FirebaseArtisanHelper {
     }
   }
 
+  Future<DocumentSnapshot> fetchArtisanProfile(String artisanId) async {
+    final artisanDoc = await artisansRef.doc(artisanId).get();
+    return artisanDoc;
+  }
+
   Future<QuerySnapshot?> fetchArtisansInCategory(String category) async {
     final QuerySnapshot snapshot =
         await artisansRef.where('category', isEqualTo: category).get();

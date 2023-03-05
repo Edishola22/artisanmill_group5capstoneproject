@@ -15,6 +15,7 @@ _$_UserDto _$$_UserDtoFromJson(Map<String, dynamic> json) => _$_UserDto(
       state: json['state'] as String?,
       streetAddress: json['streetAddress'] as String?,
       imageUrl: json['imageUrl'] as String?,
+      country: json['country'] as String?,
     );
 
 Map<String, dynamic> _$$_UserDtoToJson(_$_UserDto instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$_UserDtoToJson(_$_UserDto instance) =>
       'state': instance.state,
       'streetAddress': instance.streetAddress,
       'imageUrl': instance.imageUrl,
+      'country': instance.country,
     };

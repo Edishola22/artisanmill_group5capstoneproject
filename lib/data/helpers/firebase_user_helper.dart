@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/utils/exceptions/user_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseUserHelper {
 
@@ -29,6 +32,20 @@ class FirebaseUserHelper {
     catch (e) {
       throw CouldNotUpdateUserException();
     }
+  }
 
+  Future<DocumentSnapshot> fetchUserDetails(String userId) async {
+    final doc = await usersRef.doc(userId).get();
+    return doc;
+  }
+
+  Future<void> updateUserDetails(UserDto user) async {
+    await usersRef.doc(user.id).update(user.toJson());
+  }
+
+  Future<void> uploadProfilePicture(File image, String name) async {
+    final filename = DateTime.now().millisecondsSinceEpoch.toString() + name;
+    final storageRef= FirebaseStorage.instance.ref('users').child(filename);
+    await storageRef.putFile(image);
   }
 }

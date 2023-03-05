@@ -28,6 +28,7 @@ mixin _$UserDto {
   String? get state => throw _privateConstructorUsedError;
   String? get streetAddress => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
+  String? get country => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $UserDtoCopyWith<$Res> {
       String? city,
       String? state,
       String? streetAddress,
-      String? imageUrl});
+      String? imageUrl,
+      String? country});
 }
 
 /// @nodoc
@@ -71,6 +73,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
     Object? state = freezed,
     Object? streetAddress = freezed,
     Object? imageUrl = freezed,
+    Object? country = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -105,6 +108,10 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -124,7 +131,8 @@ abstract class _$$_UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
       String? city,
       String? state,
       String? streetAddress,
-      String? imageUrl});
+      String? imageUrl,
+      String? country});
 }
 
 /// @nodoc
@@ -145,6 +153,7 @@ class __$$_UserDtoCopyWithImpl<$Res>
     Object? state = freezed,
     Object? streetAddress = freezed,
     Object? imageUrl = freezed,
+    Object? country = freezed,
   }) {
     return _then(_$_UserDto(
       id: freezed == id
@@ -179,6 +188,10 @@ class __$$_UserDtoCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -194,7 +207,8 @@ class _$_UserDto implements _UserDto {
       this.city,
       this.state,
       this.streetAddress,
-      this.imageUrl});
+      this.imageUrl,
+      this.country});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
       _$$_UserDtoFromJson(json);
@@ -215,10 +229,12 @@ class _$_UserDto implements _UserDto {
   final String? streetAddress;
   @override
   final String? imageUrl;
+  @override
+  final String? country;
 
   @override
   String toString() {
-    return 'UserDto(id: $id, email: $email, phoneNumber: $phoneNumber, name: $name, city: $city, state: $state, streetAddress: $streetAddress, imageUrl: $imageUrl)';
+    return 'UserDto(id: $id, email: $email, phoneNumber: $phoneNumber, name: $name, city: $city, state: $state, streetAddress: $streetAddress, imageUrl: $imageUrl, country: $country)';
   }
 
   @override
@@ -236,13 +252,14 @@ class _$_UserDto implements _UserDto {
             (identical(other.streetAddress, streetAddress) ||
                 other.streetAddress == streetAddress) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            (identical(other.country, country) || other.country == country));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, email, phoneNumber, name,
-      city, state, streetAddress, imageUrl);
+      city, state, streetAddress, imageUrl, country);
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +284,8 @@ abstract class _UserDto implements UserDto {
       final String? city,
       final String? state,
       final String? streetAddress,
-      final String? imageUrl}) = _$_UserDto;
+      final String? imageUrl,
+      final String? country}) = _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
@@ -287,6 +305,8 @@ abstract class _UserDto implements UserDto {
   String? get streetAddress;
   @override
   String? get imageUrl;
+  @override
+  String? get country;
   @override
   @JsonKey(ignore: true)
   _$$_UserDtoCopyWith<_$_UserDto> get copyWith =>

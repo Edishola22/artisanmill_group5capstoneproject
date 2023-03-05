@@ -30,6 +30,7 @@ class ArtisanDto with _$ArtisanDto {
 
   factory ArtisanDto.fromJson(Map<String, dynamic> json) =>
       _$ArtisanDtoFromJson(json);
+
 }
 
 

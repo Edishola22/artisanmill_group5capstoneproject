@@ -16,6 +16,7 @@ class UserDto with _$UserDto {
      final String? state,
     final String? streetAddress,
     final String? imageUrl,
+    final String? country,
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);

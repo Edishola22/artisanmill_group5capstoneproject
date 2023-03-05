@@ -20,6 +20,7 @@ ChatRoomDto _$ChatRoomDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatRoomDto {
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_one')
   String get userOne => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_two')
@@ -50,7 +51,8 @@ abstract class $ChatRoomDtoCopyWith<$Res> {
       _$ChatRoomDtoCopyWithImpl<$Res, ChatRoomDto>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'user_one') String userOne,
+      {String? id,
+      @JsonKey(name: 'user_one') String userOne,
       @JsonKey(name: 'user_two') String userTwo,
       @JsonKey(name: 'user_one_name') String userOneName,
       @JsonKey(name: 'user_two_name') String userTwoName,
@@ -73,6 +75,7 @@ class _$ChatRoomDtoCopyWithImpl<$Res, $Val extends ChatRoomDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? userOne = null,
     Object? userTwo = null,
     Object? userOneName = null,
@@ -83,6 +86,10 @@ class _$ChatRoomDtoCopyWithImpl<$Res, $Val extends ChatRoomDto>
     Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       userOne: null == userOne
           ? _value.userOne
           : userOne // ignore: cast_nullable_to_non_nullable
@@ -128,7 +135,8 @@ abstract class _$$_ChatRoomDtoCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'user_one') String userOne,
+      {String? id,
+      @JsonKey(name: 'user_one') String userOne,
       @JsonKey(name: 'user_two') String userTwo,
       @JsonKey(name: 'user_one_name') String userOneName,
       @JsonKey(name: 'user_two_name') String userTwoName,
@@ -149,6 +157,7 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? userOne = null,
     Object? userTwo = null,
     Object? userOneName = null,
@@ -159,6 +168,10 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
     Object? timestamp = null,
   }) {
     return _then(_$_ChatRoomDto(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       userOne: null == userOne
           ? _value.userOne
           : userOne // ignore: cast_nullable_to_non_nullable
@@ -199,7 +212,8 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChatRoomDto implements _ChatRoomDto {
   _$_ChatRoomDto(
-      {@JsonKey(name: 'user_one') required this.userOne,
+      {this.id,
+      @JsonKey(name: 'user_one') required this.userOne,
       @JsonKey(name: 'user_two') required this.userTwo,
       @JsonKey(name: 'user_one_name') required this.userOneName,
       @JsonKey(name: 'user_two_name') required this.userTwoName,
@@ -211,6 +225,8 @@ class _$_ChatRoomDto implements _ChatRoomDto {
   factory _$_ChatRoomDto.fromJson(Map<String, dynamic> json) =>
       _$$_ChatRoomDtoFromJson(json);
 
+  @override
+  final String? id;
   @override
   @JsonKey(name: 'user_one')
   final String userOne;
@@ -238,7 +254,7 @@ class _$_ChatRoomDto implements _ChatRoomDto {
 
   @override
   String toString() {
-    return 'ChatRoomDto(userOne: $userOne, userTwo: $userTwo, userOneName: $userOneName, userTwoName: $userTwoName, userOneImageUrl: $userOneImageUrl, userTwoImageUrl: $userTwoImageUrl, lastMessage: $lastMessage, timestamp: $timestamp)';
+    return 'ChatRoomDto(id: $id, userOne: $userOne, userTwo: $userTwo, userOneName: $userOneName, userTwoName: $userTwoName, userOneImageUrl: $userOneImageUrl, userTwoImageUrl: $userTwoImageUrl, lastMessage: $lastMessage, timestamp: $timestamp)';
   }
 
   @override
@@ -246,6 +262,7 @@ class _$_ChatRoomDto implements _ChatRoomDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChatRoomDto &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.userOne, userOne) || other.userOne == userOne) &&
             (identical(other.userTwo, userTwo) || other.userTwo == userTwo) &&
             (identical(other.userOneName, userOneName) ||
@@ -264,8 +281,17 @@ class _$_ChatRoomDto implements _ChatRoomDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userOne, userTwo, userOneName,
-      userTwoName, userOneImageUrl, userTwoImageUrl, lastMessage, timestamp);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userOne,
+      userTwo,
+      userOneName,
+      userTwoName,
+      userOneImageUrl,
+      userTwoImageUrl,
+      lastMessage,
+      timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -283,7 +309,8 @@ class _$_ChatRoomDto implements _ChatRoomDto {
 
 abstract class _ChatRoomDto implements ChatRoomDto {
   factory _ChatRoomDto(
-      {@JsonKey(name: 'user_one')
+      {final String? id,
+      @JsonKey(name: 'user_one')
           required final String userOne,
       @JsonKey(name: 'user_two')
           required final String userTwo,
@@ -303,6 +330,8 @@ abstract class _ChatRoomDto implements ChatRoomDto {
   factory _ChatRoomDto.fromJson(Map<String, dynamic> json) =
       _$_ChatRoomDto.fromJson;
 
+  @override
+  String? get id;
   @override
   @JsonKey(name: 'user_one')
   String get userOne;

@@ -1,4 +1,7 @@
+import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/calendar/calendar.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_detail_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
@@ -82,13 +85,19 @@ class AppRouter {
               name: 'chat',
               routes: [
                 GoRoute(
-                    path: 'chat-details/:id',
+                    path: 'chat-details',
                     name: 'chat-details',
                     builder: (context, state) {
-                      final chatId = state.params['id'] ?? '';
-                      return ChatDetailScreen(chatId: chatId);
-                    }
-                ),
+                      final chatId = state.queryParams['chatId'];
+                      final userId = state.queryParams['userId'];
+                      return BlocProvider(
+                        create: (context) => ChatBloc(),
+                        child: ChatDetailScreen(
+                          chatId: chatId,
+                          userId: userId,
+                        ),
+                      );
+                    }),
               ],
               builder: (context, state) {
                 return BlocProvider(
@@ -106,7 +115,10 @@ class AppRouter {
                     name: 'artisan-profile',
                     builder: (context, state) {
                       final artisanId = state.params['id'] ?? '';
-                      return ArtisanProfileDetails(userId: artisanId);
+                      return BlocProvider(
+                        create: (context) => ArtisanBloc(),
+                        child: ArtisanProfileDetails(userId: artisanId),
+                      );
                     })
               ],
               builder: (context, state) {
@@ -127,10 +139,16 @@ class AppRouter {
                 GoRoute(
                     path: 'edit-profile',
                     name: 'edit-profile',
-                    builder: (context, state) => const EditProfileScreen())
+                    builder: (context, state) {
+                      final user = state.extra as UserDto;
+                      return EditProfileScreen(user: user);
+                    })
               ],
               builder: (context, state) {
-                return const ProfileTab();
+                return BlocProvider(
+                  create: (context) => UserBloc(),
+                  child: const ProfileTab(),
+                );
               },
             ),
             GoRoute(

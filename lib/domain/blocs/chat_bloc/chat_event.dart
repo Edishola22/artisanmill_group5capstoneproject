@@ -9,4 +9,5 @@ class ChatEvent with _$ChatEvent{
   factory ChatEvent.fetchChatRooms(String userId) = _fetchChatRooms;
   factory ChatEvent.fetchConversation(String chatId) = _fetchConversation;
   factory ChatEvent.createChatRoom(ChatModel chat, ChatMessage message) = _createChatRoom;
+  factory ChatEvent.createNewMessage(String chatId, ChatMessage message) = _createNewMessage;
 }

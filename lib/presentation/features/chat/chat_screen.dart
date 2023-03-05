@@ -26,7 +26,9 @@ class _ChatTabState extends State<ChatTab> {
   @override
   void initState() {
     _searchController = TextEditingController();
-    final userId = BlocProvider.of<UserBloc>(context).userId;
+    final userId = BlocProvider
+        .of<UserBloc>(context)
+        .userId;
     BlocProvider.of<ChatBloc>(context).add(ChatEvent.fetchChatRooms(userId));
     super.initState();
   }
@@ -49,7 +51,7 @@ class _ChatTabState extends State<ChatTab> {
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 22.w),
+        padding: EdgeInsets.symmetric(horizontal: 22.w),
         child: BlocBuilder<ChatBloc, ChatState>(
           builder: (context, state) {
             return state.when(
@@ -63,8 +65,8 @@ class _ChatTabState extends State<ChatTab> {
                 return chatRooms.isEmpty ?
                 Center(
                   child: Text('No chats yet',
-                  style: context.textTheme.titleMedium,),
-                ):
+                    style: context.textTheme.titleMedium,),
+                ) :
                 Column(
                   children: [
                     _buildSearchField(),
@@ -73,10 +75,11 @@ class _ChatTabState extends State<ChatTab> {
                   ],
                 );
               },
-              error: (message) =>  Center(
-                child: Text(message,
-                  style: context.textTheme.titleMedium,),
-              ),
+              error: (message) =>
+                  Center(
+                    child: Text(message,
+                      style: context.textTheme.titleMedium,),
+                  ),
             );
           },
         ),
@@ -86,26 +89,21 @@ class _ChatTabState extends State<ChatTab> {
 
   Widget _buildChatItemList(List<ChatModel> chats) {
     return ListView.separated(
-        itemCount: 6,
+        itemCount: chats.length,
         separatorBuilder: (_, index) => SizedBox(height: 8.h),
         itemBuilder: (context, index) {
+          final chat = chats[index];
           return InkWell(
-            onTap: () => _navigateToChatDetail(),
+            onTap: () => _navigateToChatDetail(chat.id!),
             child: ChatItem(
-              chat: ChatModel(
-                  userOneName: 'Blessing Okon',
-                  userTwoName: 'Blessing Okon',
-                  userTwoAvatar: '',
-                  recentMessage: 'Hello',
-                  timeStamp: DateTime.now()),
-            ),
-          );
+              chat: chat
+          ),);
         });
   }
 
-  void _navigateToChatDetail() {
-    context.goNamed('chat-details', params: {
-      'id': 'a',
+  void _navigateToChatDetail(String chatId) {
+    context.goNamed('chat-details', queryParams: {
+      'chatId': chatId,
     });
   }
 

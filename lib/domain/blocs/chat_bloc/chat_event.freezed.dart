@@ -22,6 +22,8 @@ mixin _$ChatEvent {
     required TResult Function(String chatId) fetchConversation,
     required TResult Function(ChatModel chat, ChatMessage message)
         createChatRoom,
+    required TResult Function(String chatId, ChatMessage message)
+        createNewMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +31,7 @@ mixin _$ChatEvent {
     TResult? Function(String userId)? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
     TResult? Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +39,7 @@ mixin _$ChatEvent {
     TResult Function(String userId)? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
     TResult Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -44,6 +48,7 @@ mixin _$ChatEvent {
     required TResult Function(_fetchChatRooms value) fetchChatRooms,
     required TResult Function(_fetchConversation value) fetchConversation,
     required TResult Function(_createChatRoom value) createChatRoom,
+    required TResult Function(_createNewMessage value) createNewMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +56,7 @@ mixin _$ChatEvent {
     TResult? Function(_fetchChatRooms value)? fetchChatRooms,
     TResult? Function(_fetchConversation value)? fetchConversation,
     TResult? Function(_createChatRoom value)? createChatRoom,
+    TResult? Function(_createNewMessage value)? createNewMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +64,7 @@ mixin _$ChatEvent {
     TResult Function(_fetchChatRooms value)? fetchChatRooms,
     TResult Function(_fetchConversation value)? fetchConversation,
     TResult Function(_createChatRoom value)? createChatRoom,
+    TResult Function(_createNewMessage value)? createNewMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -148,6 +155,8 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     required TResult Function(String chatId) fetchConversation,
     required TResult Function(ChatModel chat, ChatMessage message)
         createChatRoom,
+    required TResult Function(String chatId, ChatMessage message)
+        createNewMessage,
   }) {
     return fetchChatRooms(userId);
   }
@@ -158,6 +167,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     TResult? Function(String userId)? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
     TResult? Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
     return fetchChatRooms?.call(userId);
   }
@@ -168,6 +178,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     TResult Function(String userId)? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
     TResult Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
     if (fetchChatRooms != null) {
@@ -182,6 +193,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     required TResult Function(_fetchChatRooms value) fetchChatRooms,
     required TResult Function(_fetchConversation value) fetchConversation,
     required TResult Function(_createChatRoom value) createChatRoom,
+    required TResult Function(_createNewMessage value) createNewMessage,
   }) {
     return fetchChatRooms(this);
   }
@@ -192,6 +204,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     TResult? Function(_fetchChatRooms value)? fetchChatRooms,
     TResult? Function(_fetchConversation value)? fetchConversation,
     TResult? Function(_createChatRoom value)? createChatRoom,
+    TResult? Function(_createNewMessage value)? createNewMessage,
   }) {
     return fetchChatRooms?.call(this);
   }
@@ -202,6 +215,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
     TResult Function(_fetchChatRooms value)? fetchChatRooms,
     TResult Function(_fetchConversation value)? fetchConversation,
     TResult Function(_createChatRoom value)? createChatRoom,
+    TResult Function(_createNewMessage value)? createNewMessage,
     required TResult orElse(),
   }) {
     if (fetchChatRooms != null) {
@@ -289,6 +303,8 @@ class _$_fetchConversation implements _fetchConversation {
     required TResult Function(String chatId) fetchConversation,
     required TResult Function(ChatModel chat, ChatMessage message)
         createChatRoom,
+    required TResult Function(String chatId, ChatMessage message)
+        createNewMessage,
   }) {
     return fetchConversation(chatId);
   }
@@ -299,6 +315,7 @@ class _$_fetchConversation implements _fetchConversation {
     TResult? Function(String userId)? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
     TResult? Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
     return fetchConversation?.call(chatId);
   }
@@ -309,6 +326,7 @@ class _$_fetchConversation implements _fetchConversation {
     TResult Function(String userId)? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
     TResult Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
     if (fetchConversation != null) {
@@ -323,6 +341,7 @@ class _$_fetchConversation implements _fetchConversation {
     required TResult Function(_fetchChatRooms value) fetchChatRooms,
     required TResult Function(_fetchConversation value) fetchConversation,
     required TResult Function(_createChatRoom value) createChatRoom,
+    required TResult Function(_createNewMessage value) createNewMessage,
   }) {
     return fetchConversation(this);
   }
@@ -333,6 +352,7 @@ class _$_fetchConversation implements _fetchConversation {
     TResult? Function(_fetchChatRooms value)? fetchChatRooms,
     TResult? Function(_fetchConversation value)? fetchConversation,
     TResult? Function(_createChatRoom value)? createChatRoom,
+    TResult? Function(_createNewMessage value)? createNewMessage,
   }) {
     return fetchConversation?.call(this);
   }
@@ -343,6 +363,7 @@ class _$_fetchConversation implements _fetchConversation {
     TResult Function(_fetchChatRooms value)? fetchChatRooms,
     TResult Function(_fetchConversation value)? fetchConversation,
     TResult Function(_createChatRoom value)? createChatRoom,
+    TResult Function(_createNewMessage value)? createNewMessage,
     required TResult orElse(),
   }) {
     if (fetchConversation != null) {
@@ -437,6 +458,8 @@ class _$_createChatRoom implements _createChatRoom {
     required TResult Function(String chatId) fetchConversation,
     required TResult Function(ChatModel chat, ChatMessage message)
         createChatRoom,
+    required TResult Function(String chatId, ChatMessage message)
+        createNewMessage,
   }) {
     return createChatRoom(chat, message);
   }
@@ -447,6 +470,7 @@ class _$_createChatRoom implements _createChatRoom {
     TResult? Function(String userId)? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
     TResult? Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
     return createChatRoom?.call(chat, message);
   }
@@ -457,6 +481,7 @@ class _$_createChatRoom implements _createChatRoom {
     TResult Function(String userId)? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
     TResult Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
     if (createChatRoom != null) {
@@ -471,6 +496,7 @@ class _$_createChatRoom implements _createChatRoom {
     required TResult Function(_fetchChatRooms value) fetchChatRooms,
     required TResult Function(_fetchConversation value) fetchConversation,
     required TResult Function(_createChatRoom value) createChatRoom,
+    required TResult Function(_createNewMessage value) createNewMessage,
   }) {
     return createChatRoom(this);
   }
@@ -481,6 +507,7 @@ class _$_createChatRoom implements _createChatRoom {
     TResult? Function(_fetchChatRooms value)? fetchChatRooms,
     TResult? Function(_fetchConversation value)? fetchConversation,
     TResult? Function(_createChatRoom value)? createChatRoom,
+    TResult? Function(_createNewMessage value)? createNewMessage,
   }) {
     return createChatRoom?.call(this);
   }
@@ -491,6 +518,7 @@ class _$_createChatRoom implements _createChatRoom {
     TResult Function(_fetchChatRooms value)? fetchChatRooms,
     TResult Function(_fetchConversation value)? fetchConversation,
     TResult Function(_createChatRoom value)? createChatRoom,
+    TResult Function(_createNewMessage value)? createNewMessage,
     required TResult orElse(),
   }) {
     if (createChatRoom != null) {
@@ -508,5 +536,162 @@ abstract class _createChatRoom implements ChatEvent {
   ChatMessage get message;
   @JsonKey(ignore: true)
   _$$_createChatRoomCopyWith<_$_createChatRoom> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_createNewMessageCopyWith<$Res> {
+  factory _$$_createNewMessageCopyWith(
+          _$_createNewMessage value, $Res Function(_$_createNewMessage) then) =
+      __$$_createNewMessageCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String chatId, ChatMessage message});
+}
+
+/// @nodoc
+class __$$_createNewMessageCopyWithImpl<$Res>
+    extends _$ChatEventCopyWithImpl<$Res, _$_createNewMessage>
+    implements _$$_createNewMessageCopyWith<$Res> {
+  __$$_createNewMessageCopyWithImpl(
+      _$_createNewMessage _value, $Res Function(_$_createNewMessage) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chatId = null,
+    Object? message = null,
+  }) {
+    return _then(_$_createNewMessage(
+      null == chatId
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as ChatMessage,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_createNewMessage implements _createNewMessage {
+  _$_createNewMessage(this.chatId, this.message);
+
+  @override
+  final String chatId;
+  @override
+  final ChatMessage message;
+
+  @override
+  String toString() {
+    return 'ChatEvent.createNewMessage(chatId: $chatId, message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_createNewMessage &&
+            (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, chatId, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_createNewMessageCopyWith<_$_createNewMessage> get copyWith =>
+      __$$_createNewMessageCopyWithImpl<_$_createNewMessage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function(String chatId) fetchConversation,
+    required TResult Function(ChatModel chat, ChatMessage message)
+        createChatRoom,
+    required TResult Function(String chatId, ChatMessage message)
+        createNewMessage,
+  }) {
+    return createNewMessage(chatId, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function(String chatId)? fetchConversation,
+    TResult? Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult? Function(String chatId, ChatMessage message)? createNewMessage,
+  }) {
+    return createNewMessage?.call(chatId, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userId)? fetchChatRooms,
+    TResult Function(String chatId)? fetchConversation,
+    TResult Function(ChatModel chat, ChatMessage message)? createChatRoom,
+    TResult Function(String chatId, ChatMessage message)? createNewMessage,
+    required TResult orElse(),
+  }) {
+    if (createNewMessage != null) {
+      return createNewMessage(chatId, message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_fetchChatRooms value) fetchChatRooms,
+    required TResult Function(_fetchConversation value) fetchConversation,
+    required TResult Function(_createChatRoom value) createChatRoom,
+    required TResult Function(_createNewMessage value) createNewMessage,
+  }) {
+    return createNewMessage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_fetchChatRooms value)? fetchChatRooms,
+    TResult? Function(_fetchConversation value)? fetchConversation,
+    TResult? Function(_createChatRoom value)? createChatRoom,
+    TResult? Function(_createNewMessage value)? createNewMessage,
+  }) {
+    return createNewMessage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_fetchChatRooms value)? fetchChatRooms,
+    TResult Function(_fetchConversation value)? fetchConversation,
+    TResult Function(_createChatRoom value)? createChatRoom,
+    TResult Function(_createNewMessage value)? createNewMessage,
+    required TResult orElse(),
+  }) {
+    if (createNewMessage != null) {
+      return createNewMessage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _createNewMessage implements ChatEvent {
+  factory _createNewMessage(final String chatId, final ChatMessage message) =
+      _$_createNewMessage;
+
+  String get chatId;
+  ChatMessage get message;
+  @JsonKey(ignore: true)
+  _$$_createNewMessageCopyWith<_$_createNewMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,6 +6,8 @@ import 'package:artisanmill_group5capstoneproject/domain/models/all_artisans.dar
 import 'package:bloc/bloc.dart';
 import 'dart:developer' as dev;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
   ArtisanBloc() : super(ArtisanState.uninitiated()) {
     on<CreateArtisanDocumentEvent>(onCreateArtisanDocument);
@@ -13,14 +15,27 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
     on<UpdateArtisanDocumentEvent>(onUpdateArtisanDocument);
 
     on<FetchAllArtisansEvent>(onFetchAllArtisans);
+
+    on<FetchArtisanProfileEvent>(onFetchArtisanProfile);
   }
 
   final FirebaseArtisanHelper artisanHelper = FirebaseArtisanHelper();
 
-  void onCreateArtisanDocument(
-    CreateArtisanDocumentEvent event,
-    Emitter<ArtisanState> emit,
-  ) async {
+  void onFetchArtisanProfile(FetchArtisanProfileEvent event,
+      Emitter<ArtisanState> emit,) async {
+    emit(ArtisanState.loading());
+    try {
+      final DocumentSnapshot<dynamic> artisanDoc = await artisanHelper.fetchArtisanProfile(event.artisanId);
+      final artisan = ArtisanDto.fromJson(artisanDoc.data());
+      emit(ArtisanState.success(artisan));
+    } catch(e) {
+      dev.log(e.toString());
+      emit(ArtisanState.error('Error occurred while fetching profile'));
+    }
+  }
+
+  void onCreateArtisanDocument(CreateArtisanDocumentEvent event,
+      Emitter<ArtisanState> emit,) async {
     emit(ArtisanState.loading());
     try {
       final ArtisanDto artisan = ArtisanDto(
@@ -38,10 +53,8 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
     }
   }
 
-  void onFetchAllArtisans(
-    FetchAllArtisansEvent event,
-    Emitter<ArtisanState> emit,
-  ) async {
+  void onFetchAllArtisans(FetchAllArtisansEvent event,
+      Emitter<ArtisanState> emit,) async {
     emit(ArtisanState.loading());
     try {
       // final categories = [
@@ -70,13 +83,16 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
 
       final snapshots = await artisanHelper.fetchAllArtisan();
       final allArtisans = snapshots?.docs.map((dynamic docSnapshot) {
-        final artisan = ArtisanDto.fromJson(docSnapshot.data());
+        var artisan = ArtisanDto.fromJson(docSnapshot.data());
+        artisan = artisan.copyWith(
+          id: docSnapshot.id
+        );
         return artisan;
       }).toList();
 
       final makeUpArtists = allArtisans
           ?.where((element) =>
-              element.category == ArtisanCategory.makeupArtist.name)
+      element.category == ArtisanCategory.makeupArtist.name)
           .toList();
 
       final mechanics = allArtisans
@@ -91,7 +107,7 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
 
       final hairStylists = allArtisans
           ?.where((element) =>
-              element.category == ArtisanCategory.hairStylists.name)
+      element.category == ArtisanCategory.hairStylists.name)
           .toList();
 
       final plumbers = allArtisans
@@ -134,8 +150,6 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
     }
   }
 
-  void onUpdateArtisanDocument(
-    UpdateArtisanDocumentEvent event,
-    Emitter<ArtisanState> emit,
-  ) {}
+  void onUpdateArtisanDocument(UpdateArtisanDocumentEvent event,
+      Emitter<ArtisanState> emit,) {}
 }

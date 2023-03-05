@@ -1,13 +1,24 @@
+import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/custom_text_field.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  final UserDto user;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -18,12 +29,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _stateController;
   late final TextEditingController _countryController;
+  late final UserDto user;
 
   @override
   void initState() {
+    user = widget.user;
     _nameController = TextEditingController();
     _stateController = TextEditingController();
     _countryController = TextEditingController();
+    _nameController.text = user.name ?? '';
+    _stateController.text = user.state ?? '';
+    _countryController.text == user.country ?? '';
     super.initState();
   }
 
@@ -95,36 +111,82 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       label: 'Name',
                       hintText: 'Enter your name',
                       controller: _nameController,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'Name required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 22.h),
                     CustomTextField(
-                      label: 'Name',
+                      label: 'State',
                       hintText: 'Enter your state',
                       controller: _stateController,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'State required';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 22.h),
                     CustomTextField(
-                      label: 'Name',
+                      label: 'Country',
                       hintText: 'Enter your country',
                       controller: _countryController,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value!.trim().isEmpty) {
+                          return 'Country required';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
               ),
             ),
             SizedBox(height: 60.h),
-            PlainAppButton(
-              width: 157.w,
-              height: 50.h,
-              text: 'Done',
-              onTap: () {},
+            BlocConsumer<UserBloc, UserState>(
+              listener: (context, state) {
+                state.maybeWhen(
+                  orElse: () => null,
+                  error: (message) => context.showErrorSnackBar(message),
+                  success: (_) => context.pop(),
+                );
+              },
+              builder: (context, state) {
+                return state.maybeWhen(
+                    orElse: () => PlainAppButton(
+                          width: 157.w,
+                          height: 50.h,
+                          text: 'Done',
+                          onTap: () => updateUserDetails(),
+                        ),
+                    loading: () => const Center(
+                          child: CircularProgressIndicator(),
+                        ));
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void updateUserDetails() {
+    if (_formKey.currentState!.validate()) {
+      final name = _nameController.text.trim();
+      final state = _stateController.text.trim();
+      final country = _countryController.text.trim();
+
+      final userBloc = BlocProvider.of<UserBloc>(context);
+      userBloc.add(UpdateUserDocumentEvent(
+          user: user.copyWith(
+        name: name,
+        state: state,
+        country: country,
+      )));
+    }
   }
 }

@@ -1,9 +1,11 @@
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/chat_message.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/avatar_widget.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatMessageItem extends StatelessWidget {
@@ -16,7 +18,8 @@ class ChatMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return message.sender == 'A'
+    final userId = BlocProvider.of<UserBloc>(context).userId;
+    return message.sender != userId
         ? _buildReceiverContainer(context)
         : _buildSenderContainer(context);
   }

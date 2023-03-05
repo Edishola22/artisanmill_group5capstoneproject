@@ -139,7 +139,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       listener: (context, state) {
                         state.maybeWhen(
                           orElse: () => null,
-                          success: () {
+                          success: (_) {
                             context.showSuccessSnackBar('Profile created!');
                             _navigateToHome();
                           },
