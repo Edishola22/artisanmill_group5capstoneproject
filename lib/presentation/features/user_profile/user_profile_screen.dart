@@ -140,7 +140,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _navigateToEditProfile(BuildContext context, UserDto user) {
     context.goNamed(
-      'edit-profile',
+      'user-edit-profile',
       extra: user,
     );
   }

@@ -36,8 +36,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/facebook.svg
   SvgGenImage get facebook => const SvgGenImage('assets/icons/facebook.svg');
 
+  /// File path: assets/icons/facebook_colored_icon.svg
+  SvgGenImage get facebookColoredIcon =>
+      const SvgGenImage('assets/icons/facebook_colored_icon.svg');
+
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
+
+  /// File path: assets/icons/google_colored_icon.svg
+  SvgGenImage get googleColoredIcon =>
+      const SvgGenImage('assets/icons/google_colored_icon.svg');
 
   /// File path: assets/icons/hamburger_icon.svg
   SvgGenImage get hamburgerIcon =>
@@ -122,7 +130,9 @@ class $AssetsIconsGen {
         calendarIcon,
         chatIcon,
         facebook,
+        facebookColoredIcon,
         google,
+        googleColoredIcon,
         hamburgerIcon,
         help,
         homeIcon,
@@ -162,6 +172,14 @@ class $AssetsImagesGen {
   AssetGenImage get cleaning =>
       const AssetGenImage('assets/images/cleaning.png');
 
+  /// File path: assets/images/facebook_colored_logo.png
+  AssetGenImage get facebookColoredLogo =>
+      const AssetGenImage('assets/images/facebook_colored_logo.png');
+
+  /// File path: assets/images/google_colored_logo.png
+  AssetGenImage get googleColoredLogo =>
+      const AssetGenImage('assets/images/google_colored_logo.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
@@ -194,6 +212,8 @@ class $AssetsImagesGen {
         artisanAvatar,
         chatAvatar,
         cleaning,
+        facebookColoredLogo,
+        googleColoredLogo,
         logo,
         maintenace,
         mechanical,

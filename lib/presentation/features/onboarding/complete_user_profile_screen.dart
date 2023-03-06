@@ -95,7 +95,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       label: 'State',
                       hintText: 'Enter your state',
                       controller: _stateController,
-                      inputType: TextInputType.name,
+                      inputType: TextInputType.text,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'State required';
@@ -108,7 +108,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
                       label: 'City',
                       controller: _cityController,
                       hintText: 'Enter your city',
-                      inputType: TextInputType.name,
+                      inputType: TextInputType.text,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'City required';
@@ -192,6 +192,6 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
   }
 
   void _navigateToHome() {
-    context.goNamed('home');
+    context.goNamed('user-home');
   }
 }

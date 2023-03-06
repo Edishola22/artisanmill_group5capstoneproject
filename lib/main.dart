@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'domain/blocs/auth_bloc/auth_event.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -34,7 +36,9 @@ class MyApp extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => AuthBloc(),
+                create: (context) => AuthBloc()
+                ..add(CheckAuthStatusEvent()),
+                lazy: false,
               ),
               BlocProvider(
                 create: (context) => NavigationBloc(),

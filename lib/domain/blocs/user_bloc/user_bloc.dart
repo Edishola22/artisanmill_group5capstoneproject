@@ -1,4 +1,5 @@
 import 'package:artisanmill_group5capstoneproject/data/helpers/firebase_user_helper.dart';
+import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_state.dart';
@@ -18,6 +19,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
 
   final FirebaseUserHelper userHelper = FirebaseUserHelper();
+  final AppPreferences appPreferences = AppPreferences();
 
   String get userId => userHelper.userId;
 
@@ -26,7 +28,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       Emitter<UserState> emit,) async {
     emit(UserState.loading());
     try {
+      dev.log('Userid is $userId');
       final DocumentSnapshot<dynamic> userDoc = await userHelper.fetchUserDetails(userId);
+      dev.log('user doc is $userDoc');
       final user = UserDto.fromJson(userDoc.data());
       emit(UserState.success(user));
     } catch (e) {

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_event.dart';
@@ -107,7 +105,7 @@ class _CompleteArtisanProfileScreenState
                     CustomTextField(
                       label: 'State',
                       controller: _stateController,
-                      inputType: TextInputType.name,
+                      inputType: TextInputType.text,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'State required';
@@ -119,7 +117,7 @@ class _CompleteArtisanProfileScreenState
                     CustomTextField(
                       label: 'Occupation',
                       controller: _occupationController,
-                      inputType: TextInputType.name,
+                      inputType: TextInputType.text,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'Occupation required';
@@ -130,7 +128,7 @@ class _CompleteArtisanProfileScreenState
                     SizedBox(height: 24.h),
                     CustomTextField(
                       label: 'Business Description',
-                      inputType: TextInputType.streetAddress,
+                      inputType: TextInputType.text,
                       controller: _businessDescriptionController,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
@@ -309,6 +307,6 @@ class _CompleteArtisanProfileScreenState
   }
 
   void _navigateToHome() {
-    context.goNamed('home');
+    context.goNamed('user-home');
   }
 }

@@ -1,35 +1,64 @@
 import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_state.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/calendar/calendar.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_detail_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/chat/chat_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/home/home_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/home/log_out_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/login_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/sign_up_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/splash_screen.dart';
-import 'package:artisanmill_group5capstoneproject/presentation/features/profile/edit_profile.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/search/artisan_profile_detail.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/security_settings.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/settings_screen.dart';
-import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_section_navigation.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/home/user_navigation_section_.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/account_chooser.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/complete_artisan_profile_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/onboarding_screen.dart';
-import 'package:artisanmill_group5capstoneproject/presentation/features/profile/profile_screen.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/search/search_screen.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/user_profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer' as dev;
 
 import '../presentation/features/onboarding/complete_user_profile_screen.dart';
+import '../presentation/features/user_profile/user_profile_screen.dart';
 
 class AppRouter {
   final _rootNavKey = GlobalKey<NavigatorState>();
   final _shellNavKey = GlobalKey<NavigatorState>();
   late final router = GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/',
     navigatorKey: _rootNavKey,
     debugLogDiagnostics: true,
+    redirect: (context, state) {
+      dev.log('redirect called');
+      final authBloc = BlocProvider.of<AuthBloc>(context);
+      final isNotLoggedIn = authBloc.state == AuthState.unauthenticated();
+      final isOnboardingScreen = state.location == '/onboarding';
+      final isAccountChooserScreen = state.location == '/account-chooser';
+      final isCompleteProfileScreen =
+          state.location == '/complete-user-profile';
+      final isLoginScreen = state.location == '/login';
+      final isRegisterScreen = state.location == '/register';
+      final isLogoutScreen = state.location == '/home/logout';
+
+      if (isNotLoggedIn &&
+          (!isOnboardingScreen &&
+              !isAccountChooserScreen &&
+              !isCompleteProfileScreen &&
+              !isLogoutScreen &&
+              !isLoginScreen &&
+              !isRegisterScreen)) {
+        return '/login';
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/',
@@ -55,7 +84,10 @@ class AppRouter {
         builder: (context, state) {
           final phoneNumber = state.queryParams['phone'];
 
-          return CompleteUserProfileScreen(phoneNumber: phoneNumber);
+          return BlocProvider(
+            create: (context) => UserBloc(),
+            child: CompleteUserProfileScreen(phoneNumber: phoneNumber),
+          );
         },
       ),
       GoRoute(
@@ -67,15 +99,39 @@ class AppRouter {
           return CompleteArtisanProfileScreen(phoneNumber: phoneNumber);
         },
       ),
+      GoRoute(
+        path: '/login',
+        name: 'login',
+        builder: (context, state) {
+          //final phoneNumber = state.queryParams['phone'];
+
+          return const LoginScreen();
+        },
+      ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) {
+          //final phoneNumber = state.queryParams['phone'];
+
+          return const SignUpScreen();
+        },
+      ),
       ShellRoute(
           navigatorKey: _shellNavKey,
           builder: (context, state, child) {
-            return ScaffoldWithNavBar(child: child);
+            return UserScaffoldWithNavBar(child: child);
           },
           routes: [
             GoRoute(
-              path: '/home',
-              name: 'home',
+              path: '/user-home',
+              name: 'user-home',
+              routes: [
+                GoRoute(
+                    path: 'logout',
+                    name: 'logout',
+                    builder: (context, state) => const LogoutScreen())
+              ],
               builder: (context, state) {
                 return const HomeTab();
               },
@@ -133,15 +189,15 @@ class AppRouter {
               },
             ),
             GoRoute(
-              path: '/profile',
-              name: 'profile',
+              path: '/user-profile',
+              name: 'user-profile',
               routes: [
                 GoRoute(
-                    path: 'edit-profile',
-                    name: 'edit-profile',
+                    path: 'user-edit-profile',
+                    name: 'user-edit-profile',
                     builder: (context, state) {
                       final user = state.extra as UserDto;
-                      return EditProfileScreen(user: user);
+                      return UserEditProfileScreen(user: user);
                     })
               ],
               builder: (context, state) {

@@ -12,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({
+class UserEditProfileScreen extends StatefulWidget {
+  const UserEditProfileScreen({
     Key? key,
     required this.user,
   }) : super(key: key);
@@ -21,10 +21,10 @@ class EditProfileScreen extends StatefulWidget {
   final UserDto user;
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<UserEditProfileScreen> createState() => _UserEditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _UserEditProfileScreenState extends State<UserEditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   late final TextEditingController _nameController;
   late final TextEditingController _stateController;

@@ -10,8 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 
-class ScaffoldWithNavBar extends StatefulWidget {
-  const ScaffoldWithNavBar({
+class UserScaffoldWithNavBar extends StatefulWidget {
+  const UserScaffoldWithNavBar({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -19,10 +19,10 @@ class ScaffoldWithNavBar extends StatefulWidget {
   final Widget child;
 
   @override
-  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
+  State<UserScaffoldWithNavBar> createState() => _UserScaffoldWithNavBarState();
 }
 
-class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
+class _UserScaffoldWithNavBarState extends State<UserScaffoldWithNavBar> {
   final ValueNotifier<int> _currentIndex = ValueNotifier(0);
 
   @override

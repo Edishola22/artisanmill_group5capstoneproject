@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    required this.label,
     required this.controller,
     required this.validator,
     this.inputType,
@@ -15,10 +14,11 @@ class CustomTextField extends StatelessWidget {
     this.onShowPassword,
     this.isPasswordVisible,
     this.hintText,
+    this.label,
     this.inputFormatters,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final bool isPassword;
   final TextEditingController controller;
   final VoidCallback? onShowPassword;
@@ -33,8 +33,8 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
+        if(label != null) Text(
+          label!,
           style: context.textTheme.bodyLarge,
         ),
         SizedBox(height: 4.h),

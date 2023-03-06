@@ -16,7 +16,7 @@ class NavItem {
     NavItem(
       title: 'Home',
       iconPath: Assets.icons.homeIcon.path,
-      initialLocation: '/home',
+      initialLocation: '/user-home',
     ),
     NavItem(
       title: 'Chat',
@@ -36,7 +36,7 @@ class NavItem {
     NavItem(
       title: 'Profile',
       iconPath: Assets.icons.profileIcon.path,
-      initialLocation: '/profile',
+      initialLocation: '/user-profile',
     ),
 
   ];

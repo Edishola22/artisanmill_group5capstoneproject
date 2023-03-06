@@ -9,21 +9,25 @@ class FilledAppButton extends StatelessWidget {
     required this.height,
     required this.text,
     required this.onTap,
+    this.color,
   }) : super(key: key);
   final double width;
   final double height;
   final String text;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-          fixedSize: Size(width, height),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          )),
+        fixedSize: Size(width, height),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        backgroundColor: color
+      ),
       child: Text(
         text,
         style: context.textTheme.bodyLarge,

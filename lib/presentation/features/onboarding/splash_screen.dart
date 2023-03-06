@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_state.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer' as dev;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -21,7 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if(mounted) {
-        context.goNamed('onboarding');
+        final authBloc = BlocProvider.of<AuthBloc>(context);
+        if(authBloc.state == AuthState.authenticated()) {
+          context.goNamed('user-home');
+        } else {
+          context.goNamed('onboarding');
+        }
       }
     });
     super.initState();

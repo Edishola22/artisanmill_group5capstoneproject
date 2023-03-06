@@ -26,6 +26,7 @@ class FirebaseUserHelper {
      final user =  userDto.copyWith(
         id: currentUser?.uid,
        email: currentUser!.email!,
+       country: '',
       );
       await usersRef.doc(user.id).set(user.toJson());
     }

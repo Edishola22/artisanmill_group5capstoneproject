@@ -115,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                     listener: (context, state) {
                       state.maybeWhen(
                         orElse: () => null,
-                        success: () {
+                        authenticated: () {
                           context.showSuccessSnackBar(
                             'Account created successfully!',
                           );
@@ -154,15 +154,13 @@ class _SignUpState extends State<SignUp> {
 
   void _signInWithGoogleAccount() {
     final authBloc = BlocProvider.of<AuthBloc>(context);
-    authBloc.add(
-      GoogleSignInEvent()
-    );
+    authBloc.add(GoogleSignInEvent());
   }
 
   void _createAccount() {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
-      final password = _emailController.text.trim();
+      final password = _passwordController.text.trim();
 
       final authBloc = BlocProvider.of<AuthBloc>(context);
       authBloc.add(
@@ -176,9 +174,7 @@ class _SignUpState extends State<SignUp> {
 
   void _navigateToChooseAccount() {
     final phoneNumber = _phoneController.text.trim();
-    context.goNamed('account-chooser', queryParams: {
-      'phone': phoneNumber
-    });
+    context.goNamed('account-chooser', queryParams: {'phone': phoneNumber});
   }
 
   Widget _buildSignInText() {
@@ -192,14 +188,20 @@ class _SignUpState extends State<SignUp> {
               style: context.textTheme.titleLarge,
               children: [
                 TextSpan(
-                    text: 'Sign In',
-                    style: context.textTheme.titleLarge
-                        ?.copyWith(color: context.colors.secondary),
-                    recognizer: TapGestureRecognizer()..onTap = () {}),
+                  text: 'Sign In',
+                  style: context.textTheme.titleLarge
+                      ?.copyWith(color: context.colors.secondary),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => _navigateToLogin(),
+                ),
               ]),
         ),
       ),
     );
+  }
+
+  void _navigateToLogin() {
+    context.goNamed('login');
   }
 
   Widget _buildSocialLoginRow() {

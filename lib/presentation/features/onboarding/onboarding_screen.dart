@@ -1,6 +1,8 @@
 import 'package:artisanmill_group5capstoneproject/domain/models/onboarding_item.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/widgets/auth_header.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/widgets/onboarding_screen_item.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/onboarding/widgets/sign_up.dart';
+import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/plain_app_button.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
@@ -53,10 +55,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                         duration: const Duration(milliseconds: 500),
                         switchInCurve: Curves.fastOutSlowIn,
                         child: lastPage
-                            ? _buildSignUpHeader()
-                            : Image.asset(
-                                Assets.images.logo.path,
-                                width: 103.w,
+                            ? AuthHeader(
+                                key: UniqueKey(),
+                              )
+                            : AppLogo(
                                 key: UniqueKey(),
                               ),
                       ),
@@ -137,26 +139,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       2,
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeIn,
-    );
-  }
-
-  Widget _buildSignUpHeader() {
-    return Column(
-      key: UniqueKey(),
-      children: [
-        Image.asset(
-          Assets.images.logo.path,
-          width: 210.w,
-          height: 28.h,
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          'Just The Connect You Need',
-          style: TextStyle(
-            fontSize: 16.sp,
-          ),
-        ),
-      ],
     );
   }
 

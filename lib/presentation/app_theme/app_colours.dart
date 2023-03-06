@@ -10,5 +10,9 @@ class AppColours {
   static const purpleShadeThree = Color(0xFF3D1FF8);
   static const purpleShadeFour = Color(0xFF9483FB);
   static const purpleShadeFive = Color(0xFFF6F5FF);
+  static const purpleShadeSix = Color(0xFF160062);
   static const grayShade = Color(0xFFD7D7D7);
+  static const redShade = Color(0xFFE86969);
+  static const blueShade = Color(0xFF1877F2);
+  static const blueShadeTwo = Color(0xFF2F89FC);
 }
