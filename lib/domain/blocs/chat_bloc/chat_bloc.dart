@@ -67,7 +67,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       dev.log('Chat user is ${user.name}');
 
-      final artisanDoc = await artisanHelper.artisanDoc(userId);
+      final artisanDoc = await artisanHelper.artisanDoc(artisanId);
       final artisan =
           ArtisanDto.fromJson(artisanDoc.data() as Map<String, dynamic>);
 
