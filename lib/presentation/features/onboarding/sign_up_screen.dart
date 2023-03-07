@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       listener: (context, state) {
                         state.maybeWhen(
                           orElse: () => null,
-                          authenticated: () {
+                          authenticatedUnknown: () {
                             context.showSuccessSnackBar(
                               'Account created successfully!',
                             );

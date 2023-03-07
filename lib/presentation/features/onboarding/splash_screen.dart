@@ -26,9 +26,17 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if(mounted) {
         final authBloc = BlocProvider.of<AuthBloc>(context);
-        if(authBloc.state == AuthState.authenticated()) {
+        dev.log('Auth state is ${authBloc.state}');
+        if(authBloc.state == AuthState.authenticatedUser()) {
           context.goNamed('user-home');
-        } else {
+        }
+        else if(authBloc.state == AuthState.authenticatedArtisan()) {
+          context.goNamed('artisan-home');
+        }
+        else if(authBloc.state == AuthState.authenticatedUnknown()) {
+          context.goNamed('account-chooser');
+        }
+        else {
           context.goNamed('onboarding');
         }
       }

@@ -21,15 +21,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final FirebaseUserHelper userHelper = FirebaseUserHelper();
   final AppPreferences appPreferences = AppPreferences();
 
-  String get userId => userHelper.userId;
+
 
 
   void onFetchUserProfile(FetchUserProfileEvent event,
       Emitter<UserState> emit,) async {
     emit(UserState.loading());
     try {
-      dev.log('Userid is $userId');
-      final DocumentSnapshot<dynamic> userDoc = await userHelper.fetchUserDetails(userId);
+      final DocumentSnapshot<dynamic> userDoc = await userHelper.fetchUserDetails(event.userId);
       dev.log('user doc is $userDoc');
       final user = UserDto.fromJson(userDoc.data());
       emit(UserState.success(user));
@@ -51,6 +50,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         streetAddress: event.address,
       );
       await userHelper.createUserProfile(user);
+      appPreferences.setUserType(UserType.user);
       emit(UserState.success(null));
     } catch (_) {
       emit(UserState.error('Failed to create user details'));

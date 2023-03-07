@@ -1,7 +1,5 @@
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_event.dart';
-import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_bloc.dart';
-import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_event.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/settings/widgets/settings_item.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/shared/app_logo.dart';
@@ -11,7 +9,6 @@ import 'package:artisanmill_group5capstoneproject/utils/extensions/context_exten
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -21,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppLogo(),
+        title: AppLogo(),
         leading: const SizedBox.shrink(),
         centerTitle: true,
       ),

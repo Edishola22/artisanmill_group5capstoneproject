@@ -17,6 +17,17 @@ class FirebaseArtisanHelper {
   CollectionReference artisansRef =
       FirebaseFirestore.instance.collection('artisans');
 
+
+  Future<bool> userIsArtisan(String userId) async {
+    final doc = await artisansRef.doc(userId).get();
+    return doc.exists;
+  }
+
+  Future<DocumentSnapshot> artisanDoc(String userId) async {
+    final doc = await artisansRef.doc(userId).get();
+    return doc;
+  }
+
   Future<void> createArtisanProfile(ArtisanDto artisanDto) async {
     try {
       final artisan = artisanDto.copyWith(

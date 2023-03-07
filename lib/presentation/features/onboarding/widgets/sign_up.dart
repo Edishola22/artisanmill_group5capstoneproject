@@ -115,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                     listener: (context, state) {
                       state.maybeWhen(
                         orElse: () => null,
-                        authenticated: () {
+                        authenticatedUnknown: () {
                           context.showSuccessSnackBar(
                             'Account created successfully!',
                           );

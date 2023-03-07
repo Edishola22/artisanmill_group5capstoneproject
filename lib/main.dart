@@ -1,7 +1,8 @@
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_navigation_bloc/artisan_navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
-import 'package:artisanmill_group5capstoneproject/domain/blocs/navigation_bloc/navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_bloc/user_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/firebase_options.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_theme.dart';
 import 'package:artisanmill_group5capstoneproject/routing/app_router.dart';
@@ -41,10 +42,14 @@ class MyApp extends StatelessWidget {
                 lazy: false,
               ),
               BlocProvider(
-                create: (context) => NavigationBloc(),
+                create: (context) => UserNavigationBloc(),
+              ),
+              BlocProvider(
+                create: (context) => ArtisanNavigationBloc(),
               ),
               BlocProvider(
                 create: (context) => UserBloc(),
+                lazy: false,
               ),
               BlocProvider(
                 create: (context) => ArtisanBloc(),

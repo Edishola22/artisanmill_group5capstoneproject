@@ -136,9 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 listener: (context, state) {
                   state.maybeWhen(
                     orElse: () => null,
-                    authenticated: () {
-                      _navigateToHome();
+                    authenticatedUser: () => _navigateToUserHome(),
+                    authenticatedUnknown: () {
+                      _navigateToChooseAccount();
                     },
+                    authenticatedArtisan: () => _navigateToArtisanHome(),
                     error: (message) => context.showErrorSnackBar(message),
                   );
                 },
@@ -292,11 +294,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _navigateToChooseAccount() {
+    context.goNamed('account-chooser');
+  }
+
+
   void _navigateToSignUp() {
     context.goNamed('register');
   }
 
-  void _navigateToHome() {
+  void _navigateToUserHome() {
     context.goNamed('user-home');
+  }
+
+  void _navigateToArtisanHome() {
+    context.goNamed('artisan-home');
   }
 }

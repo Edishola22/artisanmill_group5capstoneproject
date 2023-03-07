@@ -35,6 +35,17 @@ class FirebaseUserHelper {
     }
   }
 
+
+  Future<bool> userIsNormalUser(String userId) async {
+    final doc = await usersRef.doc(userId).get();
+    return doc.exists;
+  }
+
+  Future<DocumentSnapshot> userDoc(String userId) async {
+    final doc = await usersRef.doc(userId).get();
+    return doc;
+  }
+
   Future<DocumentSnapshot> fetchUserDetails(String userId) async {
     final doc = await usersRef.doc(userId).get();
     return doc;

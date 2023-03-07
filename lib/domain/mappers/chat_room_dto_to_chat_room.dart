@@ -6,14 +6,10 @@ extension ChatRoomDtoMapper on ChatRoomDto {
   ChatModel toChatRoom() {
     return ChatModel(
       id: id!,
-      userOneId: userOne,
-      userTwoId: userTwo,
-      userOneName: userOneName,
-      userTwoName: userTwoName,
+      user: user,
+      artisan: artisan,
       recentMessage: lastMessage,
       timeStamp: DateTime.fromMillisecondsSinceEpoch(int.tryParse(timestamp) ?? 0),
-      userOneAvatar: userOneImageUrl,
-      userTwoAvatar: userTwoImageUrl,
     );
   }
 }

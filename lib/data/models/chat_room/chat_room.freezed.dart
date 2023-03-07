@@ -21,22 +21,12 @@ ChatRoomDto _$ChatRoomDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatRoomDto {
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_one')
-  String get userOne => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_two')
-  String get userTwo => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_one_name')
-  String get userOneName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_two_name')
-  String get userTwoName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_one_image_url')
-  String get userOneImageUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_two_image_url')
-  String get userTwoImageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_message')
   String get lastMessage => throw _privateConstructorUsedError;
   @JsonKey(name: 'timestamp')
   String get timestamp => throw _privateConstructorUsedError;
+  UserDto get user => throw _privateConstructorUsedError;
+  ArtisanDto get artisan => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,14 +42,13 @@ abstract class $ChatRoomDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      @JsonKey(name: 'user_one') String userOne,
-      @JsonKey(name: 'user_two') String userTwo,
-      @JsonKey(name: 'user_one_name') String userOneName,
-      @JsonKey(name: 'user_two_name') String userTwoName,
-      @JsonKey(name: 'user_one_image_url') String userOneImageUrl,
-      @JsonKey(name: 'user_two_image_url') String userTwoImageUrl,
       @JsonKey(name: 'last_message') String lastMessage,
-      @JsonKey(name: 'timestamp') String timestamp});
+      @JsonKey(name: 'timestamp') String timestamp,
+      UserDto user,
+      ArtisanDto artisan});
+
+  $UserDtoCopyWith<$Res> get user;
+  $ArtisanDtoCopyWith<$Res> get artisan;
 }
 
 /// @nodoc
@@ -76,44 +65,16 @@ class _$ChatRoomDtoCopyWithImpl<$Res, $Val extends ChatRoomDto>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userOne = null,
-    Object? userTwo = null,
-    Object? userOneName = null,
-    Object? userTwoName = null,
-    Object? userOneImageUrl = null,
-    Object? userTwoImageUrl = null,
     Object? lastMessage = null,
     Object? timestamp = null,
+    Object? user = null,
+    Object? artisan = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userOne: null == userOne
-          ? _value.userOne
-          : userOne // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwo: null == userTwo
-          ? _value.userTwo
-          : userTwo // ignore: cast_nullable_to_non_nullable
-              as String,
-      userOneName: null == userOneName
-          ? _value.userOneName
-          : userOneName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwoName: null == userTwoName
-          ? _value.userTwoName
-          : userTwoName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userOneImageUrl: null == userOneImageUrl
-          ? _value.userOneImageUrl
-          : userOneImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwoImageUrl: null == userTwoImageUrl
-          ? _value.userTwoImageUrl
-          : userTwoImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       lastMessage: null == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
@@ -122,7 +83,31 @@ class _$ChatRoomDtoCopyWithImpl<$Res, $Val extends ChatRoomDto>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserDto,
+      artisan: null == artisan
+          ? _value.artisan
+          : artisan // ignore: cast_nullable_to_non_nullable
+              as ArtisanDto,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDtoCopyWith<$Res> get user {
+    return $UserDtoCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ArtisanDtoCopyWith<$Res> get artisan {
+    return $ArtisanDtoCopyWith<$Res>(_value.artisan, (value) {
+      return _then(_value.copyWith(artisan: value) as $Val);
+    });
   }
 }
 
@@ -136,14 +121,15 @@ abstract class _$$_ChatRoomDtoCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
-      @JsonKey(name: 'user_one') String userOne,
-      @JsonKey(name: 'user_two') String userTwo,
-      @JsonKey(name: 'user_one_name') String userOneName,
-      @JsonKey(name: 'user_two_name') String userTwoName,
-      @JsonKey(name: 'user_one_image_url') String userOneImageUrl,
-      @JsonKey(name: 'user_two_image_url') String userTwoImageUrl,
       @JsonKey(name: 'last_message') String lastMessage,
-      @JsonKey(name: 'timestamp') String timestamp});
+      @JsonKey(name: 'timestamp') String timestamp,
+      UserDto user,
+      ArtisanDto artisan});
+
+  @override
+  $UserDtoCopyWith<$Res> get user;
+  @override
+  $ArtisanDtoCopyWith<$Res> get artisan;
 }
 
 /// @nodoc
@@ -158,44 +144,16 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userOne = null,
-    Object? userTwo = null,
-    Object? userOneName = null,
-    Object? userTwoName = null,
-    Object? userOneImageUrl = null,
-    Object? userTwoImageUrl = null,
     Object? lastMessage = null,
     Object? timestamp = null,
+    Object? user = null,
+    Object? artisan = null,
   }) {
     return _then(_$_ChatRoomDto(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userOne: null == userOne
-          ? _value.userOne
-          : userOne // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwo: null == userTwo
-          ? _value.userTwo
-          : userTwo // ignore: cast_nullable_to_non_nullable
-              as String,
-      userOneName: null == userOneName
-          ? _value.userOneName
-          : userOneName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwoName: null == userTwoName
-          ? _value.userTwoName
-          : userTwoName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userOneImageUrl: null == userOneImageUrl
-          ? _value.userOneImageUrl
-          : userOneImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      userTwoImageUrl: null == userTwoImageUrl
-          ? _value.userTwoImageUrl
-          : userTwoImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       lastMessage: null == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
@@ -204,6 +162,14 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserDto,
+      artisan: null == artisan
+          ? _value.artisan
+          : artisan // ignore: cast_nullable_to_non_nullable
+              as ArtisanDto,
     ));
   }
 }
@@ -213,14 +179,10 @@ class __$$_ChatRoomDtoCopyWithImpl<$Res>
 class _$_ChatRoomDto implements _ChatRoomDto {
   _$_ChatRoomDto(
       {this.id,
-      @JsonKey(name: 'user_one') required this.userOne,
-      @JsonKey(name: 'user_two') required this.userTwo,
-      @JsonKey(name: 'user_one_name') required this.userOneName,
-      @JsonKey(name: 'user_two_name') required this.userTwoName,
-      @JsonKey(name: 'user_one_image_url') required this.userOneImageUrl,
-      @JsonKey(name: 'user_two_image_url') required this.userTwoImageUrl,
       @JsonKey(name: 'last_message') required this.lastMessage,
-      @JsonKey(name: 'timestamp') required this.timestamp});
+      @JsonKey(name: 'timestamp') required this.timestamp,
+      required this.user,
+      required this.artisan});
 
   factory _$_ChatRoomDto.fromJson(Map<String, dynamic> json) =>
       _$$_ChatRoomDtoFromJson(json);
@@ -228,33 +190,19 @@ class _$_ChatRoomDto implements _ChatRoomDto {
   @override
   final String? id;
   @override
-  @JsonKey(name: 'user_one')
-  final String userOne;
-  @override
-  @JsonKey(name: 'user_two')
-  final String userTwo;
-  @override
-  @JsonKey(name: 'user_one_name')
-  final String userOneName;
-  @override
-  @JsonKey(name: 'user_two_name')
-  final String userTwoName;
-  @override
-  @JsonKey(name: 'user_one_image_url')
-  final String userOneImageUrl;
-  @override
-  @JsonKey(name: 'user_two_image_url')
-  final String userTwoImageUrl;
-  @override
   @JsonKey(name: 'last_message')
   final String lastMessage;
   @override
   @JsonKey(name: 'timestamp')
   final String timestamp;
+  @override
+  final UserDto user;
+  @override
+  final ArtisanDto artisan;
 
   @override
   String toString() {
-    return 'ChatRoomDto(id: $id, userOne: $userOne, userTwo: $userTwo, userOneName: $userOneName, userTwoName: $userTwoName, userOneImageUrl: $userOneImageUrl, userTwoImageUrl: $userTwoImageUrl, lastMessage: $lastMessage, timestamp: $timestamp)';
+    return 'ChatRoomDto(id: $id, lastMessage: $lastMessage, timestamp: $timestamp, user: $user, artisan: $artisan)';
   }
 
   @override
@@ -263,35 +211,18 @@ class _$_ChatRoomDto implements _ChatRoomDto {
         (other.runtimeType == runtimeType &&
             other is _$_ChatRoomDto &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userOne, userOne) || other.userOne == userOne) &&
-            (identical(other.userTwo, userTwo) || other.userTwo == userTwo) &&
-            (identical(other.userOneName, userOneName) ||
-                other.userOneName == userOneName) &&
-            (identical(other.userTwoName, userTwoName) ||
-                other.userTwoName == userTwoName) &&
-            (identical(other.userOneImageUrl, userOneImageUrl) ||
-                other.userOneImageUrl == userOneImageUrl) &&
-            (identical(other.userTwoImageUrl, userTwoImageUrl) ||
-                other.userTwoImageUrl == userTwoImageUrl) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
             (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp));
+                other.timestamp == timestamp) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.artisan, artisan) || other.artisan == artisan));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userOne,
-      userTwo,
-      userOneName,
-      userTwoName,
-      userOneImageUrl,
-      userTwoImageUrl,
-      lastMessage,
-      timestamp);
+  int get hashCode =>
+      Object.hash(runtimeType, id, lastMessage, timestamp, user, artisan);
 
   @JsonKey(ignore: true)
   @override
@@ -310,22 +241,10 @@ class _$_ChatRoomDto implements _ChatRoomDto {
 abstract class _ChatRoomDto implements ChatRoomDto {
   factory _ChatRoomDto(
       {final String? id,
-      @JsonKey(name: 'user_one')
-          required final String userOne,
-      @JsonKey(name: 'user_two')
-          required final String userTwo,
-      @JsonKey(name: 'user_one_name')
-          required final String userOneName,
-      @JsonKey(name: 'user_two_name')
-          required final String userTwoName,
-      @JsonKey(name: 'user_one_image_url')
-          required final String userOneImageUrl,
-      @JsonKey(name: 'user_two_image_url')
-          required final String userTwoImageUrl,
-      @JsonKey(name: 'last_message')
-          required final String lastMessage,
-      @JsonKey(name: 'timestamp')
-          required final String timestamp}) = _$_ChatRoomDto;
+      @JsonKey(name: 'last_message') required final String lastMessage,
+      @JsonKey(name: 'timestamp') required final String timestamp,
+      required final UserDto user,
+      required final ArtisanDto artisan}) = _$_ChatRoomDto;
 
   factory _ChatRoomDto.fromJson(Map<String, dynamic> json) =
       _$_ChatRoomDto.fromJson;
@@ -333,29 +252,15 @@ abstract class _ChatRoomDto implements ChatRoomDto {
   @override
   String? get id;
   @override
-  @JsonKey(name: 'user_one')
-  String get userOne;
-  @override
-  @JsonKey(name: 'user_two')
-  String get userTwo;
-  @override
-  @JsonKey(name: 'user_one_name')
-  String get userOneName;
-  @override
-  @JsonKey(name: 'user_two_name')
-  String get userTwoName;
-  @override
-  @JsonKey(name: 'user_one_image_url')
-  String get userOneImageUrl;
-  @override
-  @JsonKey(name: 'user_two_image_url')
-  String get userTwoImageUrl;
-  @override
   @JsonKey(name: 'last_message')
   String get lastMessage;
   @override
   @JsonKey(name: 'timestamp')
   String get timestamp;
+  @override
+  UserDto get user;
+  @override
+  ArtisanDto get artisan;
   @override
   @JsonKey(ignore: true)
   _$$_ChatRoomDtoCopyWith<_$_ChatRoomDto> get copyWith =>

@@ -53,7 +53,7 @@ class _CompleteUserProfileScreenState extends State<CompleteUserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppLogo(),
+        title: AppLogo(),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

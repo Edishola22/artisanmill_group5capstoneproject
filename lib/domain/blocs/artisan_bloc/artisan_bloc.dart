@@ -1,4 +1,5 @@
 import 'package:artisanmill_group5capstoneproject/data/helpers/firebase_artisan_helper.dart';
+import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_state.dart';
@@ -21,12 +22,17 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
 
   final FirebaseArtisanHelper artisanHelper = FirebaseArtisanHelper();
 
+  final AppPreferences preferences = AppPreferences();
+
   void onFetchArtisanProfile(FetchArtisanProfileEvent event,
       Emitter<ArtisanState> emit,) async {
     emit(ArtisanState.loading());
     try {
       final DocumentSnapshot<dynamic> artisanDoc = await artisanHelper.fetchArtisanProfile(event.artisanId);
-      final artisan = ArtisanDto.fromJson(artisanDoc.data());
+      var artisan = ArtisanDto.fromJson(artisanDoc.data());
+      artisan = artisan.copyWith(
+        id: artisanDoc.id
+      );
       emit(ArtisanState.success(artisan));
     } catch(e) {
       dev.log(e.toString());
@@ -47,6 +53,7 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
         category: event.category?.name,
       );
       await artisanHelper.createArtisanProfile(artisan);
+      preferences.setUserType(UserType.artisan);
       emit(ArtisanState.success(null));
     } catch (_) {
       emit(ArtisanState.error('Failed to create artisan profile'));

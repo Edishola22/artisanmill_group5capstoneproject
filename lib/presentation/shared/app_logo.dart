@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class AppLogo extends StatelessWidget {
-  const AppLogo({Key? key}) : super(key: key);
+  AppLogo({Key? key, this.logo,}) : super(key: key);
+
+  String? logo;
 
   @override
   Widget build(BuildContext context) {
     return  Image.asset(
-      Assets.images.logo.path,
+      logo ?? Assets.images.logo.path,
       width: 103.w,
       height: 14.32.h,
     );

@@ -17,6 +17,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/about.svg
   SvgGenImage get about => const SvgGenImage('assets/icons/about.svg');
 
+  /// File path: assets/icons/activity.svg
+  SvgGenImage get activity => const SvgGenImage('assets/icons/activity.svg');
+
   /// File path: assets/icons/advanced.svg
   SvgGenImage get advanced => const SvgGenImage('assets/icons/advanced.svg');
 
@@ -57,6 +60,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home_icon.svg');
 
+  /// File path: assets/icons/horizontal_more.svg
+  SvgGenImage get horizontalMore =>
+      const SvgGenImage('assets/icons/horizontal_more.svg');
+
   /// File path: assets/icons/location.svg
   SvgGenImage get location => const SvgGenImage('assets/icons/location.svg');
 
@@ -70,6 +77,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
+
+  /// File path: assets/icons/notification.svg
+  SvgGenImage get notification =>
+      const SvgGenImage('assets/icons/notification.svg');
 
   /// File path: assets/icons/paperclip.svg
   SvgGenImage get paperclip => const SvgGenImage('assets/icons/paperclip.svg');
@@ -124,6 +135,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
         about,
+        activity,
         advanced,
         apple,
         backIcon,
@@ -136,10 +148,12 @@ class $AssetsIconsGen {
         hamburgerIcon,
         help,
         homeIcon,
+        horizontalMore,
         location,
         loginActivity,
         loginSecurity,
         mail,
+        notification,
         paperclip,
         password,
         phone,
@@ -160,6 +174,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/app_logo_white.png
+  AssetGenImage get appLogoWhite =>
+      const AssetGenImage('assets/images/app_logo_white.png');
+
   /// File path: assets/images/artisan_avatar.png
   AssetGenImage get artisanAvatar =>
       const AssetGenImage('assets/images/artisan_avatar.png');
@@ -179,6 +197,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/google_colored_logo.png
   AssetGenImage get googleColoredLogo =>
       const AssetGenImage('assets/images/google_colored_logo.png');
+
+  /// File path: assets/images/home_background_image.png
+  AssetGenImage get homeBackgroundImage =>
+      const AssetGenImage('assets/images/home_background_image.png');
 
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
@@ -209,11 +231,13 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        appLogoWhite,
         artisanAvatar,
         chatAvatar,
         cleaning,
         facebookColoredLogo,
         googleColoredLogo,
+        homeBackgroundImage,
         logo,
         maintenace,
         mechanical,

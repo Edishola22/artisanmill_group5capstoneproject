@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     this.hintText,
     this.label,
     this.inputFormatters,
+    this.maxLines = 1,
   }) : super(key: key);
 
   final String? label;
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? inputType;
   final List<TextInputFormatter>? inputFormatters;
   final String? hintText;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class CustomTextField extends StatelessWidget {
         SizedBox(height: 4.h),
         TextFormField(
           controller: controller,
-          maxLines: 1,
+          maxLines: maxLines,
           keyboardType: inputType,
           inputFormatters: inputFormatters,
           decoration: InputDecoration(

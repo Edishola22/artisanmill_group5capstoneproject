@@ -1,36 +1,25 @@
+import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/chat_room/chat_room.dart';
-import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
+import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 
 class ChatModel {
-  final String userOneName;
-  final String userTwoName;
-  final String userOneId;
-  final String userTwoId;
+  final UserDto user;
+  final ArtisanDto artisan;
   final String recentMessage;
   final DateTime timeStamp;
-  final String userOneAvatar;
-  final String userTwoAvatar;
   final String? id;
 
   ChatModel({
     this.id,
-    required this.userOneName,
-    required this.userTwoName,
-    required this.userOneId,
-    required this.userTwoId,
-    required this.userTwoAvatar,
+    required this.user,
+    required this.artisan,
     required this.recentMessage,
     required this.timeStamp,
-    this.userOneAvatar = 'assets/images/chat_avatar.png',
   });
 
   ChatRoomDto toChatDto() => ChatRoomDto(
-        userOne: userOneId,
-        userTwo: userTwoId,
-        userOneName: userOneName,
-        userTwoName: userTwoName,
-        userOneImageUrl: userOneAvatar,
-        userTwoImageUrl: userTwoAvatar,
+        user: user,
+        artisan: artisan,
         lastMessage: recentMessage,
         timestamp: timeStamp.millisecondsSinceEpoch.toString(),
       );

@@ -6,7 +6,9 @@ part 'auth_state.freezed.dart';
 abstract class AuthState with _$AuthState {
   factory AuthState.initial() = _initial;
   factory AuthState.loading() = _loading;
-  factory AuthState.authenticated() = _authenticated;
+  factory AuthState.authenticatedUser() = _authenticatedUser;
+  factory AuthState.authenticatedUnknown() = _authenticatedUnknown;
+  factory AuthState.authenticatedArtisan() = _authenticatedArtisan;
   factory AuthState.unauthenticated() = _unauthenticated;
   factory AuthState.error(String message) = _error;
 }

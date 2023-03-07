@@ -61,7 +61,7 @@ class _CompleteArtisanProfileScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppLogo(),
+        title: AppLogo(),
         backgroundColor: context.colors.background,
         centerTitle: true,
         elevation: 0,
@@ -94,6 +94,7 @@ class _CompleteArtisanProfileScreenState
                       label: 'Business Name',
                       controller: _businessNameController,
                       inputType: TextInputType.name,
+                      hintText: 'Enter your name',
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'Business Name required';
@@ -105,6 +106,7 @@ class _CompleteArtisanProfileScreenState
                     CustomTextField(
                       label: 'State',
                       controller: _stateController,
+                      hintText: 'Enter your state',
                       inputType: TextInputType.text,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
@@ -118,6 +120,7 @@ class _CompleteArtisanProfileScreenState
                       label: 'Occupation',
                       controller: _occupationController,
                       inputType: TextInputType.text,
+                      hintText: 'Enter your occupation',
                       validator: (value) {
                         if(value!.trim().isEmpty) {
                           return 'Occupation required';
@@ -129,6 +132,8 @@ class _CompleteArtisanProfileScreenState
                     CustomTextField(
                       label: 'Business Description',
                       inputType: TextInputType.text,
+                      maxLines: 3,
+                      hintText: 'What is your business about',
                       controller: _businessDescriptionController,
                       validator: (value) {
                         if(value!.trim().isEmpty) {
@@ -307,6 +312,6 @@ class _CompleteArtisanProfileScreenState
   }
 
   void _navigateToHome() {
-    context.goNamed('user-home');
+    context.goNamed('artisan-home');
   }
 }

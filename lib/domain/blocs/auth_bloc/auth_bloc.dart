@@ -1,3 +1,4 @@
+import 'package:artisanmill_group5capstoneproject/data/helpers/firebase_artisan_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/helpers/firebase_auth_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/helpers/firebase_user_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
@@ -9,8 +10,11 @@ import 'dart:developer' as dev;
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuthHelper authHelper = FirebaseAuthHelper();
-  //final FirebaseUserHelper userHelper = FirebaseUserHelper();
+  final FirebaseUserHelper userHelper = FirebaseUserHelper();
+  final FirebaseArtisanHelper artisanHelper = FirebaseArtisanHelper();
   final AppPreferences preferences = AppPreferences();
+
+  String get userId => userHelper.userId;
 
   AuthBloc() : super(AuthState.initial()) {
     on<CreateAccountWithEmailAndPasswordEvent>(_createAccount);
@@ -32,10 +36,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email, password: event.password,);
 
       dev.log('login userId is ${user?.uid}');
+      final isArtisan = await artisanHelper.userIsArtisan(user!.uid);
+      final isUser = await userHelper.userIsNormalUser(user.uid);
+
+      dev.log('isArtisan $isArtisan');
+      dev.log('isUser $isUser');
 
       await preferences.setIsLoggedIn();
-      await preferences.setUserId(user!.uid);
-      emit(AuthState.authenticated());
+      await preferences.setUserId(user.uid);
+     if(isArtisan) {
+       await preferences.setUserType(UserType.artisan);
+       emit(AuthState.authenticatedArtisan());
+     } else if(isUser) {
+       await preferences.setUserType(UserType.user);
+       emit(AuthState.authenticatedUser());
+     } else {
+       await preferences.setUserType(UserType.unknown);
+       emit(AuthState.authenticatedUnknown());
+     }
     }
     on UserNotFoundException {
       emit(
@@ -51,6 +69,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AuthState.error('Error occurred while creating account'),
       );
     }
+    catch(e) {
+      dev.log(e.toString());
+    }
   }
 
 
@@ -63,8 +84,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void onCheckAuthStatus(CheckAuthStatusEvent event,
       Emitter<AuthState> emit,) async {
     final isLoggedIn = await preferences.isLoggedIn();
+    final userType = await preferences.getUserType();
+
     if (isLoggedIn) {
-      emit(AuthState.authenticated());
+      if(userType == UserType.artisan) {
+        emit(AuthState.authenticatedArtisan());
+      } else if(userType == UserType.user) {
+        emit(AuthState.authenticatedUser());
+      } else if(userType == UserType.unknown) {
+        emit(AuthState.authenticatedUnknown());
+      }
     } else {
       emit(AuthState.unauthenticated());
     }
@@ -75,9 +104,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState.loading());
     try {
       final user = await authHelper.signInWithGoogle();
+      final isArtisan = await artisanHelper.userIsArtisan(user!.uid);
+      final isUser = await userHelper.userIsNormalUser(user.uid);
+
       await preferences.setIsLoggedIn();
-      await preferences.setUserId(user!.uid);
-      emit(AuthState.authenticated());
+      await preferences.setUserId(user.uid);
+
+      if(isArtisan) {
+        preferences.setUserType(UserType.artisan);
+        emit(AuthState.authenticatedArtisan());
+      } else if(isUser) {
+        preferences.setUserType(UserType.user);
+        emit(AuthState.authenticatedUser());
+      } else {
+        emit(AuthState.authenticatedUnknown());
+      }
+
     } catch (_) {
       emit(AuthState.error('Error occurred while signing in'));
     }
@@ -95,7 +137,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await preferences.setIsLoggedIn();
       await preferences.setUserId(user!.uid);
 
-      emit(AuthState.authenticated());
+      emit(AuthState.authenticatedUnknown());
     } on WeakPassWordException {
       emit(
         AuthState.error(

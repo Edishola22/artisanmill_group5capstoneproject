@@ -19,7 +19,7 @@ class AccountChooserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppLogo(),
+        title: AppLogo(),
         backgroundColor: context.colors.background,
         centerTitle: true,
         elevation: 0,
