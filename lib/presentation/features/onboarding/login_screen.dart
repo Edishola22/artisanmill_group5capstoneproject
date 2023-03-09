@@ -32,6 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    BlocProvider.of<AuthBloc>(context).add(
+      ResetAuthEvent()
+    );
     super.initState();
   }
 

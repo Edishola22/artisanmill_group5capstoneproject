@@ -15,6 +15,7 @@ class AccountChooserScreen extends StatelessWidget {
 
   final String? phoneNumber;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -7,18 +7,20 @@ import 'package:artisanmill_group5capstoneproject/utils/extensions/context_exten
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChatMessageItem extends StatelessWidget {
   ChatMessageItem({
     Key? key,
     required this.message,
+    this.userId,
   }) : super(key: key);
 
   ChatMessage message;
+  final String? userId;
 
   @override
   Widget build(BuildContext context) {
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
     return message.sender != userId
         ? _buildReceiverContainer(context)
         : _buildSenderContainer(context);

@@ -1,3 +1,4 @@
+import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
@@ -35,7 +36,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:developer' as dev;
-
 import '../presentation/features/onboarding/complete_user_profile_screen.dart';
 
 class AppRouter {
@@ -47,7 +47,6 @@ class AppRouter {
     navigatorKey: _rootNavKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      dev.log('redirect called');
       final authBloc = BlocProvider.of<AuthBloc>(context);
       final isNotLoggedIn = authBloc.state == AuthState.unauthenticated();
       final isOnboardingScreen = state.location == '/onboarding';
@@ -88,7 +87,9 @@ class AppRouter {
         builder: (context, state) {
           final phoneNumber = state.queryParams['phone'];
 
-          return AccountChooserScreen(phoneNumber: phoneNumber);
+          return AccountChooserScreen(
+            phoneNumber: phoneNumber,
+          );
         },
       ),
       GoRoute(
@@ -99,7 +100,9 @@ class AppRouter {
 
           return BlocProvider(
             create: (context) => UserBloc(),
-            child: CompleteUserProfileScreen(phoneNumber: phoneNumber),
+            child: CompleteUserProfileScreen(
+              phoneNumber: phoneNumber,
+            ),
           );
         },
       ),
@@ -108,8 +111,9 @@ class AppRouter {
         name: 'complete-artisan-profile',
         builder: (context, state) {
           final phoneNumber = state.queryParams['phone'];
-
-          return CompleteArtisanProfileScreen(phoneNumber: phoneNumber);
+          return CompleteArtisanProfileScreen(
+            phoneNumber: phoneNumber,
+          );
         },
       ),
       GoRoute(
@@ -156,7 +160,7 @@ class AppRouter {
                     name: 'user-chat-details',
                     builder: (context, state) {
                       final chatId = state.queryParams['chatId'];
-                      final chatUsers = state.extra as ChatUsers;
+                      final chatUsers = state.extra as ChatUsers?;
                       return BlocProvider(
                         create: (context) => ChatBloc(),
                         child: UserChatDetailScreen(
@@ -189,14 +193,17 @@ class AppRouter {
                     })
               ],
               builder: (context, state) {
-                return const SearchTab();
+                final location = state.queryParams['location'];
+                dev.log('Location type is ${location.runtimeType.toString()}');
+                return SearchTab(location: location);
               },
             ),
             GoRoute(
               path: '/calendar',
               name: 'calendar',
               builder: (context, state) {
-                return const SchedulingTab();
+                final artisan = state.extra as ArtisanDto?;
+                return SchedulingTab(artisan: artisan);
               },
             ),
             GoRoute(

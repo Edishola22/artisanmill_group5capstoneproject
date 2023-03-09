@@ -25,10 +25,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void onChatEvents(ChatEvent event, Emitter<ChatState> emit) async {
     await event.when(
-      fetchChatRooms: (userId) async => fetchChatRooms(userId, emit),
+      fetchChatRooms: () async => fetchChatRooms(emit),
       fetchConversation: (chatId) async => onFetchConversation(chatId, emit),
-      createChatRoom: (artisanId, userId, message) async =>
-          createChatRoom(artisanId, userId, message, emit),
+      createChatRoom: (artisanId, message) async =>
+          createChatRoom(artisanId, message, emit),
       createNewMessage: (chatId, message) async =>
           onCreateNewMessage(chatId, message, emit),
     );
@@ -56,16 +56,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void createChatRoom(
     String artisanId,
-    String userId,
     ChatMessage message,
     Emitter<ChatState> emit,
   ) async {
     emit(ChatState.loading());
     try {
-      final userDoc = await userHelper.userDoc(userId);
+      final userId = await appPreferences.getUserId();
+      final userDoc = await userHelper.fetchUserDetails(userId!);
       final user = UserDto.fromJson(userDoc.data() as Map<String, dynamic>);
 
-      dev.log('Chat user is ${user.name}');
 
       final artisanDoc = await artisanHelper.artisanDoc(artisanId);
       final artisan =
@@ -98,12 +97,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  void fetchChatRooms(String userId, Emitter<ChatState> emit) async {
+  void fetchChatRooms(Emitter<ChatState> emit) async {
     emit(ChatState.loading());
     try {
+      final userId = await appPreferences.getUserId();
       final userType = await appPreferences.getUserType();
       final isArtisan = userType == UserType.artisan;
-      final userChatDocs = await chatHelper.fetchUserChatRooms(userId, isArtisan);
+      final userChatDocs = await chatHelper.fetchUserChatRooms(userId!, isArtisan);
       final userChats = userChatDocs.map((dynamic chatDoc) {
         var chatRoomDto = ChatRoomDto.fromJson(chatDoc.data());
         chatRoomDto = chatRoomDto.copyWith(
@@ -113,7 +113,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         return chat;
       }).toList();
-      dev.log('Chat rooms are' + userChats.toString());
 
       emit(ChatState.success(userChats));
     } catch (e) {

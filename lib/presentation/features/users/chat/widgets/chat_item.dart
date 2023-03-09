@@ -5,14 +5,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({
     Key? key,
     required this.chat,
+    this.userId,
   }) : super(key: key);
 
   final ChatModel chat;
+  final String? userId;
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +75,10 @@ class ChatItem extends StatelessWidget {
   }
 
   String? getChatUserProfileImage(BuildContext context) {
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
     return userId == chat.user.id ? chat.artisan.imageUrl: chat.user.imageUrl;
   }
 
   String? getChatUserName(BuildContext context) {
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
     return userId == chat.user.id ? chat.artisan.businessName: chat.user.name;
   }
 }

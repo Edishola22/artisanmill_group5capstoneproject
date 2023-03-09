@@ -26,8 +26,7 @@ class _UserProfileTabState extends State<UserProfileTab> {
   @override
   void initState() {
     final userBloc = BlocProvider.of<UserBloc>(context);
-    final authBloc = BlocProvider.of<AuthBloc>(context);
-    userBloc.add(FetchUserProfileEvent(userId: authBloc.userId));
+    userBloc.add(FetchUserProfileEvent());
     super.initState();
   }
 

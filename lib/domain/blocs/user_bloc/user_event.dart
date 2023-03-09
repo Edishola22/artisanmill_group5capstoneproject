@@ -8,6 +8,8 @@ class CreateUserDocumentEvent extends UserEvent {
   final String city;
   final String state;
   final String address;
+  final String? email;
+  final String? userId;
 
   CreateUserDocumentEvent({
     required this.name,
@@ -15,6 +17,8 @@ class CreateUserDocumentEvent extends UserEvent {
     required this.state,
     required this.address,
     this.phone,
+    this.userId,
+    this.email,
   });
 }
 
@@ -25,7 +29,6 @@ class UpdateUserDocumentEvent extends UserEvent {
 }
 
 class FetchUserProfileEvent extends UserEvent {
-  final String userId;
 
-  FetchUserProfileEvent({required this.userId});
+  FetchUserProfileEvent();
 }

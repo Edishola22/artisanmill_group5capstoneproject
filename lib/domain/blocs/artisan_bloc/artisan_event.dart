@@ -10,11 +10,15 @@ class CreateArtisanDocumentEvent extends ArtisanEvent {
   final String occupation;
   final String businessDescription;
   final ArtisanCategory? category;
+  final String? email;
+  final String? userId;
 
   CreateArtisanDocumentEvent({
     required this.businessName,
     this.category,
     this.phone,
+    this.email,
+    this.userId,
     required this.occupation,
     required this.state,
     required this.businessDescription,
@@ -38,6 +42,18 @@ class FetchArtisanProfileEvent extends ArtisanEvent {
 }
 
 class FetchAllArtisansEvent extends ArtisanEvent {
+}
+
+class FetchAllArtisansByLocationEvent extends ArtisanEvent {
+  final String location;
+
+  FetchAllArtisansByLocationEvent({required this.location});
+}
+
+class FetchAllArtisansByServicesEvent extends ArtisanEvent {
+  final String services;
+
+  FetchAllArtisansByServicesEvent({required this.services});
 }
 
 class UpdateArtisanDocumentEvent extends ArtisanEvent {

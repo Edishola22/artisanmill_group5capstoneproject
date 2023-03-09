@@ -2,6 +2,8 @@ import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.da
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_state.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_bloc.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/chat_users.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/features/users/search/widgets/search_app_bar.dart';
@@ -104,7 +106,7 @@ class _ArtisanProfileDetailsState extends State<ArtisanProfileDetails> {
                       width: double.maxFinite,
                       height: 45.h,
                       text: 'Book Now',
-                      onTap: () {},
+                      onTap: () => _navigateToScheduleScreen(context),
                     ),
                   ],
                 );
@@ -120,6 +122,11 @@ class _ArtisanProfileDetailsState extends State<ArtisanProfileDetails> {
         ),
       ),
     );
+  }
+
+  void _navigateToScheduleScreen(BuildContext context) {
+   final navBloc = BlocProvider.of<UserNavigationBloc>(context);
+   navBloc.add(NavigateToCalendarTabEvent(artisan));
   }
 
   Widget _buildMessageButton(BuildContext context) {
@@ -179,7 +186,7 @@ class _ArtisanProfileDetailsState extends State<ArtisanProfileDetails> {
               ),
               SizedBox(height: 8.h),
               Text(
-                'I love that Tara’s touch is super clean with their work. I wore my make up for a very long time and it didn’t smear one bit.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
                 style: context.textTheme.bodyLarge,
               ),
             ],

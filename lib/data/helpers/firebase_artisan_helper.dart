@@ -3,6 +3,7 @@ import 'package:artisanmill_group5capstoneproject/data/models/user/user.dart';
 import 'package:artisanmill_group5capstoneproject/utils/exceptions/user_exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as dev;
 
 class FirebaseArtisanHelper {
   static final FirebaseArtisanHelper _shared =
@@ -28,14 +29,11 @@ class FirebaseArtisanHelper {
     return doc;
   }
 
-  Future<void> createArtisanProfile(ArtisanDto artisanDto) async {
+  Future<void> createArtisanProfile(ArtisanDto artisan) async {
     try {
-      final artisan = artisanDto.copyWith(
-        id: currentUser?.uid,
-        email: currentUser!.email!,
-      );
       await artisansRef.doc(artisan.id).set(artisan.toJson());
     } catch (e) {
+      dev.log(e.toString());
       throw CouldNotUpdateUserException();
     }
   }
@@ -51,9 +49,19 @@ class FirebaseArtisanHelper {
     return snapshot;
   }
 
-  Future<QuerySnapshot?> fetchAllArtisan() async {
+  Future<QuerySnapshot> fetchAllArtisan() async {
     final QuerySnapshot snapshot =
     await artisansRef.get();
+    return snapshot;
+  }
+
+  Future<QuerySnapshot> fetchAllArtisanByLocation(String location) async {
+    final QuerySnapshot snapshot = await artisansRef.where('state', isEqualTo: location).get();
+    return snapshot;
+  }
+
+  Future<QuerySnapshot> fetchAllArtisanByServices(String services) async {
+    final QuerySnapshot snapshot = await artisansRef.where('occupation', isEqualTo: '$services\\uf8ff').get();
     return snapshot;
   }
 }

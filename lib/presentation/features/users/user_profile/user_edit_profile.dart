@@ -39,7 +39,7 @@ class _UserEditProfileScreenState extends State<UserEditProfileScreen> {
     _countryController = TextEditingController();
     _nameController.text = user.name ?? '';
     _stateController.text = user.state ?? '';
-    _countryController.text == user.country ?? '';
+    _countryController.text = user.country ?? '';
     super.initState();
   }
 

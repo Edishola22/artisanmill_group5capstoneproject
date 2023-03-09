@@ -1,3 +1,4 @@
+import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/artisan_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_navigation_bloc/artisan_navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'domain/blocs/auth_bloc/auth_event.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final appRouter = AppRouter();
 
-  MyApp({super.key});
+  MyApp({super.key,});
 
   // This widget is the root of your application.
   @override

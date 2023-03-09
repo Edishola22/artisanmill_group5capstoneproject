@@ -1,4 +1,5 @@
 import 'package:artisanmill_group5capstoneproject/data/models/artisan/artisan.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/category_model.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/app_logo.dart';
+import 'dart:developer' as dev;
 
 class UserHomeTab extends StatefulWidget {
   const UserHomeTab({Key? key, required}) : super(key: key);
@@ -200,7 +202,8 @@ class _UserHomeTabState extends State<UserHomeTab> {
       child: TextField(
           controller: _searchController,
           maxLines: 1,
-          onTap: () => _navigateToSearch(),
+          onSubmitted: (query) => _navigateToSearch(query),
+          textInputAction: TextInputAction.done,
           decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.r),
@@ -235,8 +238,8 @@ class _UserHomeTabState extends State<UserHomeTab> {
     );
   }
 
-  void _navigateToSearch() {
-    context.read<UserNavigationBloc>().add(NavigateToSearchTabEvent());
+  void _navigateToSearch(String query) {
+    context.read<UserNavigationBloc>().add(NavigateToSearchTabEvent(query));
   }
 
   void _navigateToSettings(BuildContext context) {

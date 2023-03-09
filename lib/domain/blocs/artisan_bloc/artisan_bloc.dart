@@ -6,7 +6,6 @@ import 'package:artisanmill_group5capstoneproject/domain/blocs/artisan_bloc/arti
 import 'package:artisanmill_group5capstoneproject/domain/models/all_artisans.dart';
 import 'package:bloc/bloc.dart';
 import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
@@ -17,6 +16,10 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
 
     on<FetchAllArtisansEvent>(onFetchAllArtisans);
 
+    on<FetchAllArtisansByLocationEvent>(onFetchAllArtisansByLocation);
+
+    on<FetchAllArtisansByServicesEvent>(onFetchAllArtisansByServices);
+
     on<FetchArtisanProfileEvent>(onFetchArtisanProfile);
   }
 
@@ -24,26 +27,31 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
 
   final AppPreferences preferences = AppPreferences();
 
-  void onFetchArtisanProfile(FetchArtisanProfileEvent event,
-      Emitter<ArtisanState> emit,) async {
+  void onFetchArtisanProfile(
+    FetchArtisanProfileEvent event,
+    Emitter<ArtisanState> emit,
+  ) async {
     emit(ArtisanState.loading());
     try {
-      final DocumentSnapshot<dynamic> artisanDoc = await artisanHelper.fetchArtisanProfile(event.artisanId);
+      final DocumentSnapshot<dynamic> artisanDoc =
+          await artisanHelper.fetchArtisanProfile(event.artisanId);
       var artisan = ArtisanDto.fromJson(artisanDoc.data());
-      artisan = artisan.copyWith(
-        id: artisanDoc.id
-      );
+      artisan = artisan.copyWith(id: artisanDoc.id);
       emit(ArtisanState.success(artisan));
-    } catch(e) {
+    } catch (e) {
       dev.log(e.toString());
       emit(ArtisanState.error('Error occurred while fetching profile'));
     }
   }
 
-  void onCreateArtisanDocument(CreateArtisanDocumentEvent event,
-      Emitter<ArtisanState> emit,) async {
+  void onCreateArtisanDocument(
+    CreateArtisanDocumentEvent event,
+    Emitter<ArtisanState> emit,
+  ) async {
     emit(ArtisanState.loading());
     try {
+      final userId = await preferences.getUserId();
+      final userEmail = await preferences.getUserEmail();
       final ArtisanDto artisan = ArtisanDto(
         phoneNumber: event.phone,
         businessName: event.businessName,
@@ -51,84 +59,60 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
         state: event.state,
         businessDescription: event.businessDescription,
         category: event.category?.name,
+        id: userId,
+        email: userEmail,
       );
       await artisanHelper.createArtisanProfile(artisan);
       preferences.setUserType(UserType.artisan);
       emit(ArtisanState.success(null));
-    } catch (_) {
+    } catch (e) {
+      dev.log(e.toString());
       emit(ArtisanState.error('Failed to create artisan profile'));
     }
   }
 
-  void onFetchAllArtisans(FetchAllArtisansEvent event,
-      Emitter<ArtisanState> emit,) async {
+  void onFetchAllArtisans(
+    FetchAllArtisansEvent event,
+    Emitter<ArtisanState> emit,
+  ) async {
     emit(ArtisanState.loading());
     try {
-      // final categories = [
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.makeupArtist.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.mechanics.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.painters.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.hairStylists.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.plumbers.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.cleaning.name,
-      //   ),
-      //   artisanHelper.fetchArtisansInCategory(
-      //     ArtisanCategory.electrical.name,
-      //   )
-      // ];
-
       final snapshots = await artisanHelper.fetchAllArtisan();
-      final allArtisans = snapshots?.docs.map((dynamic docSnapshot) {
+      final allArtisans = snapshots.docs.map((dynamic docSnapshot) {
         var artisan = ArtisanDto.fromJson(docSnapshot.data());
-        artisan = artisan.copyWith(
-          id: docSnapshot.id
-        );
+        artisan = artisan.copyWith(id: docSnapshot.id);
         return artisan;
       }).toList();
 
       final makeUpArtists = allArtisans
-          ?.where((element) =>
-      element.category == ArtisanCategory.makeupArtist.name)
+          .where((element) =>
+              element.category == ArtisanCategory.makeupArtist.name)
           .toList();
 
       final mechanics = allArtisans
-          ?.where(
+          .where(
               (element) => element.category == ArtisanCategory.mechanics.name)
           .toList();
 
       final painters = allArtisans
-          ?.where(
-              (element) => element.category == ArtisanCategory.painters.name)
+          .where((element) => element.category == ArtisanCategory.painters.name)
           .toList();
 
       final hairStylists = allArtisans
-          ?.where((element) =>
-      element.category == ArtisanCategory.hairStylists.name)
+          .where((element) =>
+              element.category == ArtisanCategory.hairStylists.name)
           .toList();
 
       final plumbers = allArtisans
-          ?.where(
-              (element) => element.category == ArtisanCategory.plumbers.name)
+          .where((element) => element.category == ArtisanCategory.plumbers.name)
           .toList();
 
       final cleaners = allArtisans
-          ?.where(
-              (element) => element.category == ArtisanCategory.cleaning.name)
+          .where((element) => element.category == ArtisanCategory.cleaning.name)
           .toList();
 
       final electricians = allArtisans
-          ?.where(
+          .where(
               (element) => element.category == ArtisanCategory.mechanics.name)
           .toList();
 
@@ -142,13 +126,68 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
         electricians: electricians ?? [],
       );
 
-      // Future.forEach(categories, (categories) async {
-      //   final snapshots = await categories;
-      //   final artisanList = snapshots?.docs.map((dynamic docSnapshot) {
-      //     final artisan = ArtisanDto.fromJson(docSnapshot.data());
-      //     return artisan;
-      //   }).toList();
-      // });
+      emit(ArtisanState.success(allArtisansResult));
+    } catch (e) {
+      dev.log(e.toString());
+      emit(ArtisanState.error('Error occurred while fetching category'));
+    }
+  }
+
+  void onFetchAllArtisansByLocation(
+    FetchAllArtisansByLocationEvent event,
+    Emitter<ArtisanState> emit,
+  ) async {
+    emit(ArtisanState.loading());
+    try {
+      final snapshots =
+          await artisanHelper.fetchAllArtisanByLocation(event.location);
+      final allArtisans = snapshots.docs.map((dynamic docSnapshot) {
+        var artisan = ArtisanDto.fromJson(docSnapshot.data());
+        artisan = artisan.copyWith(id: docSnapshot.id);
+        return artisan;
+      }).toList();
+
+      final makeUpArtists = allArtisans
+          .where((element) =>
+              element.category == ArtisanCategory.makeupArtist.name)
+          .toList();
+
+      final mechanics = allArtisans
+          .where(
+              (element) => element.category == ArtisanCategory.mechanics.name)
+          .toList();
+
+      final painters = allArtisans
+          .where((element) => element.category == ArtisanCategory.painters.name)
+          .toList();
+
+      final hairStylists = allArtisans
+          .where((element) =>
+              element.category == ArtisanCategory.hairStylists.name)
+          .toList();
+
+      final plumbers = allArtisans
+          .where((element) => element.category == ArtisanCategory.plumbers.name)
+          .toList();
+
+      final cleaners = allArtisans
+          .where((element) => element.category == ArtisanCategory.cleaning.name)
+          .toList();
+
+      final electricians = allArtisans
+          .where(
+              (element) => element.category == ArtisanCategory.mechanics.name)
+          .toList();
+
+      final allArtisansResult = AllArtisans(
+        makeupArtist: makeUpArtists ?? [],
+        mechanics: mechanics ?? [],
+        painters: painters ?? [],
+        hairStylists: hairStylists ?? [],
+        plumbers: plumbers ?? [],
+        cleaners: cleaners ?? [],
+        electricians: electricians ?? [],
+      );
 
       emit(ArtisanState.success(allArtisansResult));
     } catch (e) {
@@ -157,6 +196,71 @@ class ArtisanBloc extends Bloc<ArtisanEvent, ArtisanState> {
     }
   }
 
-  void onUpdateArtisanDocument(UpdateArtisanDocumentEvent event,
-      Emitter<ArtisanState> emit,) {}
+  void onFetchAllArtisansByServices(
+    FetchAllArtisansByServicesEvent event,
+    Emitter<ArtisanState> emit,
+  ) async {
+    emit(ArtisanState.loading());
+    try {
+      final snapshots =
+          await artisanHelper.fetchAllArtisanByServices(event.services);
+      final allArtisans = snapshots.docs.map((dynamic docSnapshot) {
+        var artisan = ArtisanDto.fromJson(docSnapshot.data());
+        artisan = artisan.copyWith(id: docSnapshot.id);
+        return artisan;
+      }).toList();
+
+      final makeUpArtists = allArtisans
+          .where((element) =>
+              element.category == ArtisanCategory.makeupArtist.name)
+          .toList();
+
+      final mechanics = allArtisans
+          .where(
+              (element) => element.category == ArtisanCategory.mechanics.name)
+          .toList();
+
+      final painters = allArtisans
+          .where((element) => element.category == ArtisanCategory.painters.name)
+          .toList();
+
+      final hairStylists = allArtisans
+          .where((element) =>
+              element.category == ArtisanCategory.hairStylists.name)
+          .toList();
+
+      final plumbers = allArtisans
+          .where((element) => element.category == ArtisanCategory.plumbers.name)
+          .toList();
+
+      final cleaners = allArtisans
+          .where((element) => element.category == ArtisanCategory.cleaning.name)
+          .toList();
+
+      final electricians = allArtisans
+          .where(
+              (element) => element.category == ArtisanCategory.mechanics.name)
+          .toList();
+
+      final allArtisansResult = AllArtisans(
+        makeupArtist: makeUpArtists ?? [],
+        mechanics: mechanics ?? [],
+        painters: painters ?? [],
+        hairStylists: hairStylists ?? [],
+        plumbers: plumbers ?? [],
+        cleaners: cleaners ?? [],
+        electricians: electricians ?? [],
+      );
+
+      emit(ArtisanState.success(allArtisansResult));
+    } catch (e) {
+      dev.log(e.toString());
+      emit(ArtisanState.error('Error occurred while fetching category'));
+    }
+  }
+
+  void onUpdateArtisanDocument(
+    UpdateArtisanDocumentEvent event,
+    Emitter<ArtisanState> emit,
+  ) {}
 }

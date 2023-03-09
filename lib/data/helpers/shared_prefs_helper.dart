@@ -6,6 +6,7 @@ class AppPreferences {
   static const String loggedInKey = "loggedIn";
   static const String userIdKey = "userId";
   static const String userTypeKey = "userType";
+  static const String userEmailKey = "userEmail";
 
   static AppPreferences shared = AppPreferences._sharedInstance();
 
@@ -24,6 +25,11 @@ class AppPreferences {
     await prefs.setString(userIdKey, userId);
   }
 
+  Future<void> setUserEmail(String? userEmail) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(userEmailKey, userEmail!);
+  }
+
   Future<void> setUserType(UserType user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userTypeKey, user.name);
@@ -37,6 +43,11 @@ class AppPreferences {
   Future<String?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(userIdKey);
+  }
+
+  Future<String?> getUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(userEmailKey);
   }
 
   Future<UserType?> getUserType() async {
@@ -57,5 +68,6 @@ class AppPreferences {
     await prefs.remove(loggedInKey);
     await prefs.remove(userIdKey);
     await prefs.remove(userTypeKey);
+    await prefs.remove(userEmailKey);
   }
 }

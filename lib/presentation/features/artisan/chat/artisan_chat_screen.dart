@@ -1,3 +1,4 @@
+import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_event.dart';
@@ -23,12 +24,12 @@ class ArtisanChatTab extends StatefulWidget {
 
 class _ArtisanChatTabState extends State<ArtisanChatTab> {
   late final TextEditingController _searchController;
+  String? _currentUserId;
 
   @override
   void initState() {
     _searchController = TextEditingController();
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
-    BlocProvider.of<ChatBloc>(context).add(ChatEvent.fetchChatRooms(userId));
+    BlocProvider.of<ChatBloc>(context).add(ChatEvent.fetchChatRooms());
     super.initState();
   }
 
@@ -49,42 +50,62 @@ class _ArtisanChatTabState extends State<ArtisanChatTab> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.w),
-        child: BlocBuilder<ChatBloc, ChatState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () => const SizedBox.shrink(),
-              loading: () => const Center(
+      body: FutureBuilder(
+          future: AppPreferences().getUserId(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
                 child: CircularProgressIndicator(),
-              ),
-              success: (chats) {
-                final chatRooms = chats as List<ChatModel>;
-                return chatRooms.isEmpty
-                    ? Center(
+              );
+            }
+            else if (snapshot.connectionState == ConnectionState.done) {
+              _currentUserId = snapshot.data;
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 22.w),
+                child: BlocBuilder<ChatBloc, ChatState>(
+                  builder: (context, state) {
+                    return state.when(
+                      initial: () => const SizedBox.shrink(),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      success: (chats) {
+                        final chatRooms = chats as List<ChatModel>;
+                        return chatRooms.isEmpty
+                            ? Center(
+                          child: Text(
+                            'No chats yet',
+                            style: context.textTheme.titleMedium,
+                          ),
+                        )
+                            : Column(
+                          children: [
+                            _buildSearchField(),
+                            SizedBox(height: 24.h),
+                            Expanded(child: _buildChatItemList(chatRooms))
+                          ],
+                        );
+                      },
+                      error: (message) => Center(
                         child: Text(
-                          'No chats yet',
+                          message,
                           style: context.textTheme.titleMedium,
                         ),
-                      )
-                    : Column(
-                        children: [
-                          _buildSearchField(),
-                          SizedBox(height: 24.h),
-                          Expanded(child: _buildChatItemList(chatRooms))
-                        ],
-                      );
-              },
-              error: (message) => Center(
+                      ),
+                    );
+                  },
+                ),
+              );
+            }else {
+              return Center(
                 child: Text(
-                  message,
+                  'Error occurred',
                   style: context.textTheme.titleMedium,
                 ),
-              ),
-            );
-          },
-        ),
-      ),
+              );
+            }
+
+          }),
     );
   }
 
@@ -100,7 +121,7 @@ class _ArtisanChatTabState extends State<ArtisanChatTab> {
           );
           return InkWell(
             onTap: () => _navigateToChatDetail(chat.id!, chatUsers),
-            child: ChatItem(chat: chat),
+            child: ChatItem(chat: chat, userId: _currentUserId),
           );
         });
   }

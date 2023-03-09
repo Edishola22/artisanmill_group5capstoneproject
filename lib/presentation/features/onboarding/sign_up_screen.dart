@@ -34,6 +34,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _passwordController = TextEditingController();
     _phoneController = TextEditingController();
     _usernameController = TextEditingController();
+    BlocProvider.of<AuthBloc>(context).add(
+        ResetAuthEvent()
+    );
     super.initState();
   }
 

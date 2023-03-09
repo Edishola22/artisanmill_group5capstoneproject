@@ -14,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseArtisanHelper artisanHelper = FirebaseArtisanHelper();
   final AppPreferences preferences = AppPreferences();
 
-  String get userId => userHelper.userId;
+
 
   AuthBloc() : super(AuthState.initial()) {
     on<CreateAccountWithEmailAndPasswordEvent>(_createAccount);
@@ -26,6 +26,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutAuthEvent>(onLogOutEvent);
 
     on<LoginAuthEvent>(onLoginWithEmailAndPassword);
+
+    on<ResetAuthEvent>(onResetAuthEvent);
+
+
+  }
+
+  void onResetAuthEvent(ResetAuthEvent event, Emitter<AuthState> emit) {
+    emit(AuthState.initial());
   }
 
   void onLoginWithEmailAndPassword(LoginAuthEvent event,
@@ -35,15 +43,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await authHelper.loginWithEmailAndPassword(
         email: event.email, password: event.password,);
 
-      dev.log('login userId is ${user?.uid}');
       final isArtisan = await artisanHelper.userIsArtisan(user!.uid);
       final isUser = await userHelper.userIsNormalUser(user.uid);
 
-      dev.log('isArtisan $isArtisan');
-      dev.log('isUser $isUser');
 
       await preferences.setIsLoggedIn();
       await preferences.setUserId(user.uid);
+      await preferences.setUserEmail(user.email);
      if(isArtisan) {
        await preferences.setUserType(UserType.artisan);
        emit(AuthState.authenticatedArtisan());
@@ -109,6 +115,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await preferences.setIsLoggedIn();
       await preferences.setUserId(user.uid);
+      await preferences.setUserEmail(user.email);
 
       if(isArtisan) {
         preferences.setUserType(UserType.artisan);
@@ -136,6 +143,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       await preferences.setIsLoggedIn();
       await preferences.setUserId(user!.uid);
+      await preferences.setUserEmail(user.email);
 
       emit(AuthState.authenticatedUnknown());
     } on WeakPassWordException {

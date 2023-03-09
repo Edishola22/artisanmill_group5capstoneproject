@@ -1,5 +1,6 @@
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_event.dart';
+import 'package:artisanmill_group5capstoneproject/domain/blocs/user_navigation_bloc/user_navigation_state.dart';
 import 'package:artisanmill_group5capstoneproject/domain/models/user_nav_item.dart';
 import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_colours.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
@@ -34,7 +35,7 @@ class _UserScaffoldWithNavBarState extends State<UserScaffoldWithNavBar> {
   }
 
   Widget _buildBottomNavBar(BuildContext context) {
-    return BlocConsumer<UserNavigationBloc, int>(
+    return BlocConsumer<UserNavigationBloc, UserNavState>(
       listener: (context, state) {
         _navigateToTab(context, state);
       },
@@ -66,10 +67,10 @@ class _UserScaffoldWithNavBarState extends State<UserScaffoldWithNavBar> {
                 event = NavigateToChatTabEvent();
                 break;
               case 2:
-                event = NavigateToSearchTabEvent();
+                event = NavigateToSearchTabEvent(null);
                 break;
               case 3:
-                event = NavigateToCalendarTabEvent();
+                event = NavigateToCalendarTabEvent(null);
                 break;
               case 4:
                 event = NavigateToProfileTabEvent();
@@ -81,7 +82,7 @@ class _UserScaffoldWithNavBarState extends State<UserScaffoldWithNavBar> {
             context.read<UserNavigationBloc>()
                 .add(event);
           },
-          currentIndex: state,
+          currentIndex: state.index,
           type: BottomNavigationBarType.fixed,
           backgroundColor: AppColours.purpleShadeOne,
           unselectedFontSize: 12.sp,
@@ -94,10 +95,16 @@ class _UserScaffoldWithNavBarState extends State<UserScaffoldWithNavBar> {
     );
   }
 
-  void _navigateToTab(BuildContext context, int index) {
-    if (index == _currentIndex.value) return;
-    final location = UserNavItem.navItems[index].initialLocation;
-    _currentIndex.value = index;
-    context.go(location);
+  void _navigateToTab(BuildContext context, UserNavState state) {
+    if (state.index == _currentIndex.value) return;
+    final location = UserNavItem.navItems[state.index].initialLocation;
+    _currentIndex.value = state.index;
+    if(location == '/calendar') {
+      context.go(location, extra: state.artisan);
+    } else if(location == '/search') {
+      context.go('$location?location=${state.location}');
+    }else {
+      context.go(location);
+    }
   }
 }

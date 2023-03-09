@@ -18,10 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChatEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function() fetchChatRooms,
     required TResult Function(String chatId) fetchConversation,
-    required TResult Function(
-            String artisanId, String userId, ChatMessage message)
+    required TResult Function(String artisanId, ChatMessage message)
         createChatRoom,
     required TResult Function(String chatId, ChatMessage message)
         createNewMessage,
@@ -29,19 +28,17 @@ mixin _$ChatEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function()? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
-    TResult? Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult? Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId)? fetchChatRooms,
+    TResult Function()? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
-    TResult Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) =>
@@ -95,8 +92,6 @@ abstract class _$$_fetchChatRoomsCopyWith<$Res> {
   factory _$$_fetchChatRoomsCopyWith(
           _$_fetchChatRooms value, $Res Function(_$_fetchChatRooms) then) =
       __$$_fetchChatRoomsCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String userId});
 }
 
 /// @nodoc
@@ -106,89 +101,62 @@ class __$$_fetchChatRoomsCopyWithImpl<$Res>
   __$$_fetchChatRoomsCopyWithImpl(
       _$_fetchChatRooms _value, $Res Function(_$_fetchChatRooms) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userId = null,
-  }) {
-    return _then(_$_fetchChatRooms(
-      null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_fetchChatRooms implements _fetchChatRooms {
-  _$_fetchChatRooms(this.userId);
-
-  @override
-  final String userId;
+  _$_fetchChatRooms();
 
   @override
   String toString() {
-    return 'ChatEvent.fetchChatRooms(userId: $userId)';
+    return 'ChatEvent.fetchChatRooms()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_fetchChatRooms &&
-            (identical(other.userId, userId) || other.userId == userId));
+        (other.runtimeType == runtimeType && other is _$_fetchChatRooms);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_fetchChatRoomsCopyWith<_$_fetchChatRooms> get copyWith =>
-      __$$_fetchChatRoomsCopyWithImpl<_$_fetchChatRooms>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function() fetchChatRooms,
     required TResult Function(String chatId) fetchConversation,
-    required TResult Function(
-            String artisanId, String userId, ChatMessage message)
+    required TResult Function(String artisanId, ChatMessage message)
         createChatRoom,
     required TResult Function(String chatId, ChatMessage message)
         createNewMessage,
   }) {
-    return fetchChatRooms(userId);
+    return fetchChatRooms();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function()? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
-    TResult? Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult? Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
-    return fetchChatRooms?.call(userId);
+    return fetchChatRooms?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId)? fetchChatRooms,
+    TResult Function()? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
-    TResult Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
     if (fetchChatRooms != null) {
-      return fetchChatRooms(userId);
+      return fetchChatRooms();
     }
     return orElse();
   }
@@ -232,12 +200,7 @@ class _$_fetchChatRooms implements _fetchChatRooms {
 }
 
 abstract class _fetchChatRooms implements ChatEvent {
-  factory _fetchChatRooms(final String userId) = _$_fetchChatRooms;
-
-  String get userId;
-  @JsonKey(ignore: true)
-  _$$_fetchChatRoomsCopyWith<_$_fetchChatRooms> get copyWith =>
-      throw _privateConstructorUsedError;
+  factory _fetchChatRooms() = _$_fetchChatRooms;
 }
 
 /// @nodoc
@@ -305,10 +268,9 @@ class _$_fetchConversation implements _fetchConversation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function() fetchChatRooms,
     required TResult Function(String chatId) fetchConversation,
-    required TResult Function(
-            String artisanId, String userId, ChatMessage message)
+    required TResult Function(String artisanId, ChatMessage message)
         createChatRoom,
     required TResult Function(String chatId, ChatMessage message)
         createNewMessage,
@@ -319,10 +281,9 @@ class _$_fetchConversation implements _fetchConversation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function()? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
-    TResult? Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult? Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
     return fetchConversation?.call(chatId);
@@ -331,10 +292,9 @@ class _$_fetchConversation implements _fetchConversation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId)? fetchChatRooms,
+    TResult Function()? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
-    TResult Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
@@ -397,7 +357,7 @@ abstract class _$$_createChatRoomCopyWith<$Res> {
           _$_createChatRoom value, $Res Function(_$_createChatRoom) then) =
       __$$_createChatRoomCopyWithImpl<$Res>;
   @useResult
-  $Res call({String artisanId, String userId, ChatMessage message});
+  $Res call({String artisanId, ChatMessage message});
 }
 
 /// @nodoc
@@ -412,17 +372,12 @@ class __$$_createChatRoomCopyWithImpl<$Res>
   @override
   $Res call({
     Object? artisanId = null,
-    Object? userId = null,
     Object? message = null,
   }) {
     return _then(_$_createChatRoom(
       null == artisanId
           ? _value.artisanId
           : artisanId // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       null == message
           ? _value.message
@@ -435,18 +390,16 @@ class __$$_createChatRoomCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_createChatRoom implements _createChatRoom {
-  _$_createChatRoom(this.artisanId, this.userId, this.message);
+  _$_createChatRoom(this.artisanId, this.message);
 
   @override
   final String artisanId;
-  @override
-  final String userId;
   @override
   final ChatMessage message;
 
   @override
   String toString() {
-    return 'ChatEvent.createChatRoom(artisanId: $artisanId, userId: $userId, message: $message)';
+    return 'ChatEvent.createChatRoom(artisanId: $artisanId, message: $message)';
   }
 
   @override
@@ -456,12 +409,11 @@ class _$_createChatRoom implements _createChatRoom {
             other is _$_createChatRoom &&
             (identical(other.artisanId, artisanId) ||
                 other.artisanId == artisanId) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, artisanId, userId, message);
+  int get hashCode => Object.hash(runtimeType, artisanId, message);
 
   @JsonKey(ignore: true)
   @override
@@ -472,41 +424,38 @@ class _$_createChatRoom implements _createChatRoom {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function() fetchChatRooms,
     required TResult Function(String chatId) fetchConversation,
-    required TResult Function(
-            String artisanId, String userId, ChatMessage message)
+    required TResult Function(String artisanId, ChatMessage message)
         createChatRoom,
     required TResult Function(String chatId, ChatMessage message)
         createNewMessage,
   }) {
-    return createChatRoom(artisanId, userId, message);
+    return createChatRoom(artisanId, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function()? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
-    TResult? Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult? Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
-    return createChatRoom?.call(artisanId, userId, message);
+    return createChatRoom?.call(artisanId, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId)? fetchChatRooms,
+    TResult Function()? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
-    TResult Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {
     if (createChatRoom != null) {
-      return createChatRoom(artisanId, userId, message);
+      return createChatRoom(artisanId, message);
     }
     return orElse();
   }
@@ -550,11 +499,10 @@ class _$_createChatRoom implements _createChatRoom {
 }
 
 abstract class _createChatRoom implements ChatEvent {
-  factory _createChatRoom(final String artisanId, final String userId,
-      final ChatMessage message) = _$_createChatRoom;
+  factory _createChatRoom(final String artisanId, final ChatMessage message) =
+      _$_createChatRoom;
 
   String get artisanId;
-  String get userId;
   ChatMessage get message;
   @JsonKey(ignore: true)
   _$$_createChatRoomCopyWith<_$_createChatRoom> get copyWith =>
@@ -633,10 +581,9 @@ class _$_createNewMessage implements _createNewMessage {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId) fetchChatRooms,
+    required TResult Function() fetchChatRooms,
     required TResult Function(String chatId) fetchConversation,
-    required TResult Function(
-            String artisanId, String userId, ChatMessage message)
+    required TResult Function(String artisanId, ChatMessage message)
         createChatRoom,
     required TResult Function(String chatId, ChatMessage message)
         createNewMessage,
@@ -647,10 +594,9 @@ class _$_createNewMessage implements _createNewMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId)? fetchChatRooms,
+    TResult? Function()? fetchChatRooms,
     TResult? Function(String chatId)? fetchConversation,
-    TResult? Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult? Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult? Function(String chatId, ChatMessage message)? createNewMessage,
   }) {
     return createNewMessage?.call(chatId, message);
@@ -659,10 +605,9 @@ class _$_createNewMessage implements _createNewMessage {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId)? fetchChatRooms,
+    TResult Function()? fetchChatRooms,
     TResult Function(String chatId)? fetchConversation,
-    TResult Function(String artisanId, String userId, ChatMessage message)?
-        createChatRoom,
+    TResult Function(String artisanId, ChatMessage message)? createChatRoom,
     TResult Function(String chatId, ChatMessage message)? createNewMessage,
     required TResult orElse(),
   }) {

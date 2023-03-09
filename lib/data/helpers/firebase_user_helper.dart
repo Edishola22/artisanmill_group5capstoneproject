@@ -5,6 +5,7 @@ import 'package:artisanmill_group5capstoneproject/utils/exceptions/user_exceptio
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:developer' as dev;
 
 class FirebaseUserHelper {
 
@@ -19,13 +20,14 @@ class FirebaseUserHelper {
 
   CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
 
-  String get userId => currentUser!.uid;
+  String get userId {
+    dev.log('>>Firebase userId is ${currentUser?.uid}<<');
+    return currentUser!.uid;
+  }
 
   Future<void> createUserProfile(UserDto userDto) async {
     try {
      final user =  userDto.copyWith(
-        id: currentUser?.uid,
-       email: currentUser!.email!,
        country: '',
       );
       await usersRef.doc(user.id).set(user.toJson());
@@ -41,10 +43,10 @@ class FirebaseUserHelper {
     return doc.exists;
   }
 
-  Future<DocumentSnapshot> userDoc(String userId) async {
-    final doc = await usersRef.doc(userId).get();
-    return doc;
-  }
+  // Future<DocumentSnapshot> userDoc(String userId) async {
+  //   final doc = await usersRef.doc(userId).get();
+  //   return doc;
+  // }
 
   Future<DocumentSnapshot> fetchUserDetails(String userId) async {
     final doc = await usersRef.doc(userId).get();
@@ -52,6 +54,7 @@ class FirebaseUserHelper {
   }
 
   Future<void> updateUserDetails(UserDto user) async {
+    dev.log('country is ${user.country}');
     await usersRef.doc(user.id).update(user.toJson());
   }
 

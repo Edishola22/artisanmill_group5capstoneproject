@@ -1,5 +1,5 @@
+import 'package:artisanmill_group5capstoneproject/data/helpers/shared_prefs_helper.dart';
 import 'package:artisanmill_group5capstoneproject/data/models/chat_message/chat_message.dart';
-import 'package:artisanmill_group5capstoneproject/domain/blocs/auth_bloc/auth_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_bloc.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_event.dart';
 import 'package:artisanmill_group5capstoneproject/domain/blocs/chat_bloc/chat_state.dart';
@@ -11,6 +11,7 @@ import 'package:artisanmill_group5capstoneproject/presentation/app_theme/app_col
 import 'package:artisanmill_group5capstoneproject/presentation/features/artisan/chat/widgets/chat_message_item.dart';
 import 'package:artisanmill_group5capstoneproject/utils/assets/assets.gen.dart';
 import 'package:artisanmill_group5capstoneproject/utils/extensions/context_extension.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,32 +29,20 @@ class ArtisanChatDetailScreen extends StatefulWidget {
   final ChatUsers? chatUsers;
 
   @override
-  State<ArtisanChatDetailScreen> createState() => _ArtisanChatDetailScreenState();
+  State<ArtisanChatDetailScreen> createState() =>
+      _ArtisanChatDetailScreenState();
 }
 
 class _ArtisanChatDetailScreenState extends State<ArtisanChatDetailScreen> {
   late final TextEditingController _messageController;
-  late final String? receiverName;
-  late final String? receiverImageUrl;
+  String? currentUserId;
+  String? receiverName;
+  String? receiverImageUrl;
   String? chatId;
 
   @override
   void initState() {
     _messageController = TextEditingController();
-    final chatUsers = widget.chatUsers;
-    final currentUserId = BlocProvider.of<AuthBloc>(context).userId;
-    if (chatUsers?.user == null) {
-      receiverName = chatUsers?.artisan?.businessName;
-      receiverImageUrl = chatUsers?.artisan?.imageUrl;
-    } else {
-      receiverName = currentUserId == chatUsers?.user?.id
-          ? chatUsers?.artisan?.businessName
-          : chatUsers?.user?.name;
-
-      receiverImageUrl = currentUserId == chatUsers?.user?.id
-          ? chatUsers?.artisan?.imageUrl
-          : chatUsers?.user?.imageUrl;
-    }
     if (widget.chatId != null) {
       chatId = widget.chatId!;
       BlocProvider.of<ChatBloc>(context)
@@ -70,70 +59,105 @@ class _ArtisanChatDetailScreenState extends State<ArtisanChatDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      body: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () => Padding(
-              padding: EdgeInsets.only(
-                left: 24.w,
-                right: 13.w,
-                top: 20.h,
-              ),
-              child: Column(
-                children: [
-                  Expanded(child: _buildConversationListView([])),
-                  SizedBox(height: 8.h),
-                  _buildMessageField(),
-                  SizedBox(height: 13.h),
-                ],
-              ),
-            ),
-            loading: () => const Center(
+    return  FutureBuilder(
+        future: AppPreferences().getUserId(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
               child: CircularProgressIndicator(),
-            ),
-            success: (data) {
-              final chatDetail = data as ChatDetailModel;
-              chatId = chatId ?? chatDetail.chatId;
-              return StreamBuilder(
-                  stream: chatDetail.chatMessages,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      final messageSnapshots = snapshot.data;
-                      final messages =
-                          messageSnapshots?.docs.map((dynamic docSnapshot) {
-                        final conversation =
-                            ChatMessageDto.fromJson(docSnapshot.data());
-                        final chatMessage = conversation.toChatMessage();
-                        return chatMessage;
-                      }).toList();
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          left: 24.w,
-                          right: 13.w,
-                          top: 20.h,
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            currentUserId = snapshot.data;
+            final chatUsers = widget.chatUsers;
+            if (chatUsers?.user == null) {
+              receiverName = chatUsers?.artisan?.businessName;
+              receiverImageUrl = chatUsers?.artisan?.imageUrl;
+            } else {
+              receiverName = currentUserId == chatUsers?.user?.id
+                  ? chatUsers?.artisan?.businessName
+                  : chatUsers?.user?.name;
+
+              receiverImageUrl = currentUserId == chatUsers?.user?.id
+                  ? chatUsers?.artisan?.imageUrl
+                  : chatUsers?.user?.imageUrl;
+            }
+            return Scaffold(
+              appBar: _buildAppBar(context),
+              body: BlocBuilder<ChatBloc, ChatState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: () =>
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 24.w,
+                            right: 13.w,
+                            top: 20.h,
+                          ),
+                          child: Column(
+                            children: [
+                              Expanded(child: _buildConversationListView([])),
+                              SizedBox(height: 8.h),
+                              _buildMessageField(),
+                              SizedBox(height: 13.h),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child:
-                                    _buildConversationListView(messages ?? [])),
-                            SizedBox(height: 8.h),
-                            _buildMessageField(),
-                            SizedBox(height: 13.h),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return SizedBox.shrink();
-                    }
-                  });
-            },
-          );
+                    loading: () =>
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    success: (data) {
+                      final chatDetail = data as ChatDetailModel;
+                      chatId = chatId ?? chatDetail.chatId;
+                      return StreamBuilder(
+                          stream: chatDetail.chatMessages,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              final messageSnapshots = snapshot.data;
+                              final messages = messageSnapshots?.docs
+                                  .map((dynamic docSnapshot) {
+                                final conversation =
+                                ChatMessageDto.fromJson(docSnapshot.data());
+                                final chatMessage = conversation.toChatMessage();
+                                return chatMessage;
+                              }).toList();
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: 24.w,
+                                  right: 13.w,
+                                  top: 20.h,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                        child: _buildConversationListView(
+                                            messages ?? [])),
+                                    SizedBox(height: 8.h),
+                                    _buildMessageField(),
+                                    SizedBox(height: 13.h),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return SizedBox.shrink();
+                            }
+                          });
+                    },
+                  );
+                },
+              ),
+            );
+          } else {
+            return Center(
+              child: Text(
+                'Error occurred',
+                style: context.textTheme.titleMedium,
+              ),
+            );
+          }
         },
-      ),
-    );
+      );
   }
 
   Widget _buildMessageField() {
@@ -176,25 +200,22 @@ class _ArtisanChatDetailScreenState extends State<ArtisanChatDetailScreen> {
   }
 
   void sendMessage(String message) {
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
     _messageController.text = '';
     if (chatId == null) {
-      final userId = BlocProvider.of<AuthBloc>(context).userId;
-
       final chatMessage = ChatMessage(
         message: message,
-        sender: userId,
+        sender: currentUserId!,
         timeStamp: DateTime.now(),
       );
 
       final artisanId = widget.chatUsers!.artisan!.id!;
       BlocProvider.of<ChatBloc>(context).add(
-        ChatEvent.createChatRoom(artisanId, userId, chatMessage),
+        ChatEvent.createChatRoom(artisanId, chatMessage),
       );
     } else {
       final chatMessage = ChatMessage(
         message: message,
-        sender: userId,
+        sender: currentUserId!,
         timeStamp: DateTime.now(),
       );
       BlocProvider.of<ChatBloc>(context).add(
@@ -204,24 +225,27 @@ class _ArtisanChatDetailScreenState extends State<ArtisanChatDetailScreen> {
   }
 
   Widget _buildConversationListView(List<ChatMessage> messages) {
-    final userId = BlocProvider.of<AuthBloc>(context).userId;
     return ListView.separated(
         itemCount: messages.length,
         physics: const BouncingScrollPhysics(),
         separatorBuilder: (context, _) => SizedBox(height: 8.h),
         itemBuilder: (context, index) {
           final message = messages[index];
-          return message.sender != userId
+          return message.sender != currentUserId
               ? Align(
-                  alignment: Alignment.topLeft,
-                  child: ChatMessageItem(message: message),
-                )
+            alignment: Alignment.topLeft,
+            child: ChatMessageItem(
+              message: message,
+              userId: currentUserId,
+            ),
+          )
               : Align(
-                  alignment: Alignment.topRight,
-                  child: ChatMessageItem(
-                    message: message,
-                  ),
-                );
+            alignment: Alignment.topRight,
+            child: ChatMessageItem(
+              message: message,
+              userId: currentUserId,
+            ),
+          );
         });
   }
 
@@ -237,10 +261,10 @@ class _ArtisanChatDetailScreenState extends State<ArtisanChatDetailScreen> {
       ),
       title: Row(
         children: [
-          // CircleAvatar(
-          //   backgroundImage: CachedNetworkImageProvider(receiverImageUrl ?? ''),
-          //   radius: 12.5.w,
-          // ),
+          CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(receiverImageUrl ?? ''),
+            radius: 12.5.w,
+          ),
           SizedBox(width: 4.w),
           Text(
             receiverName ?? '',

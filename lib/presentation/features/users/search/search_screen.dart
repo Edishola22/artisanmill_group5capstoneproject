@@ -18,7 +18,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:developer' as dev;
 
 class SearchTab extends StatefulWidget {
-  const SearchTab({Key? key}) : super(key: key);
+  const SearchTab({Key? key, this.location,}) : super(key: key);
+
+  final String? location;
 
   @override
   State<SearchTab> createState() => _SearchTabState();
@@ -29,9 +31,16 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   void initState() {
+    final location = widget.location;
     _searchController = TextEditingController();
     final artisanBloc = BlocProvider.of<ArtisanBloc>(context);
-    artisanBloc.add(FetchAllArtisansEvent());
+   if(location != 'null') {
+     dev.log('Fetchby location called');
+     artisanBloc.add(FetchAllArtisansByLocationEvent(location: location!));
+   } else {
+     dev.log('FetchAll called');
+     artisanBloc.add(FetchAllArtisansEvent());
+   }
     super.initState();
   }
 
@@ -70,41 +79,45 @@ class _SearchTabState extends State<SearchTab> {
                       loading: () =>
                           const Center(child: CircularProgressIndicator()),
                       success: (data) {
-                        final allArtisans = data as AllArtisans;
-                        return SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            children: [
-                              allArtisans.makeupArtist.isEmpty
-                                  ? const SizedBox.shrink()
-                                  : _buildArtisanCategory(
-                                      title: 'Makeup Artists',
-                                      artisans: allArtisans.makeupArtist,
-                                    ),
-                              SizedBox(height: 16.h),
-                              allArtisans.mechanics.isEmpty
-                                  ? const SizedBox.shrink()
-                                  : _buildArtisanCategory(
-                                      title: 'Mechanics',
-                                      artisans: allArtisans.mechanics,
-                                    ),
-                              SizedBox(height: 16.h),
-                              allArtisans.painters.isEmpty
-                                  ? const SizedBox.shrink()
-                                  : _buildArtisanCategory(
-                                      title: 'Painters',
-                                      artisans: allArtisans.painters,
-                                    ),
-                              SizedBox(height: 16.h),
-                              allArtisans.hairStylists.isEmpty
-                                  ? const SizedBox.shrink()
-                                  : _buildArtisanCategory(
-                                      title: 'Hair Stylists',
-                                      artisans: allArtisans.hairStylists,
-                                    ),
-                            ],
-                          ),
-                        );
+                          if(data != null) {
+                            final allArtisans = data as AllArtisans;
+                            return SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  allArtisans.makeupArtist.isEmpty
+                                      ? const SizedBox.shrink()
+                                      : _buildArtisanCategory(
+                                    title: 'Makeup Artists',
+                                    artisans: allArtisans.makeupArtist,
+                                  ),
+                                  SizedBox(height: 16.h),
+                                  allArtisans.mechanics.isEmpty
+                                      ? const SizedBox.shrink()
+                                      : _buildArtisanCategory(
+                                    title: 'Mechanics',
+                                    artisans: allArtisans.mechanics,
+                                  ),
+                                  SizedBox(height: 16.h),
+                                  allArtisans.painters.isEmpty
+                                      ? const SizedBox.shrink()
+                                      : _buildArtisanCategory(
+                                    title: 'Painters',
+                                    artisans: allArtisans.painters,
+                                  ),
+                                  SizedBox(height: 16.h),
+                                  allArtisans.hairStylists.isEmpty
+                                      ? const SizedBox.shrink()
+                                      : _buildArtisanCategory(
+                                    title: 'Hair Stylists',
+                                    artisans: allArtisans.hairStylists,
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                       },
                       error: (message) => const SizedBox.shrink());
                 },

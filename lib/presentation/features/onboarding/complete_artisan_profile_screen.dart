@@ -14,8 +14,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CompleteArtisanProfileScreen extends StatefulWidget {
-  const CompleteArtisanProfileScreen({Key? key, this.phoneNumber})
-      : super(key: key);
+  const CompleteArtisanProfileScreen({
+    Key? key,
+    this.phoneNumber,
+  }) : super(key: key);
 
   final String? phoneNumber;
 
@@ -96,7 +98,7 @@ class _CompleteArtisanProfileScreenState
                       inputType: TextInputType.name,
                       hintText: 'Enter your name',
                       validator: (value) {
-                        if(value!.trim().isEmpty) {
+                        if (value!.trim().isEmpty) {
                           return 'Business Name required';
                         }
                         return null;
@@ -109,7 +111,7 @@ class _CompleteArtisanProfileScreenState
                       hintText: 'Enter your state',
                       inputType: TextInputType.text,
                       validator: (value) {
-                        if(value!.trim().isEmpty) {
+                        if (value!.trim().isEmpty) {
                           return 'State required';
                         }
                         return null;
@@ -122,7 +124,7 @@ class _CompleteArtisanProfileScreenState
                       inputType: TextInputType.text,
                       hintText: 'Enter your occupation',
                       validator: (value) {
-                        if(value!.trim().isEmpty) {
+                        if (value!.trim().isEmpty) {
                           return 'Occupation required';
                         }
                         return null;
@@ -136,7 +138,7 @@ class _CompleteArtisanProfileScreenState
                       hintText: 'What is your business about',
                       controller: _businessDescriptionController,
                       validator: (value) {
-                        if(value!.trim().isEmpty) {
+                        if (value!.trim().isEmpty) {
                           return 'Business description required';
                         }
                         return null;
@@ -164,23 +166,21 @@ class _CompleteArtisanProfileScreenState
                             },
                             error: (message) {
                               context.showErrorSnackBar(message);
-                            }
-                        );
+                            });
                       },
                       builder: (context, state) {
                         return state.maybeWhen(
-                          orElse: () => Align(
-                            child: FilledAppButton(
-                              width: double.maxFinite,
-                              height: 45.h,
-                              text: 'Submit',
-                              onTap: () => _createArtisanProfile(),
-                            ),
-                          ),
-                          loading: () => const Align(
-                            child: CircularProgressIndicator(),
-                          )
-                        );
+                            orElse: () => Align(
+                                  child: FilledAppButton(
+                                    width: double.maxFinite,
+                                    height: 45.h,
+                                    text: 'Submit',
+                                    onTap: () => _createArtisanProfile(),
+                                  ),
+                                ),
+                            loading: () => const Align(
+                                  child: CircularProgressIndicator(),
+                                ));
                       },
                     ),
                     SizedBox(height: 24.h),
